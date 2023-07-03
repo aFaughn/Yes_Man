@@ -1,5 +1,6 @@
 const Discord = require(`discord.js`)
 const client = new Discord.Client();
+import 'os'
 
 // Register an event so that when the bot is ready, it will log a messsage to the terminal
 client.on('ready', () => {
@@ -19,4 +20,4 @@ client.on('message', async msg => {
 })
 
 // client.login logs the bot in and sets it up for use. You'll enter your token here.
-client.login('MTEyNTMxOTMzNzYwNDAzNDYyMA.GV3aW9.GaAjDkT5DQBPywaHEMbuIjoYzrd5H6aSRkmdQs');
+client.login(process.env.API_KEY);
