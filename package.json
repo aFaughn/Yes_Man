@@ -1,6 +1,13 @@
 {
+  "name": "mydiscordbot",
+  "version": "0.0.1",
+  "private": true,
   "dependencies": {
     "discord.js": "^14.11.0",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "nodemon": "^2.0.22"
+  },
+  "scripts": {
+    "run": "npx nodemon"
   }
 }
