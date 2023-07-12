@@ -2,9 +2,9 @@ const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('hello')
-		.setDescription('replies with world'),
+		.setName('well')
+		.setDescription('extends your well'),
 	async execute(interaction) {
-		await interaction.reply('World!');
+		await interaction.reply('WEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEELLLLLLLLLLLLL');
 	},
 };
