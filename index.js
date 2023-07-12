@@ -15,6 +15,7 @@ const client = new Client({
 
 client.commands = new Collection();
 
+// Dynamically loads all valid commands in ./commands
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
@@ -28,6 +29,12 @@ for (const file of commandFiles) {
     console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
   }
 }
+
+//
+client.on(Events.InteractionCreate, interaction => {
+  if (!interaction.isChatInputCommand()) return;
+    console.log(interaction);
+})
 
 // Register an event so that when the bot is ready, it will log a messsage to the terminal
 client.on('ready', () => {
