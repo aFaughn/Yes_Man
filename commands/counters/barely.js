@@ -5,7 +5,6 @@ module.exports = {
 		.setName('carter_barely')
 		.setDescription('Increment\'s the amount of times Carter has made a "barely even know her" joke.'),
 	async execute(interaction) {
-        counter += 1;
 		await interaction.reply(`Carter has yet to help me implement PostgreSQL into this bot! For shame!`);
 	},
 };
