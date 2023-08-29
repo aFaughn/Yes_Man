@@ -3,6 +3,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {Client, Collection, Events, GatewayIntentBits } = require(`discord.js`)
 const token = process.env.API_KEY;
+const db = require('./database')
+const models = require('./database/models')
 
 // Declare permissions that our bot will need in order to perform it's functions.
 const client = new Client({
@@ -57,6 +59,17 @@ client.on(Events.InteractionCreate, async interaction => {
     }
   }
 })
+
+logger.info(`Connecting to database...`);
+
+// Dynamically create associations because we are lazy.
+Object.keys(models).forEach(ele => {
+  models[ele].associate(models);
+})
+//BEWARE! SETTING FORCE_DB_RESET TO 'TRUE' WILL --WIPE YOUR DB-- UPON ANY CHANGE!
+await db.sync({force: process.env.FORCE_DB_RESET})
+
+logger.info(`Completed database connection! Yippee!`)
 
 // Register an event so that when the bot is ready, it will log a messsage to the terminal
 client.on('ready', () => {
