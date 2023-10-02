@@ -6,4 +6,5 @@ const sequelize = new Sequelize(process.env.POSTGRES_DB, process.env.POSTGRES_US
     dialect: `postgres`,
 });
 
+
 module.exports = sequelize;

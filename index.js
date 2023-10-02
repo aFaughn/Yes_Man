@@ -55,21 +55,22 @@ client.on(Events.InteractionCreate, async interaction => {
     if (interaction.replied || interaction.deferred) {
       await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true});
     } else {
-      await interaction.reply({ content: 'There was an error white executing this command!', ephemeal: true});
+      await interaction.reply({ content: 'There was an error while executing this command!', ephemeal: true});
     }
   }
 })
 
-logger.info(`Connecting to database...`);
 
 // Dynamically create associations because we are lazy.
 Object.keys(models).forEach(ele => {
   models[ele].associate(models);
 })
 //BEWARE! SETTING FORCE_DB_RESET TO 'TRUE' WILL --WIPE YOUR DB-- UPON ANY CHANGE!
-await db.sync({force: process.env.FORCE_DB_RESET})
+async function dbSync() {
+  await db.sync({force: process.env.FORCE_DB_RESET})
+}
 
-logger.info(`Completed database connection! Yippee!`)
+dbSync()
 
 // Register an event so that when the bot is ready, it will log a messsage to the terminal
 client.on('ready', () => {
