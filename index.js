@@ -68,7 +68,7 @@ Object.keys(models).forEach(ele => {
 })
 //BEWARE! SETTING FORCE_DB_RESET TO 'TRUE' WILL --WIPE YOUR DB-- UPON ANY CHANGE!
 async function dbSync() {
-  await db.sync({force: process.env.FORCE_DB_RESET})
+  await db.sync({force: process.env.FORCE_DB_RESET === 'true' ? true : false})
 }
 
 dbSync()
