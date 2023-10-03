@@ -10,7 +10,7 @@ class User extends Model {
 
 User.init(
     {
-        discordSnowflake: {
+        username: {
             type: DataTypes.STRING,
             unique: true
         }
