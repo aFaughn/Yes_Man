@@ -4,7 +4,8 @@ const path = require('node:path');
 const {Client, Collection, Events, GatewayIntentBits } = require(`discord.js`)
 const token = process.env.API_KEY;
 const db = require('./database')
-const models = require('./database/models')
+const models = require('./database/models');
+const sequelize = require('./database');
 
 // Declare permissions that our bot will need in order to perform it's functions.
 const client = new Client({
@@ -72,8 +73,21 @@ async function dbSync() {
 
 dbSync()
 
+//DB Authentication
+async function authDB() {
+  try {
+    await sequelize.authenticate();
+    console.log(`Database connection O.K!`)
+  } catch (e) {
+    console.error('Unable to connect to D.B! Error:', e)
+  }
+}
+
+authDB();
+
 // Register an event so that when the bot is ready, it will log a messsage to the terminal
 client.on('ready', () => {
+
   console.log(`Logged in as ${client.user.tag}!`);
 })
 
