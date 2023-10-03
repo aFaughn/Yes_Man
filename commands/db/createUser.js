@@ -12,14 +12,14 @@ module.exports = {
 				username: interaction.user.username
 			}
 		})
-		console.log(user)
-		if (!user) {
+		if (user[0] === undefined) {
 			const newUser = await User.create({
 				username: interaction.user.username
 			})
-			interaction.reply(`Created a new user with username: ${interaction.user.username}`)
-		} else {
-			interaction.reply('User already exists!')
+			await interaction.reply(`Created a new user with username: ${interaction.user.username}`)
+		} if (user[0] !== undefined) {
+			await console.log(user[0])
+			await interaction.reply('User already exists!')
 		}
 	},
 };
