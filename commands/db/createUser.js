@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, Message, InteractionCollector } = require("discord.js");
 
-const {User} = require('../../database/models')
+const {User} = require('../../database/models/user')
 
 module.exports = {
 	data: new SlashCommandBuilder()

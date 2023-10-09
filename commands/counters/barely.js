@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
 
-const {Counter} = require('../../database/models/counters')
+const {Counter} = require('../../database/models/counter')
 
 module.exports = {
 	data: new SlashCommandBuilder()
