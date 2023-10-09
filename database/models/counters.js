@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Counters.init({
     name: DataTypes.STRING,
-    value: DataTypes.NUMBER
+    value: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Counters',
