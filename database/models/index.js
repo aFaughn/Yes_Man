@@ -1,4 +1,3 @@
-const User = require('./user');
-const Counter = require('./counter.js')
+const User = require('./User');
 
-module.exports = {User, Counter};
+module.exports = {User};
