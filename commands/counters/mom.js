@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
 
-let counter = 0;
-
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('mom')

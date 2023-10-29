@@ -1,24 +1,26 @@
 const db = require(`../index`);
 const {Model, DataTypes} = require('sequelize');
 
-class User extends Model {
+class Counter extends Model {
     static associate() {
 
     }
 }
 
-User.init(
+Counter.init(
     {
-        username: {
+        name: {
             type: DataTypes.STRING,
             unique: true
+        },
+        value: {
+            type: DataTypes.INTEGER,
+            unique: false
         }
     },
     {
         paranoid: true,
         sequelize: db,
-        modelName: 'User'
+        modelName: 'Counter'
     }
-    )
-
-module.exports = User;
+)
