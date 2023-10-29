@@ -11,9 +11,16 @@ module.exports = {
 				name: 'hardly'
 			}
 		})
+		if (!counter[0]) {
+			const newCounter = await Counter.create({
+				name: 'barely',
+				value: 0
+			})
+			await interaction.reply('Created a new counter.')
+		}
 		const counterVal = await counter.value
 		counter.value = counterVal + 1
-		await counter.save();
+		await counter.set({ value: counter.value + 1})
 		interaction.reply(`Carter has hardly known 'er ${counterVal + 1} times!`)
 	},
 };
