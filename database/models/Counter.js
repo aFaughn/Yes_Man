@@ -22,5 +22,5 @@ Counter.init(
         paranoid: true,
         sequelize: db,
         modelName: 'Counter'
-    }
-)
+    })
+module.exports = Counter;
