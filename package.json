@@ -5,6 +5,7 @@
   "dependencies": {
     "discord.js": "^14.11.0",
     "dotenv": "^16.3.1",
+    "gapi": "^0.0.3",
     "nodemon": "^2.0.22",
     "pg": "^8.11.3",
     "sequelize": "^6.32.1"

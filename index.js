@@ -6,6 +6,7 @@ const token = process.env.API_KEY;
 const db = require('./database')
 const models = require('./database/models');
 const sequelize = require('./database');
+const { gapi } = require('gapi')
 
 // Declare permissions that our bot will need in order to perform it's functions.
 const client = new Client({
@@ -84,6 +85,17 @@ async function authDB() {
 }
 
 authDB();
+
+// Google API Authentication and Sign-In
+async function authenticate() {
+  return gapi.auth2.getAuthInstance()
+  .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
+  .then(function() { console.log("Google API Signed in Successfully!"); },
+        function(err) {console.log("Google API Failed to sign in. Error:", err)});
+}
+async function loadClient() {
+  gapi.client.setApiKey(`${}`)
+}
 
 // Register an event so that when the bot is ready, it will log a messsage to the terminal
 client.on('ready', () => {

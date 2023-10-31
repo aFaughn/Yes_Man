@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('query_youtube_likes')
@@ -27,3 +28,15 @@ module.exports = {
 
     },
 }
+
+
+/*
+
+curl \
+  'https://youtube.googleapis.com/youtube/v3/videos?part=statistics&id=ULj1qno-LBk&key=221393006490-g5p4d4m5u36qqh25rjee646jsevtgske.apps.googleusercontent.com' \
+  --header 'Authorization: Bearer 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' \
+  --header 'Accept: application/json' \
+  --compressed
+
+
+*/
