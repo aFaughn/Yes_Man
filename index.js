@@ -17,6 +17,7 @@ const client = new Client({
         GatewayIntentBits.Guilds, 
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
+        GatewayIntentBits.DirectMessages
     ] 
  });
 
@@ -41,31 +42,6 @@ for (const folder of commandFolders) {
 	}
 }
 
-//
-client.on(Events.InteractionCreate, async interaction => {
-  if (!interaction.isChatInputCommand()) return;
-    
-  const command = interaction.client.commands.get(interaction.commandName);
-
-  if (!command) {
-    console.error(`No command matching ${interaction.commandName} was found.`);
-    return;
-
-  }
-
-  try {
-    await command.execute(interaction);
-  } catch (error) {
-    console.error(error);
-    if (interaction.replied || interaction.deferred) {
-      await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true});
-    } else {
-      await interaction.reply({ content: 'There was an error while executing this command!', ephemeal: true});
-    }
-  }
-})
-
-
 // Dynamically create associations because we are lazy.
 Object.keys(models).forEach(ele => {
   models[ele].associate(models);
@@ -88,12 +64,6 @@ async function authDB() {
 }
 
 authDB();
-
-// Register an event so that when the bot is ready, it will log a messsage to the terminal
-client.on('ready', () => {
-
-  console.log(`Logged in as ${client.user.tag}!`);
-})
 
 // client.login logs the bot in and sets it up for use. You'll enter your token here.
 client.login(token);
