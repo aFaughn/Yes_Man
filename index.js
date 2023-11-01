@@ -1,15 +1,18 @@
 require('dotenv').config()
+require('coffee-script/register')
 const fs = require('node:fs');
 const path = require('node:path');
 const {Client, Collection, Events, GatewayIntentBits } = require(`discord.js`)
 const token = process.env.API_KEY;
+const gapi_api_key = process.env.YOUTUBE_API_KEY
+const oauthId = process.env.GOOGLE_OAUTH_ID
 const db = require('./database')
 const models = require('./database/models');
 const sequelize = require('./database');
-const { gapi } = require('gapi')
+const { gapi } = require('gapi');
 
 // Declare permissions that our bot will need in order to perform it's functions.
-const client = new Client({
+const discordClient = new Client({
     intents: [
         GatewayIntentBits.Guilds, 
         GatewayIntentBits.GuildMessages,
@@ -17,7 +20,7 @@ const client = new Client({
     ] 
  });
 
-client.commands = new Collection();
+discordClient.commands = new Collection();
 
 // Dynamically loads all valid commands in ./commands
 const foldersPath = path.join(__dirname, 'commands');
@@ -31,7 +34,7 @@ for (const folder of commandFolders) {
 		const command = require(filePath);
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
 		if ('data' in command && 'execute' in command) {
-			client.commands.set(command.data.name, command);
+			discordClient.commands.set(command.data.name, command);
 		} else {
 			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
 		}
@@ -39,10 +42,10 @@ for (const folder of commandFolders) {
 }
 
 //
-client.on(Events.InteractionCreate, async interaction => {
+discordClient.on(Events.InteractionCreate, async interaction => {
   if (!interaction.isChatInputCommand()) return;
     
-  const command = interaction.client.commands.get(interaction.commandName);
+  const command = interaction.discordClient.commands.get(interaction.commandName);
 
   if (!command) {
     console.error(`No command matching ${interaction.commandName} was found.`);
@@ -86,22 +89,11 @@ async function authDB() {
 
 authDB();
 
-// Google API Authentication and Sign-In
-async function authenticate() {
-  return gapi.auth2.getAuthInstance()
-  .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
-  .then(function() { console.log("Google API Signed in Successfully!"); },
-        function(err) {console.log("Google API Failed to sign in. Error:", err)});
-}
-async function loadClient() {
-  gapi.client.setApiKey(`${}`)
-}
-
 // Register an event so that when the bot is ready, it will log a messsage to the terminal
-client.on('ready', () => {
+discordClient.on('ready', () => {
 
-  console.log(`Logged in as ${client.user.tag}!`);
+  console.log(`Logged in as ${discordClient.user.tag}!`);
 })
 
 // client.login logs the bot in and sets it up for use. You'll enter your token here.
-client.login(token);
+discordClient.login(token);
