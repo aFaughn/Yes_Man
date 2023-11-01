@@ -1,5 +1,6 @@
 require('dotenv').config()
 require('coffee-script/register')
+const { deployCommands } = require('./events/deployCommands')
 const fs = require('node:fs');
 const path = require('node:path');
 const {Client, Collection, Events, GatewayIntentBits } = require(`discord.js`)
@@ -10,6 +11,10 @@ const db = require('./database')
 const models = require('./database/models');
 const sequelize = require('./database');
 // const { gapi } = require('gapi')
+
+// Deploy Commands
+const dir = __dirname
+deployCommands(dir)
 
 // Declare permissions that our bot will need in order to perform it's functions.
 const client = new Client({
