@@ -8,19 +8,18 @@ module.exports = {
 	async execute(interaction) {
 		const counter = await Counter.findAll({
 			where: {
-				name: 'hardly'
+				name: 'barely'
 			}
 		})
 		if (!counter[0]) {
-			const newCounter = await Counter.create({
+			await Counter.create({
 				name: 'barely',
 				value: 0
 			})
-			await interaction.reply('Created a new counter.')
+			await interaction.reply(`Carter has barely known 'er ${counter[0].value} times!`)
 		}
-		const counterVal = await counter.value
-		counter.value = counterVal + 1
-		await counter.set({ value: counter.value + 1})
-		interaction.reply(`Carter has hardly known 'er ${counterVal + 1} times!`)
+		await counter[0].update({ value: counter[0].value + 1})
+		.then(interaction.reply(`Carter has barely known 'er ${counter[0].value} times!`)
+		)
 	},
 };
