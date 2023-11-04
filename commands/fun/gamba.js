@@ -41,7 +41,7 @@ module.exports = {
 
             } else if (outcome >= 50 && outcome < 59) {
 
-                user[0].update({ points: user[0].points * 2.44 })
+                user[0].update({ points: user[0].points * 1.20 })
                 await interaction.reply(`[🍋🍋🍋] \n Winner! You got ${wager * 1.20} points!`)
 
             } else if (outcome < 50) {
