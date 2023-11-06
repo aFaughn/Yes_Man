@@ -19,7 +19,7 @@ User.init(
             type: DataTypes.FLOAT,
             unique: false,
             allowNull: true,
-            defaultValue: 0,
+            defaultValue: 100,
         },
         favoriteGame: {
             type: DataTypes.STRING,
