@@ -16,7 +16,7 @@ User.init(
             unique: true
         },
         points: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.FLOAT,
             unique: false,
             allowNull: true,
             defaultValue: 0,

@@ -22,3 +22,4 @@
 - Purge test channel
 - Post PLEX Server requests to specific channel with rich information
 - More plex integrations (?) [Plex Docs](https://www.plexopedia.com/plex-media-server/api/library/movies/)
+- Gamba
