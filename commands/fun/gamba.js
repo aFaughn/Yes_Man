@@ -19,11 +19,14 @@ module.exports = {
 		}
 
         // Grab wager from args
-        const wager = parseInt(interaction.options.getString('wager'))
-
+        let wager = interaction.options.getString('wager').slice(0, interaction.options.getString('wager').length + 1);
+        if (wager !== 'all' || typeof wager !== 'string') {
+            wager = parseInt(interaction.options.getString('wager'))
+        }
         //Err handling -- Bad wagers
+        if (wager === 'all') { wager = parseInt(user[0].points)}
         if (user[0].points < wager) { await interaction.reply('⚠ Cannot wager more than you have!')}
-        if (typeof wager != 'number') {await interaction.reply('⚠ Wager is not an integer.')}
+        if (typeof wager !== 'number' && wager !== 'all') {await interaction.reply(`⚠ Wager is not an integer. Your wager: "${wager}"`)}
         if (user[0].points <= 0 || wager === 0) {
             await interaction.reply("⚠ You don't have any points to gamba with! Brokie!")
         } else {
