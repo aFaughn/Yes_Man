@@ -20,6 +20,6 @@ module.exports = {
 		.setName('schizo_meltdown')
 		.setDescription('Grabs a ccrouse14 quote at random.'),
 	async execute(interaction) {
-		await interaction.reply(quotes[Math.floor(Math.random() * quotes.length + 1)]);
+		await interaction.reply(quotes[Math.floor(Math.random() * quotes.length)]);
 	},
 };
