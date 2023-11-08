@@ -21,11 +21,11 @@ module.exports = {
         } else {
 
             gamers.push(`${top3[0].username} - ${top3[0].points}`)
-            
-            if (!top3[1]) {
+
+            if (top3[1]) {
                 gamers.push(`${top3[1].username} - ${top3[1].points}`)
             }
-            if (!top3[2]) {
+            if (top3[2]) {
                 gamers.push(`${top3[2].username} - ${top3[2].points}`)
             }
 
