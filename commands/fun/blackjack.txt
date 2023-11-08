@@ -64,3 +64,12 @@ func determineWinner(playerHand, HouseHand) {
         clean blackjack vars
 }
 */
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('schizo_meltdown')
+		.setDescription('Grabs a ccrouse14 quote at random.'),
+	async execute(interaction) {
+		await interaction.reply(quotes[Math.floor(Math.random() * quotes.length + 1)]);
+	},
+};
