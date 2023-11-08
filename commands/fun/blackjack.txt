@@ -1,0 +1,75 @@
+/*
+
+Outline:
+0. A player calls /blackjack with a 'wager' arguement.
+1. An instance of blackjack should be made.
+2. 
+3. A deck of cards is generated (13 cards / 4 suites)
+4. The dealer and the player are dealt 2 random cards
+    4a. In order to prevent duplicate cards from the same suit from appearing, any indice selected from the cards array should be blacklisted
+    4b. If the card selecter rolls a duplicate card, it must roll again until an undealt card is given.
+5. if the dealer / player has reached 21, the game ends and the house/player is declared winner.
+6. If a player draws a card, that card should be added to their 'hand' and their current hand updated and printed back to them.
+    6a. If the player still has only 2 cards, they may 'double down' and double their wager (assuming they have the money) and are forced to draw once, and then stay.
+7. If the player chooses to 'stay':
+    7a. The house must continue to draw to 16, if the house goes over, they bust and the game ends.
+    7b. If the house draws an amount higher than the player, and lower than 21, they win and the player loses their wager.
+
+*/
+
+/*
+Psuedo:
+deck = [hearts,spades,diamonds,clubs]
+
+func grabRandomCard = grab a random card
+
+if userisnotplayingBlackJack
+    UserWhoRanThisCommand.isPlayingBlackJack =  true
+    UserWhoRanThisCommand.wager =  wager
+
+UWRTC.houseHand = {2 new cards}
+UWRTC.hand = {2 new cards}
+UWRTC.wager = wager
+
+if UWRTC.houseHand === 21 || UWRTC.hand === 21; Game over
+
+interactionreply = Your hand is ____ the house is showing one card: card at indice 0
+
+if arguement is 'double down'
+    draw another card
+    if bust then lose
+    if lower than 21 draw house to 16+
+    compare
+    determine winner and call winner function
+
+if arguement is 'draw'
+    deal the player an additonional card
+    return current hand
+
+if arguement is 'stay'
+    draw house to 16+
+    determine winner
+
+func determineWinner(playerHand, HouseHand) {
+    compare hands()
+    if winner house:
+        remove player points
+        tell player they lose. House had (amount) (hand)
+        terminate blackjack instance
+        clean blackjack vars
+    if winner player:
+        award player points double what they wagered
+        tell player they won
+        terminate blackjack instance
+        clean blackjack vars
+}
+*/
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('schizo_meltdown')
+		.setDescription('Grabs a ccrouse14 quote at random.'),
+	async execute(interaction) {
+		await interaction.reply(quotes[Math.floor(Math.random() * quotes.length + 1)]);
+	},
+};
