@@ -10,10 +10,10 @@ Outline:
     4b. If the card selecter rolls a duplicate card, it must roll again until an undealt card is given.
 5. if the dealer / player has reached 21, the game ends and the house/player is declared winner.
 6. If a player draws a card, that card should be added to their 'hand' and their current hand updated and printed back to them.
-    6a. If the player still has only 2 cards, they may 'double down' and double their wager (assuming they have the money) and are forced to draw once, and then stay.
+    6a. If the player still has only 2 cards and they are of the same face value, they may 'double down' and double their wager (assuming they have the money) and are forced to draw once, and then stay.
 7. If the player chooses to 'stay':
     7a. The house must continue to draw to 16, if the house goes over, they bust and the game ends.
-    7b. If the house draws an amount higher than the player, and lower than 21, they win and the player loses their wager.
+    7b. If the house draws an amount higher than the player, and lower than or equal to 21, they win and the player loses their wager.
 
 */
 
@@ -58,7 +58,7 @@ func determineWinner(playerHand, HouseHand) {
         terminate blackjack instance
         clean blackjack vars
     if winner player:
-        award player points double what they wagered
+        award player points double what they wagered, or 3:2 in the event of a blackjack
         tell player they won
         terminate blackjack instance
         clean blackjack vars
