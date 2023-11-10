@@ -1,6 +1,8 @@
 const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
 const { User } = require("../../database/models");
 
+let badSlots = ['🍋🍒🥝','🍒🥝🍌']
+
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('gamba')
@@ -34,21 +36,30 @@ module.exports = {
             const outcome = Math.floor(Math.random() * 100)
             if (outcome === 99 || outcome === 100) {
 
-                user[0].update({ points: user[0].points + (wager * 10) })
+                await user[0].update({ points: user[0].points + (wager * 10) })
                 await interaction.reply(`[💎💎💎] \n JACKPOT!!! You got ${wager * 10}`)
 
-            } else if (outcome >= 60 && outcome < 99) {
+            } else if (outcome === 69) {
 
-                user[0].update({ points: user[0].points + (wager * 2.44) })
+                await user[0].update({ points: user[0].points + (wager * 69.69) })
+                await interaction.reply(`[6️⃣9️⃣6️⃣9️⃣6️⃣9️⃣6️⃣9️⃣] \n LOLOLOLOLOLOLOLOL YOU ROLLED ${outcome} You got ${wager * 69.69} points!`)    
+
+            } else if (outcome >= 60 && outcome < 99 && outcome !== 69) {
+
+                await user[0].update({ points: user[0].points + (wager * 4) })
                 await interaction.reply(`[🍒🍒🍒] \n Big Winner! You got ${wager * 2.44} points!`)
 
             } else if (outcome >= 50 && outcome < 59) {
 
-                user[0].update({ points: user[0].points * 1.20 })
+                await user[0].update({ points: user[0].points + (wager * 1.5) })
                 await interaction.reply(`[🍋🍋🍋] \n Winner! You got ${wager * 1.20} points!`)
 
-            } else if (outcome < 50) {
-                user[0].update({ points: user[0].points - wager})
+            } else if (outcome < 50 && outcome <= 30) {
+
+                await interaction.reply(`[🍋💲💲] Stale! You break even. (+0 points)`)
+
+            } else {
+                await user[0].update({ points: user[0].points - wager})
                 await interaction.reply(`[🍋🍒🥝] \n Loss! You lost your wager! -${wager} points!`)
             }
         }
