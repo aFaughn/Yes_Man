@@ -54,7 +54,7 @@ module.exports = {
                 await user[0].update({ points: user[0].points + (wager * 1.5) })
                 await interaction.reply(`[🍋🍋🍋] \n Winner! You got ${wager * 1.20} points!`)
 
-            } else if (outcome < 50 && outcome <= 30) {
+            } else if (outcome < 50 && outcome <= 45) {
 
                 await interaction.reply(`[🍋💲💲] Stale! You break even. (+0 points)`)
 
