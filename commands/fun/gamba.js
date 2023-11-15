@@ -34,33 +34,38 @@ module.exports = {
         } else {
             // Roll outcome
             const outcome = Math.floor(Math.random() * 100)
+            let reward;
             if (outcome === 99 || outcome === 100) {
 
-                await user[0].update({ points: user[0].points + (wager * 10) })
-                await interaction.reply(`[💎💎💎] \n JACKPOT!!! You got ${wager * 10}`)
+                reward = wager * 10
+                await user[0].update({ points: user[0].points + reward})
+                await interaction.reply(`[💎💎💎] \n (${outcome}) JACKPOT!!! You got ${reward}`)
 
             } else if (outcome === 69) {
 
-                await user[0].update({ points: user[0].points + (wager * 69.69) })
-                await interaction.reply(`[6️⃣9️⃣6️⃣9️⃣6️⃣9️⃣6️⃣9️⃣] \n LOLOLOLOLOLOLOLOL YOU ROLLED ${outcome} You got ${wager * 69.69} points!`)    
+                reward = wager * 69
+                await user[0].update({ points: user[0].points + reward })
+                await interaction.reply(`[6️⃣9️⃣6️⃣9️⃣6️⃣9️⃣6️⃣9️⃣] \n LOLOLOLOLOLOLOLOL YOU ROLLED ${outcome} You got ${reward} points!`)    
 
             } else if (outcome >= 60 && outcome < 99 && outcome !== 69) {
 
-                await user[0].update({ points: user[0].points + (wager * 4) })
-                await interaction.reply(`[🍒🍒🍒] \n Big Winner! You got ${wager * 2.44} points!`)
+                reward = wager * 4
+                await user[0].update({ points: user[0].points + reward })
+                await interaction.reply(`[🍒🍒🍒] \n (${outcome}) Big Winner! You got ${reward} points!`)
 
             } else if (outcome >= 50 && outcome < 59) {
 
-                await user[0].update({ points: user[0].points + (wager * 1.5) })
-                await interaction.reply(`[🍋🍋🍋] \n Winner! You got ${wager * 1.20} points!`)
+                reward = wager * 1.5
+                await user[0].update({ points: user[0].points + reward })
+                await interaction.reply(`[🍋🍋🍋] \n (${outcome}) Winner! You got ${reward} points!`)
 
             } else if (outcome < 50 && outcome >= 45) {
 
-                await interaction.reply(`[🍋💲💲] Stale! You break even. (+0 points)`)
+                await interaction.reply(`[🍋💲💲] (${outcome}) Stale! You break even. (+0 points)`)
 
             } else {
                 await user[0].update({ points: user[0].points - wager})
-                await interaction.reply(`[🍋🍒🥝] \n Loss! You lost your wager! -${wager} points!`)
+                await interaction.reply(`[🍋🍒🥝] \n (${outcome}) Loss! You lost your wager! -${wager} points!`)
             }
         }
 	},
