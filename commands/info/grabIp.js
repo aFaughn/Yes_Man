@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { SlashCommandBuilder, Guild, Client } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
 	data: new SlashCommandBuilder()
