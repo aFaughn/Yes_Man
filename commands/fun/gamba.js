@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
 const { User } = require("../../database/models");
 
-let badSlots = ['🍋🍒🥝','🍒🥝🍌']
+let badSlots = ['🍋🍒🥝','🍒🥝🍌', '👉👌😩']
 
 module.exports = {
 	data: new SlashCommandBuilder()
