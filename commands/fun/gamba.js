@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
 const { User } = require("../../database/models");
 
-let badSlots = ['🍋🍒🥝','🍒🥝🍌']
+let badSlots = ['🍋🍒🥝','🍒🥝🍌', '👉👌😩']
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -37,48 +37,37 @@ module.exports = {
             let reward;
             if (outcome === 99 || outcome === 100) {
 
-                (async () => {
-                    reward = wager * 10
-                    .then(user[0].update({ points: user[0].points + reward})) 
-                    .then(interaction.reply(`[💎💎💎] \n (${outcome}) JACKPOT!!! You got ${reward}`))
-                })
+                reward = wager * 10
+                user[0].update({ points: user[0].points + reward}) 
+                interaction.reply(`[💎💎💎] \n (${outcome}) JACKPOT!!! You got ${reward}`)
 
             } else if (outcome === 69) {
 
-                (async() => {
-                    reward = wager * 69
-                    .then(user[0].update({ points: user[0].points + reward }))
-                    .then(interaction.reply(`[6️⃣9️⃣6️⃣9️⃣6️⃣9️⃣6️⃣9️⃣] \n LOLOLOLOLOLOLOLOL YOU ROLLED ${outcome} You got ${reward} points!`))
-                })
+                reward = wager * 69
+                user[0].update({ points: user[0].points + reward })
+                interaction.reply(`[6️⃣9️⃣6️⃣9️⃣6️⃣9️⃣6️⃣9️⃣] \n LOLOLOLOLOLOLOLOL YOU ROLLED ${outcome} You got ${reward} points!`)
 
             } else if (outcome >= 60 && outcome < 99 && outcome !== 69) {
 
-               (async () => {
-                    reward = wager * 4
-                    .then(user[0].update({ points: user[0].points + reward }))
-                    .then(interaction.reply(`[🍒🍒🍒] \n (${outcome}) Big Winner! You got ${reward} points!`))
-                })
-                
+                reward = wager * 4
+                user[0].update({ points: user[0].points + reward })
+                interaction.reply(`[🍒🍒🍒] \n (${outcome}) Big Winner! You got ${reward} points!`)
 
             } else if (outcome >= 50 && outcome < 59) {
 
-                (async () => {
-
-                    reward = wager * 1.5
-                    .then(user[0].update({ points: user[0].points + reward }))
-                    .then(interaction.reply(`[🍋🍋🍋] \n (${outcome}) Winner! You got ${reward} points!`))
-
-                })
+                reward = wager * 1.5
+                user[0].update({ points: user[0].points + reward })
+                interaction.reply(`[🍋🍋🍋] \n (${outcome}) Winner! You got ${reward} points!`)
 
             } else if (outcome < 50 && outcome >= 45) {
 
                 await interaction.reply(`[🍋💲💲] (${outcome}) Stale! You break even. (+0 points)`)
 
             } else {
-                (async () => {
-                    await user[0].update({ points: user[0].points - wager})
-                    .then(interaction.reply(`[🍋🍒🥝] \n (${outcome}) Loss! You lost your wager! -${wager} points!`))
-                })
+
+                await user[0].update({ points: user[0].points - wager})
+                interaction.reply(`[🍋🍒🥝] \n (${outcome}) Loss! You lost your wager! -${wager} points!`)
+
             }
         }
 	},

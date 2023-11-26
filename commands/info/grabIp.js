@@ -16,11 +16,14 @@ module.exports = {
 
             // Define authorized users here
             let authorizedUsers  = {
-                1: 'alfman',
-                2: 'laxbroclb'
+                'alfman': 'alfman',
+                'laxbroclb': 'laxbroclb'
             }
             
             for (let user in authorizedUsers) {
+                if (!interaction.user.username in authorizedUsers) {
+                    interaction.reply('[403] Unauthorized')
+                }
                     if (authorizedUsers[user] === interaction.user.username) {
                         let currentIP = await fetch('http://httpbin.org/ip')
                         .then(response => response.json())
@@ -30,7 +33,6 @@ module.exports = {
                         })
                     }
                 }
-            await interaction.reply(`[403] Authenticaton Failed`)
         } else if (process.env.NODE_ENV === 'production') {
             interaction.reply(`This command is disabled by default in production mode.`)
         }
