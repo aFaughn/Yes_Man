@@ -16,11 +16,13 @@ module.exports = {
             .setCustomId('markcomplete')
             .setLabel('Mark Completed')
             .setStyle(ButtonStyle.Success)
+            .setEmoji('e2902f38bd5c27bae536')
 
         const markBad = new ButtonBuilder()
             .setCustomId('markBad')
             .setLabel('Delete')
             .setStyle(ButtonStyle.Danger)
+            .setEmoji('d22e8c77c1aa9e5a69a2')
 
         const row = new ActionRowBuilder()
             .addComponents(markComplete, markBad)
