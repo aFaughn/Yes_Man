@@ -17,21 +17,21 @@ module.exports = {
             .setCustomId('markcomplete')
             .setLabel('Mark Completed')
             .setStyle(ButtonStyle.Success)
-            .setEmoji('e2902f38bd5c27bae536')
+            .setEmoji('✅')
 
         const markBad = new ButtonBuilder()
             .setCustomId('markBad')
             .setLabel('Delete')
             .setStyle(ButtonStyle.Danger)
-            .setEmoji('d22e8c77c1aa9e5a69a2')
+            .setEmoji('✖')
 
         const row = new ActionRowBuilder()
             .addComponents(markComplete, markBad)
 
         const channel = await client.channels.fetch(channelId)
-        await channel.send({
+        await channel.send({ 
             content: `${interaction.user.username} requested ${interaction.options.getString('title')}`,
-            components: [row],
+            components: [row]
         })
 	},
 };
