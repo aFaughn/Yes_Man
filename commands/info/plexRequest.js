@@ -9,6 +9,7 @@ module.exports = {
                 .setDescription('Title of the film. Duh.')
                 .setRequired(true)),
 	async execute(interaction) {
+        const { client } = interaction
         // Destination channel
         const channelId = '1125153614441238621'
 
@@ -27,9 +28,9 @@ module.exports = {
         const row = new ActionRowBuilder()
             .addComponents(markComplete, markBad)
 
-        const channel = client.channels.cache.get(channelId)
-        channel.send({
-            content: `${interaction.user.username} requested ${interaction.option.getString('title')}`,
+        const channel = await client.channels.fetch(channelId)
+        await channel.send({
+            content: `${interaction.user.username} requested ${interaction.options.getString('title')}`,
             components: [row],
         })
 	},
