@@ -14,7 +14,7 @@ module.exports = {
         const channelId = '1125153614441238621'
 
         const markComplete = new ButtonBuilder()
-            .setCustomId('markcomplete')
+            .setCustomId('markComplete')
             .setLabel('Mark Completed')
             .setStyle(ButtonStyle.Success)
             .setEmoji('✅')
@@ -29,9 +29,18 @@ module.exports = {
             .addComponents(markComplete, markBad)
 
         const channel = await client.channels.fetch(channelId)
-        await channel.send({ 
-            content: `${interaction.user.username} requested ${interaction.options.getString('title')}`,
+
+        plexManager = '<@697944233776119850>'
+
+        const response = await channel.send({ 
+            content: `${plexManager} ${interaction.user.username} requested ${interaction.options.getString('title')}`,
             components: [row]
         })
+
+        const acknowledge = await interaction.reply(`Request Made! This message will self destruct in 5 seconds!`)
+
+        setTimeout(() => {
+            acknowledge.delete()
+        },5000)
 	},
 };
