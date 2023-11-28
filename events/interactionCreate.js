@@ -1,17 +1,18 @@
 const { Events } = require('discord.js');
+let film;
 
 module.exports = {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
 		if (interaction.isChatInputCommand()) {
-
+			
 			const command = interaction.client.commands.get(interaction.commandName);
-
+			
 			if (!command) {
 				console.error(`No command matching ${interaction.commandName} was found.`);
 				return;
 			}
-
+			
 			try {
 				await command.execute(interaction);
 			} catch (error) {
@@ -20,10 +21,25 @@ module.exports = {
 			}
 		} else if (interaction.isButton()) {
 			if (interaction.customId === 'markComplete') {
-				await interaction.message.edit(`Film added!`)
+				const { client } = interaction;
+
+				channelId = '1125153614441238621'
+				const channel = await client.channels.fetch(channelId)
+
+				for (let i = 0; i < interaction.message.content.length - 1; i++) {
+					let p1;
+					if (interaction.message.content[i] === '*' && p1 === undefined) p1 = i
+					if (p1 !== undefined) {
+						film = await interaction.message.content.slice(p1)
+					}
+				}
+				await interaction.message.delete()
+				await channel.send(`${film} has been added to the Plex Server!`)
+				await interaction.deferUpdate()
 			}
 			if (interaction.customId === 'markBad') {
-				interaction.message.delete()
+				
+				await interaction.message.delete()
 			}
 		} else if (interaction.isStringSelectMenu()) {
 			return;
