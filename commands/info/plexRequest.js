@@ -30,8 +30,8 @@ module.exports = {
 
         const channel = await client.channels.fetch(channelId)
 
-        // plexManager = '<@697944233776119850>'
-        plexManager = 'test'
+        plexManager = '<@697944233776119850>'
+        // plexManager = 'test'
 
         const response = await channel.send({ 
             content: `${plexManager} ${interaction.user.username} requested *${interaction.options.getString('title')}*`,
