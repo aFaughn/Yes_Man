@@ -12,5 +12,8 @@
   },
   "scripts": {
     "run": "npx nodemon"
+  },
+  "config": {
+    "plexOwner":"1125153614441238621"
   }
 }
