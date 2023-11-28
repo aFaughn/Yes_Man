@@ -14,6 +14,7 @@
     "run": "npx nodemon"
   },
   "config": {
-    "plexOwner":"1125153614441238621"
+    "plexOwner":"<@697944233776119850>",
+    "plexChannel":"1125153614441238621"
   }
 }
