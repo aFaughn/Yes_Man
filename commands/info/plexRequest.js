@@ -1,4 +1,6 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { plexOwner, plexChannel } = require('../../package.json').config
+
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -10,8 +12,6 @@ module.exports = {
                 .setRequired(true)),
 	async execute(interaction) {
         const { client } = interaction
-        // Destination channel
-        const channelId = '1125153614441238621'
 
         const markComplete = new ButtonBuilder()
             .setCustomId('markComplete')
@@ -28,12 +28,10 @@ module.exports = {
         const row = new ActionRowBuilder()
             .addComponents(markComplete, markBad)
 
-        const channel = await client.channels.fetch(channelId)
-
-        plexManager = '<@697944233776119850>'
+        const channel = await client.channels.fetch(plexChannel)
 
         const response = await channel.send({ 
-            content: `${plexManager} ${interaction.user.username} requested *${interaction.options.getString('title')}*`,
+            content: `${plexOwner} ${interaction.user.username} requested *${interaction.options.getString('title')}*`,
             components: [row]
         })
 
