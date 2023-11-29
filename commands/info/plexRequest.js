@@ -31,7 +31,7 @@ module.exports = {
         const channel = await client.channels.fetch(plexChannel)
 
         const response = await channel.send({ 
-            content: `${plexOwner} ${interaction.user.username} requested *${interaction.options.getString('title')}*`,
+            content: `${plexOwner} ${interaction.user.username} requested *${interaction.options.getString('title')}*`,            content: `${plexManager} ${interaction.user.username} requested *${interaction.options.getString('title')}*`,
             components: [row]
         })
 
