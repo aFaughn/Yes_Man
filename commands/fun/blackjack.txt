@@ -1,7 +1,7 @@
 /*
 
 Outline:
-0. A player calls /blackjack with a 'wager' arguement.
+0. A player calls /blackjack with a 'wager' argument.
 1. An instance of blackjack should be made.
 2. 
 3. A deck of cards is generated (13 cards / 4 suites)
@@ -35,18 +35,18 @@ if UWRTC.houseHand === 21 || UWRTC.hand === 21; Game over
 
 interactionreply = Your hand is ____ the house is showing one card: card at indice 0
 
-if arguement is 'double down'
+if argument is 'double down'
     draw another card
     if bust then lose
     if lower than 21 draw house to 16+
     compare
     determine winner and call winner function
 
-if arguement is 'draw'
+if argument is 'draw'
     deal the player an additonional card
     return current hand
 
-if arguement is 'stay'
+if argument is 'stay'
     draw house to 16+
     determine winner
 
