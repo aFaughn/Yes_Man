@@ -15,12 +15,17 @@
 3. Setup your environmental variables (see .env.example) NOTE: MAKE SURE TO SET DB_SYNC TO TRUE ON FIRST LAUNCH **AND THEN DISABLE THEREAFTER**
 4. execute the program by running `node index.js`
 
+## Features
+ - Daily NASA APOD
+ - Gambling
+ - Counters for bad jokes
+ - Points Leaderboards
+ - PostgreSQL integration
+ - Dynamic Command Loading
+ - Plex Requests
+ 
+
 ## TODO
-- Implement Karma
-- Implement Points
 - Implement Inventory
 - Purge test channel
-- Post PLEX Server requests to specific channel with rich information
 - More plex integrations (?) [Plex Docs](https://www.plexopedia.com/plex-media-server/api/library/movies/)
-- Gamba
-- Points Leaderboard
