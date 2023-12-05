@@ -16,6 +16,9 @@
   "config": {
     "plexOwner":"<@697944233776119850>",
     "plexChannel":"1125153614441238621",
-    "nasaAPODChannel":"1050609635360526378"
+    "nasaAPODChannel":"1050609635360526378",
+    "serverOwners": {
+      "alfman":"alfman"
+    }
   }
 }
