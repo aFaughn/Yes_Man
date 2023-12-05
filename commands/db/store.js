@@ -26,8 +26,8 @@ const store = {
 }
 
 const storeString = `__Yes-Man Store -- Emporium of Junk! -- Purchase now!__
-- gambacap - Increase your gamba cap to the next tier
-- pointscap - Increase your points cap to the next tier 
+- *T* gambacap - Increase your gamba cap to the next tier
+- *T* pointscap - Increase your points cap to the next tier 
 - Renew One-Time - DOES NOT STACK renew a used one-time. - 999,999,999,999,999,999,999p
 
 **Please take care to spell an item to purchase exactly as it appears in it's listing!*
