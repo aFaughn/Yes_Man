@@ -28,11 +28,13 @@ module.exports = {
                 .setRequired(false)),
 	async execute(interaction) {
         const { client } = interaction
+        
+        const item = interaction.options.getString('item')
 
-        if (!interaction.options.getString('item')) {
+        if (!item) {
             await interaction.reply(storeString)
         } else {
-            
+
         }
 	},
 };
