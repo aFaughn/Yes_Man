@@ -15,6 +15,9 @@ module.exports = {
             // Grab user who ran the command
             const user = await User.findAll({where: {username: interaction.user.username}})
             
+            // Grab user's inventory
+            const inventory = JSON.parse(user[0].inventory)
+
             //Err handling -- No user
             if (!user[0]) {
                 interaction.reply('⚠ No user found! Please run /create_user first!')
@@ -25,14 +28,19 @@ module.exports = {
             if (wager !== 'max' || typeof wager !== 'string') {
                 wager = parseInt(interaction.options.getString('wager'))
             }
+
             //Define what our wager is exactly
             if (wager === 'max') {
-                 const inventory = JSON.parse(user[0].inventory)
                  if (inventory.upgrades.gambacap === 0) {
                     wager = 50
                  } else {
                     wager = (inventory.upgrades.gambacap * 50) * inventory.upgrades.gambacap
                  }
+            }
+
+            //User is at their current point cap
+            if (user[0].points >= inventory.upgrades.pointscap) {
+                await interaction.reply(`You are at your point cap. Buy an upgrade with /store`)
             }
 
             //User tried to wager more than they have
@@ -46,6 +54,7 @@ module.exports = {
                 await interaction.reply("⚠ You don't have any points to gamba with! Brokie!")
             } else {
                 // Roll outcome
+                // Note to dev: Switch case cannot be used here practically due to logic constraints
                 const outcome = Math.floor(Math.random() * 100)
                 let reward;
                 if (outcome === 99 || outcome === 100) {
