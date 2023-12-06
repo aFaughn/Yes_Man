@@ -62,7 +62,7 @@ module.exports = {
                     
                 } else if (outcome >= 60 && outcome < 99 && outcome !== 69) {
                     
-                    reward = wager * 4
+                    reward = wager * 3
                     user[0].update({ points: user[0].points + reward })
                     interaction.reply(`[🍒🍒🍒] \n (${outcome}) Big Winner! You got ${reward} points!`)
                     
