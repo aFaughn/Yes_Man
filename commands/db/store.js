@@ -27,13 +27,12 @@ const store = {
 }
 
 const storeString = `__Yes-Man Store -- Emporium of Junk! -- Purchase now!__
-- *T* gambacap - Increase your gamba cap to the next tier
-- *T* pointscap - Increase your points cap to the next tier 
+- gambacap - Increase your gamba cap to the next tier
+- pointscap - Increase your points cap to the next tier 
 - Prestige - Wipe your points and upgrades and progress 1 prestige tier.
 - Renew One-Time - DOES NOT STACK renew a used one-time. - 999,999,999,999,999,999,999p
 
 **Please take care to spell an item to purchase exactly as it appears in it's listing!*
-When buying tiered Items (Marked with *T*) Make sure to include the tier you are purchasing. (e.g. /store gambacap 10)
 `
 
 module.exports = {
@@ -71,19 +70,24 @@ module.exports = {
 
                 } else {
                     //Purchase logic
+
+                    /*
                     if (store[item] ===  'gambacap') {
 
-                        await user.update({points: user.points - store[`gambacap ${inventory.upgrades.gambacap + 1}`]})
+                        await user.update({points: await user.points - store[`gambacap ${inventory.upgrades.gambacap + 1}`]})
                         await user.update({ inventory: await inventory.upgrades.gambacap + 1})
 
                     } else if (store[item] === 'pointscap') {
 
-                        await user.update({points: user.points - store[`pointscap ${inventory.upgrades.pointscap + 1}`]})
+                        await user.update({points: await user.points - store[`pointscap ${inventory.upgrades.pointscap + 1}`]})
                         await user.update({ inventory: await inventory.upgrades.pointscap + 1})
 
                     } else if (store[item] === 'prestige') {
-                        //logic
+                        
+                        await user.update({points: await user.points - store[item]})
+                        await user.update({ inventory: await inventory.upgrades.pointscap})
                     }
+                    */
 
                 }
             }
