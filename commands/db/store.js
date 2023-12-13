@@ -48,7 +48,7 @@ module.exports = {
 
             // Init user
             let user = await User.findOne({ where: { username: interaction.user.username}})
-            const inventory = await user.inventory
+            const inventory = await user.inventory.JSON()
             const upgrades = await user.inventory.upgrades
 
             // Error handling for no user
@@ -71,23 +71,28 @@ module.exports = {
                 } else {
                     //Purchase logic
 
-                    /*
+                    
                     if (store[item] ===  'gambacap') {
 
+                        inventory.upgrades.pointscap += 1
                         await user.update({points: await user.points - store[`gambacap ${inventory.upgrades.gambacap + 1}`]})
-                        await user.update({ inventory: await inventory.upgrades.gambacap + 1})
+                        await user.update({ inventory: await inventory})
 
                     } else if (store[item] === 'pointscap') {
 
+                        inventory.upgrades.pointscap += 1
                         await user.update({points: await user.points - store[`pointscap ${inventory.upgrades.pointscap + 1}`]})
-                        await user.update({ inventory: await inventory.upgrades.pointscap + 1})
+                        await user.update({ inventory: inventory})
 
                     } else if (store[item] === 'prestige') {
-                        
+
+                        inventory.upgrades.pointscap = 0
+                        inventory.upgrades.gambacap = 0
                         await user.update({points: await user.points - store[item]})
-                        await user.update({ inventory: await inventory.upgrades.pointscap})
+                        await user.update({ inventory: inventory})
+
                     }
-                    */
+                    
 
                 }
             }
