@@ -29,7 +29,7 @@ const store = {
 const storeString = `__Yes-Man Store -- Emporium of Junk! -- Purchase now!__
 - *T* gambacap - Increase your gamba cap to the next tier
 - *T* pointscap - Increase your points cap to the next tier 
-- [NOT IMPLEMENTED] - Prestige - Wipe your points and upgrades and progress 1 prestige tier.
+- Prestige - Wipe your points and upgrades and progress 1 prestige tier.
 - Renew One-Time - DOES NOT STACK renew a used one-time. - 999,999,999,999,999,999,999p
 
 **Please take care to spell an item to purchase exactly as it appears in it's listing!*
@@ -49,6 +49,8 @@ module.exports = {
 
             // Init user
             let user = await User.findOne({ where: { username: interaction.user.username}})
+            const inventory = await user.inventory
+            const upgrades = await user.inventory.upgrades
 
             // Error handling for no user
             if (!user) {
@@ -58,6 +60,7 @@ module.exports = {
                 
                 const item = interaction.options.getString('item')
                 
+                // Auto-Complete would be a nice feature to add here
                 if (!item) {
 
                     await interaction.reply(storeString)
@@ -67,11 +70,19 @@ module.exports = {
                     await interaction.reply('Nice try.')
 
                 } else {
+                    //Purchase logic
+                    if (store[item] ===  'gambacap') {
 
-                    if (store[item] !== undefined) {
-                        await user.update({points: user.points - store[item]})
-                        .then(user.save())
-                        .then(interaction.reply(`Successfully purchased ${item} for ${store[item]} point(s)`))
+                        await user.update({points: user.points - store[`gambacap ${inventory.upgrades.gambacap + 1}`]})
+                        await user.update({ inventory: await inventory.upgrades.gambacap + 1})
+
+                    } else if (store[item] === 'pointscap') {
+
+                        await user.update({points: user.points - store[`pointscap ${inventory.upgrades.pointscap + 1}`]})
+                        await user.update({ inventory: await inventory.upgrades.pointscap + 1})
+
+                    } else if (store[item] === 'prestige') {
+                        //logic
                     }
 
                 }
