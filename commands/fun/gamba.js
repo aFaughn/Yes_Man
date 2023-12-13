@@ -24,7 +24,7 @@ module.exports = {
             }
             
             // Grab wager from args
-            let wager = interaction.options.getString('wager').slice(0, interaction.options.getString('wager').length + 1);
+            let wager = interaction.options.getString('wager').slice(0, interaction.options.getString('wager').length + 1).toLowerCase();
             if (wager !== 'max' || typeof wager !== 'string') {
                 wager = parseInt(interaction.options.getString('wager'))
             }
