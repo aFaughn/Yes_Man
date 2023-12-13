@@ -48,7 +48,7 @@ module.exports = {
 
             // Init user
             let user = await User.findOne({ where: { username: interaction.user.username}})
-            const inventory = await user.inventory.JSON()
+            const inventory = await user.inventory
             const upgrades = await user.inventory.upgrades
 
             // Error handling for no user
@@ -73,7 +73,7 @@ module.exports = {
 
                     
                     if (store[item] ===  'gambacap') {
-
+                        
                         inventory.upgrades.pointscap += 1
                         await user.update({points: await user.points - store[`gambacap ${inventory.upgrades.gambacap + 1}`]})
                         await user.update({ inventory: await inventory})
@@ -92,8 +92,6 @@ module.exports = {
                         await user.update({ inventory: inventory})
 
                     }
-                    
-
                 }
             }
 	},

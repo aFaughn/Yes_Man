@@ -41,6 +41,7 @@ module.exports = {
             //User is at their current point cap
             if (user[0].points >= inventory.upgrades.pointscap) {
                 await interaction.reply(`You are at your point cap. Buy an upgrade with /store`)
+                return
             }
 
             //User tried to wager more than they have
