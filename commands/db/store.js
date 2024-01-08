@@ -30,7 +30,7 @@ const storeString = `__Yes-Man Store -- Emporium of Junk! -- Purchase now!__
 - gambacap - Increase your gamba cap to the next tier
 - pointscap - Increase your points cap to the next tier 
 - Prestige - Wipe your points and upgrades and progress 1 prestige tier.
-- Renew One-Time - DOES NOT STACK renew a used one-time. - 999,999,999,999,999,999,999p
+- Renew One-Time - DOES NOT STACK renew a used one-time.
 
 **Please take care to spell an item to purchase exactly as it appears in it's listing!*
 `
@@ -76,20 +76,20 @@ module.exports = {
                         
                         inventory.upgrades.pointscap += 1
                         await user.update({points: await user.points - store[`gambacap ${inventory.upgrades.gambacap + 1}`]})
-                        await user.update({ inventory: await inventory})
+                        await user.update({ inventory: await inventory}).then(interaction.reply(`Gambacap upgraded to ${inventory.upgrades.gambacap}`))
 
                     } else if (store[item] === 'pointscap') {
 
                         inventory.upgrades.pointscap += 1
                         await user.update({points: await user.points - store[`pointscap ${inventory.upgrades.pointscap + 1}`]})
-                        await user.update({ inventory: inventory})
+                        await user.update({ inventory: inventory}).then(interaction.reply(`points cap upgraded to ${inventory.upgrades.pointscap}`))
 
                     } else if (store[item] === 'prestige') {
 
                         inventory.upgrades.pointscap = 0
                         inventory.upgrades.gambacap = 0
                         await user.update({points: await user.points - store[item]})
-                        await user.update({ inventory: inventory})
+                        await user.update({ inventory: inventory}).then(interaction.reply(`Prestige increased!`))
 
                     }
                 }
