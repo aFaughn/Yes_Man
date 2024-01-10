@@ -1,7 +1,13 @@
 const db = require(`../index`);
 const {Model, DataTypes} = require('sequelize');
 
-const defaultInventory = { items: []}
+const defaultInventory = { 
+    items: [],
+    upgrades: {
+        pointscap: 0,
+        gambacap: 0,
+    }
+}
 
 class User extends Model {
     static associate() {

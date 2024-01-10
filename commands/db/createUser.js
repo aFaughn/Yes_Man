@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, Message, InteractionCollector } = require("discord.js");
+const { config } = require('../../package.json')
 
 const {User} = require('../../database/models')
 
@@ -32,19 +33,31 @@ module.exports = {
 				await interaction.reply('User already exists.')
 			}
 		} else {
-			// Check if user already exists
-			const user = await User.findAll({
-				where: {
-					username: args
-				}
-			})
-			if (!user[0]) {
-				const newUser = await User.create({
-					username: args
+
+			// Check if user is a developer / Server Owner
+			if (!interaction.user.username in config.serverOwners) {
+
+				interaction.reply('[403] Unauthorized')
+
+			} else {
+
+				// Check if user already exists
+				const user = await User.findAll({
+					where: {
+						username: args
+					}
 				})
-				await interaction.reply(`Created a new user with username: ${args}`)
-			} if (user[0]) {
-				await interaction.reply('User already exists.')
+				if (!user[0]) {
+
+					const newUser = await User.create({
+						username: args
+					})
+					await interaction.reply(`Created a new user with username: ${args}`)
+
+				} if (user[0]) {
+					
+					await interaction.reply('User already exists.')
+				}
 			}
 		}
 	},

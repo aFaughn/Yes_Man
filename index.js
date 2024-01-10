@@ -20,6 +20,7 @@ deployCommands(dir)
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds, 
+        GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
         GatewayIntentBits.DirectMessages
@@ -69,6 +70,8 @@ async function authDB() {
   }
 }
 authDB();
+
+
 
 //Use node:fs to grab all events from events folder
 const eventsPath = path.join(__dirname, 'events');
