@@ -9,7 +9,7 @@ module.exports = {
             .setRequired(false)
         ),
 	async execute(interaction) {
-        let sides = await interaction.options.getString('die_type')
+        let sides = await interaction.options.getInteger('die_type')
         try {
             if (sides === null) {
                 const outcome = Math.floor(Math.random() * 20)
