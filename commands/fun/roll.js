@@ -16,7 +16,7 @@ module.exports = {
                 await interaction.reply(`${outcome}`)
             } else {
                 const outcome = Math.floor(Math.random() * sides)
-                await interaction.reply(`${outcome}, ${sides}`)
+                await interaction.reply(`${outcome}`)
             }
         } catch (e) {
             interaction.reply(`Something went wrong. Error: ${e}`)
