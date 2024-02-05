@@ -3,22 +3,23 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('roll')
 		.setDescription('Roll a dice. Defaults to a 20 sided die.')
-        .addIntegerOption(option => {
-            option.setName('Die Type')
+        .addIntegerOption(option =>
+            option.setName('die_type')
             .setDescription('Specify how many sides the die rolled should have')
             .setRequired(false)
-        }),
+        ),
 	async execute(interaction) {
+        let sides = await interaction.options.getString('die_type')
         try {
-            if (interaction.option.getInteger('Die Type') === undefined) {
+            if (sides === undefined) {
                 const outcome = Math.floor(Math.random() * 20)
-                interaction.reply(outcome)
+                await interaction.reply(`${outcome}`)
             } else {
-                const outcome = Math.floor(Math.random() * interaction.option.getInteger(`Die Type`))
-                interaction.reply(outcome)
+                const outcome = Math.floor(Math.random() * sides)
+                await interaction.reply(`${outcome}`)
             }
         } catch (e) {
-            interaction.reply(`Something went wrong. Error: ${e}`)
+            interaction.reply(`Something went wrong. Error: ${e}, sides: ${sides}`)
         }
 	},
 };
