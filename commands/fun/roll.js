@@ -11,15 +11,15 @@ module.exports = {
 	async execute(interaction) {
         let sides = await interaction.options.getString('die_type')
         try {
-            if (sides === undefined) {
+            if (sides === null) {
                 const outcome = Math.floor(Math.random() * 20)
                 await interaction.reply(`${outcome}`)
             } else {
                 const outcome = Math.floor(Math.random() * sides)
-                await interaction.reply(`${outcome}`)
+                await interaction.reply(`${outcome}, ${sides}`)
             }
         } catch (e) {
-            interaction.reply(`Something went wrong. Error: ${e}, sides: ${sides}`)
+            interaction.reply(`Something went wrong. Error: ${e}`)
         }
 	},
 };
