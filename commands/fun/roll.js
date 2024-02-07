@@ -30,11 +30,11 @@ module.exports = {
                 let results = []
                 for (let i = 0; i < rolls; i++) {
                     let roll = Math.floor(Math.random() * sides)
-                    if (roll === 0) roll = 1
                     results.push(roll)
                 }
                 let response = ''
                 results.forEach(res => {
+                    if (res === 0) res = 1
                     response += `[ ${res} ] `
                 })
                 await interaction.reply(response)
