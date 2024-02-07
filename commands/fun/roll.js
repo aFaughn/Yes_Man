@@ -21,7 +21,8 @@ module.exports = {
         try {
             if (rolls === 1) {
 
-                const outcome = Math.floor(Math.random() * sides)
+                const outcome = Math.floor(Math.random() * sides)]
+                if (outcome === 0) outcome = 1
                 await interaction.reply(`${outcome}`)
 
             } else if (rolls > 1) {
@@ -29,6 +30,7 @@ module.exports = {
                 let results = []
                 for (let i = 0; i < rolls; i++) {
                     let roll = Math.floor(Math.random() * sides)
+                    if (roll === 0) roll = 1
                     results.push(roll)
                 }
                 let response = ''
