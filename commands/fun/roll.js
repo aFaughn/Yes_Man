@@ -10,7 +10,7 @@ module.exports = {
         )
         .addIntegerOption(option => 
             option.setName('die_amount')
-            .setDescription('Specify the amount of dice to roll')
+            .setDescription('Specify the amount of dice to roll. Capped at 15')
             .setRequired(false)
         ),
 	async execute(interaction) {
@@ -18,10 +18,11 @@ module.exports = {
         let rolls = await interaction.options.getInteger('die_amount')
         if (rolls === null) rolls = 1;
         if (sides === null) sides = 20;
+        if (rolls > 15) rolls = 15
         try {
             if (rolls === 1) {
 
-                const outcome = Math.floor(Math.random() * sides)]
+                const outcome = Math.floor(Math.random() * sides)
                 if (outcome === 0) outcome = 1
                 await interaction.reply(`${outcome}`)
 
