@@ -34,7 +34,7 @@ module.exports = {
                 }
                 let response = ''
                 results.forEach(res => {
-                    response.push(`[ ${res} ] `)
+                    response += `[ ${res} ] `
                 })
                 await interaction.reply(response)
             }
