@@ -35,17 +35,17 @@ module.exports = {
                 for (let i = 0; i < user.length; i++) {
                     switch (user[i]) {
                         case 1:
-                            user[i] = 'Ace';
                             total += 11
+                            user[i] = 'Ace';
                         case 11:
+                            total += 10
                             user[i] = 'Jack';
-                            total += 10
                         case 12:
+                            total += 10
                             user[i] = 'Queen';
-                            total += 10
                         case 13:
-                            user[i] = 'King';
                             total += 10
+                            user[i] = 'King';
                         default:
                             total += user[i]
                     }
