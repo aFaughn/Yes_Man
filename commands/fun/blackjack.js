@@ -79,9 +79,35 @@ module.exports = {
 	async execute(interaction) {
         const { client } = interaction
 
+        // While we could make a giant array that resembles a 6-Deck shoe,
+        // it seems more practical to assign % values to cards and just 
+        // let RNG decide.
+
+        /*
+            BlackJack Gamestate breakdown:
+            0 - A game has yet to start and cards need to be dealt.
+            1 - The first cards have been dealt, meaning the player has an opportunity to double down if they like
+            2 - The Player has chosen to 'hit' a card and may no longer double down.
+            3 - The Player has decided to 'stay' and the dealer must now draw to either 16 or higher than the player hand.
+
+            Once points have been awarded or taken, the game state should ALWAYS be set to 0.
+        */
+        
+
         //Grab user
         let user = await User.findOne({where: {username: interaction.user.username}})
 
-        
+        // Start a game of blackjack
+        if (await user.blackjack.gameState === 0) {
+            const drawCard = () => Math.floor(Math.random() * 52)
+
+            // Draw user hand
+            await user.blackjack.hands.user.push(drawCard)
+            await user.blackjack.hands.user.push(drawCard)
+
+            // Draw dealer hand
+            await user.blackjack.hands.dealer.push(drawCard)
+            await user.blackjack.hands.dealer.push(drawCard)
+        }
 	},
 };
