@@ -1,4 +1,4 @@
-const {SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle} = require('discord.js');
+const {SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ActionRow} = require('discord.js');
 const { User } = require("../../database/models");
 
 module.exports = {
@@ -29,9 +29,9 @@ module.exports = {
         // Builds a string reply that will make sense to the user.
             const replyBuilder = (user, dealer, gamestate) => {
                 let reply = 'If you see this something fucked up.'
-            
+
                 let total = 0;
-            
+
                 for (let i = 0; i < user.length; i++) {
                     switch (user[i]) {
                         case 1:
@@ -50,7 +50,7 @@ module.exports = {
                             total += user[i]
                     }
                 }
-            
+
                 for (let i = 0; i < dealer.length; i++) {
                     switch (dealer[i]) {
                         case 1:
@@ -63,7 +63,7 @@ module.exports = {
                             dealer[i] = 'King';
                     }
                 }
-            
+
                 if (gamestate === 1) {
                     reply = ` \`\`\`Wager: ${interaction.options.getInteger('wager')} points. \nDealer is showing: ${dealer[1]} \nYou are holding: ${user[0]}, ${user[1]} \nTotal: ${total}\`\`\``
                     return reply
@@ -104,14 +104,18 @@ module.exports = {
             const blackjackUserStay = new ButtonBuilder()
                 .setCustomId('blackjackUserStay')
                 .setLabel('Stay')
-                .setStyle(ButtonStyle.Danger)
+                .setStyle(ButtonStyle.Secondary)
                 .setEmoji('✋')
             
             // Button to double down
+            // TODO implement double down
             const blackjackUserDoubleDown = new ButtonBuilder()
                 .setCustomId('blackjackUserDoubleDown')
                 .setLabel('Double Down')
                 .setStyle(ButtonStyle.Secondary)
+
+            const row = new ActionRowBuilder()
+                .addComponents(blackjackUserHit, blackjackUserStay)
 
         // Start a game of blackjack
 
@@ -134,7 +138,10 @@ module.exports = {
                 blackjack.gameState = 1
                 blackjack.wager = interaction.options.getInteger('wager')
                 await user.update({blackjack: JSON.stringify(blackjack)})
-                interaction.reply(replyBuilder(blackjack.hands.user, blackjack.hands.dealer, blackjack.gameState))
+                await interaction.reply({
+                    content: replyBuilder(blackjack.hands.user, blackjack.hands.dealer, blackjack.gameState),
+                    components: [row]
+                })
             } else if (blackjack.gameState === 1) {
                 await interaction.reply('You currently have a blackjack game in progress. Either finish it or pass -1 as your wager to reset your game.')
             }
