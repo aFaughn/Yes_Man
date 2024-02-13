@@ -27,94 +27,117 @@ module.exports = {
         */
         
         // Builds a string reply that will make sense to the user.
-        const replyBuilder = (user, dealer, gamestate) => {
-            let reply = 'If you see this something fucked up.'
-
-            let total = 0;
-
-            for (let i = 0; i < user.length; i++) {
-                switch (user[i]) {
-                    case 1:
-                        user[i] = 'Ace';
-                        total += 11
-                    case 11:
-                        user[i] = 'Jack';
-                        total += 10
-                    case 12:
-                        user[i] = 'Queen';
-                        total += 10
-                    case 13:
-                        user[i] = 'King';
-                        total += 10
-                    default:
-                        total += user[i]
+            const replyBuilder = (user, dealer, gamestate) => {
+                let reply = 'If you see this something fucked up.'
+            
+                let total = 0;
+            
+                for (let i = 0; i < user.length; i++) {
+                    switch (user[i]) {
+                        case 1:
+                            user[i] = 'Ace';
+                            total += 11
+                        case 11:
+                            user[i] = 'Jack';
+                            total += 10
+                        case 12:
+                            user[i] = 'Queen';
+                            total += 10
+                        case 13:
+                            user[i] = 'King';
+                            total += 10
+                        default:
+                            total += user[i]
+                    }
+                }
+            
+                for (let i = 0; i < dealer.length; i++) {
+                    switch (dealer[i]) {
+                        case 1:
+                            dealer[i] = 'Ace';
+                        case 11:
+                            dealer[i] = 'Jack';
+                        case 12:
+                            dealer[i] = 'Queen';
+                        case 13:
+                            dealer[i] = 'King';
+                    }
+                }
+            
+                if (gamestate === 1) {
+                    reply = ` \`\`\`Wager: ${interaction.options.getInteger('wager')} points. \nDealer is showing: ${dealer[1]} \nYou are holding: ${user[0]}, ${user[1]} \nTotal: ${total}\`\`\``
+                    return reply
+                } else {
+                    return 'Something went wrong.'
                 }
             }
-
-            for (let i = 0; i < dealer.length; i++) {
-                switch (dealer[i]) {
-                    case 1:
-                        dealer[i] = 'Ace';
-                    case 11:
-                        dealer[i] = 'Jack';
-                    case 12:
-                        dealer[i] = 'Queen';
-                    case 13:
-                        dealer[i] = 'King';
-                }
-            }
-
-            if (gamestate === 1) {
-                reply = ` \`\`\`Wager: ${interaction.options.getInteger('wager')} points. \nDealer is showing: ${dealer[1]} \nYou are holding: ${user[0]}, ${user[1]} \nTotal: ${total}\`\`\``
-                return reply
-            } else {
-                return 'Something went wrong.'
-            }
-        }
 
 
 
         //Grab user
-        let user = await User.findOne({where: {username: interaction.user.username}})
+            let user = await User.findOne({where: {username: interaction.user.username}})
 
         //Parse the blackjack object of user
-        let blackjack = JSON.parse(user.blackjack)
+            let blackjack = JSON.parse(user.blackjack)
 
         //Check if Wager is reset code
-        if (interaction.options.getInteger('wager') === -1) {
-            blackjack.gameState = 0;
-            blackjack.wager = 0;
-            blackjack.hands.dealer = [];
-            blackjack.hands.user = [];
+            if (interaction.options.getInteger('wager') === -1) {
+                blackjack.gameState = 0;
+                blackjack.wager = 0;
+                blackjack.hands.dealer = [];
+                blackjack.hands.user = [];
 
-            await user.update({blackjack: JSON.stringify(blackjack)})
-            await interaction.reply('Your instance of blackjack has been reset!')
-        }
-
-
-        // Start a game of blackjack
-        if (await blackjack.gameState === 0 && interaction.options.getInteger('wager') !== -1) {
-            // Draw a card from the shoe
-            const drawCard = () => {
-                let res = (Math.floor(Math.random() * 13))
-                if (res === 0) res += 1;
-                return res;
+                await user.update({blackjack: JSON.stringify(blackjack)})
+                await interaction.reply('Your instance of blackjack has been reset!')
             }
 
-            // Draw user hand
-            await blackjack.hands.user.push(drawCard())
-            await blackjack.hands.user.push(drawCard())
+        //Buttons
 
-            // Draw dealer hand
-            await blackjack.hands.dealer.push(drawCard())
-            await blackjack.hands.dealer.push(drawCard())
+            // Button to allow the user to hit
+            const blackjackUserHit = new ButtonBuilder()
+                .setCustomId('blackjackUserHit')
+                .setLabel('Hit')
+                .setStyle(ButtonStyle.Primary)
+                .setEmoji('☝')
+            
+            // Button to stay
+            const blackjackUserStay = new ButtonBuilder()
+                .setCustomId('blackjackUserStay')
+                .setLabel('Stay')
+                .setStyle(ButtonStyle.Danger)
+                .setEmoji('✋')
+            
+            // Button to double down
+            const blackjackUserDoubleDown = new ButtonBuilder()
+                .setCustomId('blackjackUserDoubleDown')
+                .setLabel('Double Down')
+                .setStyle(ButtonStyle.Secondary)
 
-            blackjack.gameState = 1
-            blackjack.wager = interaction.options.getInteger('wager')
-            await user.update({blackjack: JSON.stringify(blackjack)})
-            interaction.reply(replyBuilder(blackjack.hands.user, blackjack.hands.dealer, blackjack.gameState))
-        } else if (blackjack.gameState === 1) {
-            await interaction.reply('You currently have a blackjack game in progress. Either finish it or pass -1 as your wager to reset your game.')
-        }
+        // Start a game of blackjack
+
+            if (await blackjack.gameState === 0 && interaction.options.getInteger('wager') !== -1) {
+                // Draw a card from the shoe
+                const drawCard = () => {
+                    let res = (Math.floor(Math.random() * 13))
+                    if (res === 0) res += 1;
+                    return res;
+                }
+
+                // Draw user hand
+                await blackjack.hands.user.push(drawCard())
+                await blackjack.hands.user.push(drawCard())
+
+                // Draw dealer hand
+                await blackjack.hands.dealer.push(drawCard())
+                await blackjack.hands.dealer.push(drawCard())
+
+                blackjack.gameState = 1
+                blackjack.wager = interaction.options.getInteger('wager')
+                await user.update({blackjack: JSON.stringify(blackjack)})
+                interaction.reply(replyBuilder(blackjack.hands.user, blackjack.hands.dealer, blackjack.gameState))
+            } else if (blackjack.gameState === 1) {
+                await interaction.reply('You currently have a blackjack game in progress. Either finish it or pass -1 as your wager to reset your game.')
+            }
+        
 	},
 };
