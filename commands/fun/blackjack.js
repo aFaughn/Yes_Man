@@ -93,21 +93,78 @@ module.exports = {
             Once points have been awarded or taken, the game state should ALWAYS be set to 0.
         */
         
+        // Builds a string reply that will make sense to the user.
+        const replyBuilder = (user, dealer, gamestate) => {
+            let reply = 'If you see this something fucked up.'
+
+            dealer.forEach(card => {
+               switch (card) {
+                case 11: {
+                    card = 'Jack'
+                }
+                case 12: {
+                    card = 'Queen'
+                }
+                case 13: {
+                    card = 'King'
+                }
+                case 14: {
+                    card = 'Ace'
+                }
+               }
+            })
+
+            user.forEach(card => {
+                switch (card) {
+                    case 11: {
+                        card = 'Jack'
+                    }
+                    case 12: {
+                        card = 'Queen'
+                    }
+                    case 13: {
+                        card = 'King'
+                    }
+                    case 14: {
+                        card = 'Ace'
+                    }
+                   }
+            })
+
+            if (gamestate === 1) {
+                reply = ` \`\`\` Dealer is showing a ${dealer[0]}\`\`\` \n You are holding: ${user[0]}, ${user[1]} `
+                return reply
+            } else {
+                return 'We fucked up'
+            }
+        }
+
+
 
         //Grab user
         let user = await User.findOne({where: {username: interaction.user.username}})
+        //Parse the blackjack object of user
+        let blackjack = JSON.parse(user.blackjack)
+
+
 
         // Start a game of blackjack
-        if (await user.blackjack.gameState === 0) {
-            const drawCard = () => Math.floor(Math.random() * 52)
+        if (await blackjack.gameState === 0) {
+            // Draw a card from the shoe
+            const drawCard = () => (Math.floor(Math.random() * 14))
 
             // Draw user hand
-            await user.blackjack.hands.user.push(drawCard)
-            await user.blackjack.hands.user.push(drawCard)
+            await blackjack.hands.user.push(drawCard())
+            await blackjack.hands.user.push(drawCard())
 
             // Draw dealer hand
-            await user.blackjack.hands.dealer.push(drawCard)
-            await user.blackjack.hands.dealer.push(drawCard)
+            await blackjack.hands.dealer.push(drawCard())
+            await blackjack.hands.dealer.push(drawCard())
+
+            blackjack.gameState = 1
+            interaction.reply(replyBuilder(blackjack.hands.user, blackjack.hands.dealer, blackjack.gameState))
         }
+
+        // await interaction.reply(`${await blackjack.gameState}`)
 	},
 };
