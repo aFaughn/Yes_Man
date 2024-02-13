@@ -7,16 +7,16 @@ module.exports = {
     data: new SlashCommandBuilder()
     .setName('gamba')
     .setDescription('Gamble imaginary points!')
-    .addStringOption(option => 
+    .addIntegerOption(option => 
         option.setName('wager')
-        .setDescription('How many points you\'re willing to risk!')
+        .setDescription('How many points you\'re willing to risk! (Setting wager to 0 will wager ALL YOUR POINTS!)')
         .setRequired(true)),
         async execute(interaction) {
             // Grab user who ran the command
             const user = await User.findAll({where: {username: interaction.user.username}})
             
             // Grab user's inventory
-            const inventory = JSON.parse(user[0].inventory)
+            // const inventory = JSON.parse(user[0].inventory)
 
             //Err handling -- No user
             if (!user[0]) {
@@ -24,31 +24,31 @@ module.exports = {
             }
             
             // Grab wager from args
-            let wager = interaction.options.getString('wager').slice(0, interaction.options.getString('wager').length + 1).toLowerCase();
-            if (wager !== 'max' || typeof wager !== 'string') {
-                wager = parseInt(interaction.options.getString('wager'))
+            let wager = interaction.options.getInteger('wager')
+            if (wager === 0) {
+                wager = await user[0].points
             }
 
             //Define what our wager is exactly
-            if (wager === 'max') {
-                 if (inventory.upgrades.gambacap === 0) {
-                    wager = 50
-                 } else {
-                    wager = (inventory.upgrades.gambacap * 50) * inventory.upgrades.gambacap
-                 }
-            }
+            // if (wager === 'max') {
+            //      if (inventory.upgrades.gambacap === 0) {
+            //         wager = 50
+            //      } else {
+            //         wager = (inventory.upgrades.gambacap * 50) * inventory.upgrades.gambacap
+            //      }
+            // }
 
             //User is at their current point cap
-            if (user[0].points >= inventory.upgrades.pointscap) {
-                await interaction.reply(`You are at your point cap. Buy an upgrade with /store`)
-                return
-            }
+            // if (user[0].points >= inventory.upgrades.pointscap) {
+            //     await interaction.reply(`You are at your point cap. Buy an upgrade with /store`)
+            //     return
+            // }
 
             //User tried to wager more than they have
             if (user[0].points < wager) { await interaction.reply('⚠ Cannot wager more than you have!')}
 
             //Wager is not a number
-            else if (typeof wager !== 'number' && wager !== 'max') {await interaction.reply(`⚠ Wager is not an integer. Your wager: "${wager}"`)}
+            // else if (typeof wager !== 'number' && wager !== 'max') {await interaction.reply(`⚠ Wager is not an integer. Your wager: "${wager}"`)}
 
             //User has no points
             else if (user[0].points <= 0 || wager === 0) {
