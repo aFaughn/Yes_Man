@@ -1,70 +1,3 @@
-/*
-
-Outline:
-0. A player calls /blackjack with a 'wager' argument.
-1. An instance of blackjack should be made.
-2. 
-3. A deck of cards is generated (13 cards / 4 suites)
-4. The dealer and the player are dealt 2 random cards
-    4a. In order to prevent duplicate cards from the same suit from appearing, any indice selected from the cards array should be blacklisted
-    4b. If the card selecter rolls a duplicate card, it must roll again until an undealt card is given.
-5. if the dealer / player has reached 21, the game ends and the house/player is declared winner.
-6. If a player draws a card, that card should be added to their 'hand' and their current hand updated and printed back to them.
-    6a. If the player still has only 2 cards, they may 'double down' and double their wager (assuming they have the money) and are forced to draw once, and then stay.
-7. If the player chooses to 'stay':
-    7a. The house must continue to draw to 16, if the house goes over, they bust and the game ends.
-    7b. If the house draws an amount higher than the player, and lower than or equal to 21, they win and the player loses their wager.
-
-*/
-
-
-/*
-Psuedo:
-deck = [hearts,spades,diamonds,clubs]
-
-func grabRandomCard = grab a random card
-
-if userisnotplayingBlackJack
-UserWhoRanThisCommand.isPlayingBlackJack =  true
-UserWhoRanThisCommand.wager =  wager
-
-UWRTC.houseHand = {2 new cards}
-UWRTC.hand = {2 new cards}
-UWRTC.wager = wager
-
-if UWRTC.houseHand === 21 || UWRTC.hand === 21; Game over
-
-interactionreply = Your hand is ____ the house is showing one card: card at indice 0
-
-if argument is 'double down'
-draw another card
-if bust then lose
-if lower than 21 draw house to 16+
-compare
-determine winner and call winner function
-
-if argument is 'draw'
-deal the player an additonional card
-return current hand
-
-if argument is 'stay'
-draw house to 16+
-determine winner
-
-func determineWinner(playerHand, HouseHand) {
-    compare hands()
-    if winner house:
-    remove player points
-    tell player they lose. House had (amount) (hand)
-    terminate blackjack instance
-    clean blackjack vars
-    if winner player:
-    award player points double what they wagered, or 3:2 in the event of a blackjack
-    tell player they won
-    terminate blackjack instance
-    clean blackjack vars
-}
-*/
 const {SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle} = require('discord.js');
 const { User } = require("../../database/models");
 
@@ -74,7 +7,7 @@ module.exports = {
     .setDescription('Initializes a game of blackjack')
     .addIntegerOption(option => 
         option.setName('wager')
-            .setDescription('Your wager in points.')
+            .setDescription('Your wager in points. -1 will reset your game!')
             .setRequired(true)),
 	async execute(interaction) {
         const { client } = interaction
@@ -97,45 +30,45 @@ module.exports = {
         const replyBuilder = (user, dealer, gamestate) => {
             let reply = 'If you see this something fucked up.'
 
-            dealer.forEach(card => {
-               switch (card) {
-                case 11: {
-                    card = 'Jack'
-                }
-                case 12: {
-                    card = 'Queen'
-                }
-                case 13: {
-                    card = 'King'
-                }
-                case 14: {
-                    card = 'Ace'
-                }
-               }
-            })
+            let total = 0;
 
-            user.forEach(card => {
-                switch (card) {
-                    case 11: {
-                        card = 'Jack'
-                    }
-                    case 12: {
-                        card = 'Queen'
-                    }
-                    case 13: {
-                        card = 'King'
-                    }
-                    case 14: {
-                        card = 'Ace'
-                    }
-                   }
-            })
+            for (let i = 0; i < user.length; i++) {
+                switch (user[i]) {
+                    case 1:
+                        user[i] = 'Ace';
+                        total += 11
+                    case 11:
+                        user[i] = 'Jack';
+                        total += 10
+                    case 12:
+                        user[i] = 'Queen';
+                        total += 10
+                    case 13:
+                        user[i] = 'King';
+                        total += 10
+                    default:
+                        total += user[i]
+                }
+            }
+
+            for (let i = 0; i < dealer.length; i++) {
+                switch (dealer[i]) {
+                    case 1:
+                        dealer[i] = 'Ace';
+                    case 11:
+                        dealer[i] = 'Jack';
+                    case 12:
+                        dealer[i] = 'Queen';
+                    case 13:
+                        dealer[i] = 'King';
+                }
+            }
 
             if (gamestate === 1) {
-                reply = ` \`\`\` Dealer is showing a ${dealer[0]}\`\`\` \n You are holding: ${user[0]}, ${user[1]} `
+                reply = ` \`\`\`Wager: ${interaction.options.getInteger('wager')} points. \nDealer is showing: ${dealer[1]} \nYou are holding: ${user[0]}, ${user[1]} \nTotal: ${total}\`\`\``
                 return reply
             } else {
-                return 'We fucked up'
+                return 'Something went wrong.'
             }
         }
 
@@ -143,15 +76,30 @@ module.exports = {
 
         //Grab user
         let user = await User.findOne({where: {username: interaction.user.username}})
+
         //Parse the blackjack object of user
         let blackjack = JSON.parse(user.blackjack)
 
+        //Check if Wager is reset code
+        if (interaction.options.getInteger('wager') === -1) {
+            blackjack.gameState = 0;
+            blackjack.wager = 0;
+            blackjack.hands.dealer = [];
+            blackjack.hands.user = [];
+
+            await user.update({blackjack: JSON.stringify(blackjack)})
+            await interaction.reply('Your instance of blackjack has been reset!')
+        }
 
 
         // Start a game of blackjack
-        if (await blackjack.gameState === 0) {
+        if (await blackjack.gameState === 0 && interaction.options.getInteger('wager') !== -1) {
             // Draw a card from the shoe
-            const drawCard = () => (Math.floor(Math.random() * 14))
+            const drawCard = () => {
+                let res = (Math.floor(Math.random() * 13))
+                if (res === 0) res += 1;
+                return res;
+            }
 
             // Draw user hand
             await blackjack.hands.user.push(drawCard())
@@ -162,9 +110,11 @@ module.exports = {
             await blackjack.hands.dealer.push(drawCard())
 
             blackjack.gameState = 1
+            blackjack.wager = interaction.options.getInteger('wager')
+            await user.update({blackjack: JSON.stringify(blackjack)})
             interaction.reply(replyBuilder(blackjack.hands.user, blackjack.hands.dealer, blackjack.gameState))
+        } else if (blackjack.gameState === 1) {
+            await interaction.reply('You currently have a blackjack game in progress. Either finish it or pass -1 as your wager to reset your game.')
         }
-
-        // await interaction.reply(`${await blackjack.gameState}`)
 	},
 };
