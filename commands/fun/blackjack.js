@@ -17,6 +17,8 @@ Outline:
 
 */
 
+const { User } = require("../../database/models");
+
 /*
 Psuedo:
 deck = [hearts,spades,diamonds,clubs]
@@ -67,9 +69,10 @@ func determineWinner(playerHand, HouseHand) {
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('schizo_meltdown')
-		.setDescription('Grabs a ccrouse14 quote at random.'),
+		.setName('blackjack')
+		.setDescription('Initializes a game of blackjack'),
 	async execute(interaction) {
-		await interaction.reply(quotes[Math.floor(Math.random() * quotes.length + 1)]);
+		let user = await User.findOne({where: {username: interaction.user.username}})
+        interaction.reply(`\`\`\`${user}\`\`\``)
 	},
 };
