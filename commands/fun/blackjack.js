@@ -17,7 +17,6 @@ Outline:
 
 */
 
-const { User } = require("../../database/models");
 
 /*
 Psuedo:
@@ -26,8 +25,8 @@ deck = [hearts,spades,diamonds,clubs]
 func grabRandomCard = grab a random card
 
 if userisnotplayingBlackJack
-    UserWhoRanThisCommand.isPlayingBlackJack =  true
-    UserWhoRanThisCommand.wager =  wager
+UserWhoRanThisCommand.isPlayingBlackJack =  true
+UserWhoRanThisCommand.wager =  wager
 
 UWRTC.houseHand = {2 new cards}
 UWRTC.hand = {2 new cards}
@@ -38,41 +37,51 @@ if UWRTC.houseHand === 21 || UWRTC.hand === 21; Game over
 interactionreply = Your hand is ____ the house is showing one card: card at indice 0
 
 if argument is 'double down'
-    draw another card
-    if bust then lose
-    if lower than 21 draw house to 16+
-    compare
-    determine winner and call winner function
+draw another card
+if bust then lose
+if lower than 21 draw house to 16+
+compare
+determine winner and call winner function
 
 if argument is 'draw'
-    deal the player an additonional card
-    return current hand
+deal the player an additonional card
+return current hand
 
 if argument is 'stay'
-    draw house to 16+
-    determine winner
+draw house to 16+
+determine winner
 
 func determineWinner(playerHand, HouseHand) {
     compare hands()
     if winner house:
-        remove player points
-        tell player they lose. House had (amount) (hand)
-        terminate blackjack instance
-        clean blackjack vars
+    remove player points
+    tell player they lose. House had (amount) (hand)
+    terminate blackjack instance
+    clean blackjack vars
     if winner player:
-        award player points double what they wagered, or 3:2 in the event of a blackjack
-        tell player they won
-        terminate blackjack instance
-        clean blackjack vars
+    award player points double what they wagered, or 3:2 in the event of a blackjack
+    tell player they won
+    terminate blackjack instance
+    clean blackjack vars
 }
 */
+const {SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle} = require('discord.js');
+const { User } = require("../../database/models");
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('blackjack')
-		.setDescription('Initializes a game of blackjack'),
+    data: new SlashCommandBuilder()
+    .setName('blackjack')
+    .setDescription('Initializes a game of blackjack')
+    .addIntegerOption(option => 
+        option.setName('wager')
+            .setDescription('Your wager in points.')
+            .setRequired(true)),
 	async execute(interaction) {
-		let user = await User.findOne({where: {username: interaction.user.username}})
-        interaction.reply(`\`\`\`${user}\`\`\``)
+        const { client } = interaction
+
+        //Grab user
+        let user = await User.findOne({where: {username: interaction.user.username}})
+
+        
 	},
 };

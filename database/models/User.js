@@ -9,6 +9,15 @@ const defaultInventory = {
     }
 }
 
+const defaultBlackjack = {
+    gameState: 0,
+    wager: 0,
+    hands: {
+        dealer: [],
+        user: [],
+    }
+}
+
 class User extends Model {
     static associate() {
 
@@ -40,6 +49,11 @@ User.init(
             type: DataTypes.STRING(9999),
             allowNull: true,
             defaultValue: JSON.stringify(defaultInventory)
+        },
+        blackjack: {
+            type: DataTypes.STRING(2000),
+            allowNull: true,
+            defaultValue: JSON.stringify(defaultBlackjack)
         }
     },
     {
