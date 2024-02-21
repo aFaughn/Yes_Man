@@ -152,18 +152,35 @@ module.exports = {
                 await blackjack.hands.dealer.push(drawCard())
                 await blackjack.hands.dealer.push(drawCard())
 
-                //Blackjack detection -- dealer
-                blackjack.hands.dealer.forEach(card => {
-                    
-                })
+                //Blackjack detection
+                let dealerBlackJack = false
+                let userBlackJack = false
+                for (let i = 0; i < blackjack.hands.dealer.length; i++) {
+                    if (blackjack.hands.dealer[i] > 10 && blackjack.hands.dealer[i + 1] === 1) dealerBlackJack = true;
+                    if (blackjack.hands.dealer[i] > 10 && blackjack.hands.dealer[i - 1] === 1) dealerBlackJack = true;
+                }
+                for (let i = 0; i < blackjack.hands.user.length; i++) {
+                    if (blackjack.hands.user[i] > 10 && blackjack.hands.user[i + 1] === 1) userBlackJack = true;
+                    if (blackjack.hands.user[i] > 10 && blackjack.hands.user[i - 1] === 1) userBlackJack = true;
+                }
 
-                blackjack.gameState = 1
-                blackjack.wager = interaction.options.getInteger('wager')
-                await user.update({blackjack: JSON.stringify(blackjack)})
-                await interaction.reply({
-                    content: replyBuilder(blackjack.hands.user, blackjack.hands.dealer, blackjack.gameState),
-                    components: [row]
-                })
+                if (dealerBlackJack) {
+                    await user.update({points: user.points - wager});
+                    interaction.reply(`Sorry! Dealer drew a blackjack, you lost ${wager}.`)
+                } else if (userBlackJack) {
+                    await user.update({points: user.points + (wager * 1.5)})
+                    interaction.reply(`Congratulations! You drew a blackjack! you earned ${wager * 1.5} points!`)
+                } else {
+                    blackjack.gameState = 1
+                    blackjack.wager = interaction.options.getInteger('wager')
+                    await user.update({blackjack: JSON.stringify(blackjack)})
+                    await interaction.reply({
+                        content: replyBuilder(blackjack.hands.user, blackjack.hands.dealer, blackjack.gameState),
+                        components: [row]
+                    })
+                }
+                
+            // A game of blackjack is ongoing
             } else if (blackjack.gameState === 1) {
                 await interaction.reply('You currently have a blackjack game in progress. Either finish it or pass -1 as your wager to reset your game.')
             }
