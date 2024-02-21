@@ -25,6 +25,14 @@ module.exports = {
 
             Once points have been awarded or taken, the game state should ALWAYS be set to 0.
         */
+        /*
+            Card value representations:
+             2-10: Standard numerical cards
+             1: Ace
+             11: Jack
+             12: Queen
+             13: King
+        */
         
         // Builds a string reply that will make sense to the user.
             const replyBuilder = (user, dealer, gamestate) => {
@@ -37,17 +45,22 @@ module.exports = {
                         case 1:
                             total += 11
                             user[i] = 'Ace';
+                            break;
                         case 11:
                             total += 10
                             user[i] = 'Jack';
+                            break;
                         case 12:
                             total += 10
                             user[i] = 'Queen';
+                            break;
                         case 13:
                             total += 10
                             user[i] = 'King';
+                            break;
                         default:
                             total += user[i]
+                            break;
                     }
                 }
 
@@ -55,12 +68,16 @@ module.exports = {
                     switch (dealer[i]) {
                         case 1:
                             dealer[i] = 'Ace';
+                            break;
                         case 11:
                             dealer[i] = 'Jack';
+                            break;
                         case 12:
                             dealer[i] = 'Queen';
+                            break;
                         case 13:
                             dealer[i] = 'King';
+                            break;
                     }
                 }
 
@@ -134,6 +151,11 @@ module.exports = {
                 // Draw dealer hand
                 await blackjack.hands.dealer.push(drawCard())
                 await blackjack.hands.dealer.push(drawCard())
+
+                //Blackjack detection -- dealer
+                blackjack.hands.dealer.forEach(card => {
+                    
+                })
 
                 blackjack.gameState = 1
                 blackjack.wager = interaction.options.getInteger('wager')
