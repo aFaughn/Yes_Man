@@ -4,6 +4,9 @@ let film;
 module.exports = {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
+		const { client } = interaction;
+
+		// Slash Command listeners
 		if (interaction.isChatInputCommand()) {
 			
 			const command = interaction.client.commands.get(interaction.commandName);
@@ -19,9 +22,19 @@ module.exports = {
 				console.error(`Error executing ${interaction.commandName}`);
 				console.error(error);
 			}
+
+		// Button listeners
 		} else if (interaction.isButton()) {
+			// BlackJack
+			if (interaction.customId === 'blackjackUserHit') {
+				console.log('User has hit!')
+			}
+
+			if (interaction.customId === 'blackjackUserStay') {
+				console.log('User Stayed!')
+			}
+			// Plex Requests
 			if (interaction.customId === 'markComplete') {
-				const { client } = interaction;
 
 				channelId = '1125153614441238621'
 				const channel = await client.channels.fetch(channelId)
