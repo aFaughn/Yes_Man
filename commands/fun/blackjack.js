@@ -88,7 +88,15 @@ module.exports = {
                     return 'Something went wrong.'
                 }
             }
-
+        
+        // Terminate a blackjack instance by passing in the blackjack object and user
+        async function resetGame (game, user) {
+            game.wager = 0
+            game.gamestate = 0
+            game.hands.dealer = []
+            game.hands.user = []
+            await user.update({blackjack: game.JSON()})
+        }
 
 
         //Grab user
@@ -99,12 +107,7 @@ module.exports = {
 
         //Check if Wager is reset code
             if (interaction.options.getInteger('wager') === -1) {
-                blackjack.gameState = 0;
-                blackjack.wager = 0;
-                blackjack.hands.dealer = [];
-                blackjack.hands.user = [];
-
-                await user.update({blackjack: JSON.stringify(blackjack)})
+                await resetGame(blackjack, user)
                 await interaction.reply('Your instance of blackjack has been reset!')
             }
 
@@ -155,6 +158,7 @@ module.exports = {
                 //Blackjack detection
                 let dealerBlackJack = false
                 let userBlackJack = false
+
                 for (let i = 0; i < blackjack.hands.dealer.length; i++) {
                     if (blackjack.hands.dealer[i] > 10 && blackjack.hands.dealer[i + 1] === 1) dealerBlackJack = true;
                     if (blackjack.hands.dealer[i] > 10 && blackjack.hands.dealer[i - 1] === 1) dealerBlackJack = true;
@@ -166,9 +170,11 @@ module.exports = {
 
                 if (dealerBlackJack) {
                     await user.update({points: user.points - wager});
+                    await resetGame(blackjack, user)
                     interaction.reply(`Sorry! Dealer drew a blackjack, you lost ${wager}.`)
                 } else if (userBlackJack) {
                     await user.update({points: user.points + (wager * 1.5)})
+                    await resetGame(blackjack, user)
                     interaction.reply(`Congratulations! You drew a blackjack! you earned ${wager * 1.5} points!`)
                 } else {
                     blackjack.gameState = 1
