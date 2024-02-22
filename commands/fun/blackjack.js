@@ -139,6 +139,7 @@ module.exports = {
 
         // Start a game of blackjack
 
+            // Check if a game is already going or if the user is trying to reset the game.
             if (await blackjack.gameState === 0 && interaction.options.getInteger('wager') !== -1) {
                 // Draw a card from the shoe
                 const drawCard = () => {
@@ -159,6 +160,7 @@ module.exports = {
                 let dealerBlackJack = false
                 let userBlackJack = false
 
+                // Check both the dealer and user hands for 1 Face card and 1 Ace
                 for (let i = 0; i < blackjack.hands.dealer.length; i++) {
                     if (blackjack.hands.dealer[i] > 10 && blackjack.hands.dealer[i + 1] === 1) dealerBlackJack = true;
                     if (blackjack.hands.dealer[i] > 10 && blackjack.hands.dealer[i - 1] === 1) dealerBlackJack = true;
@@ -168,15 +170,28 @@ module.exports = {
                     if (blackjack.hands.user[i] > 10 && blackjack.hands.user[i - 1] === 1) userBlackJack = true;
                 }
 
-                if (dealerBlackJack) {
+                // First check for double BlackJack
+                if (dealerBlackJack && userBlackJack) {
+                    await resetGame(blackjack, user)
+                    await interaction.reply(`Both you, and The Dealer drew a blackjack and broke even.`)
+                } 
+
+                // Then the dealer
+                else if (dealerBlackJack) {
                     await user.update({points: user.points - wager});
                     await resetGame(blackjack, user)
                     interaction.reply(`Sorry! Dealer drew a blackjack, you lost ${wager}.`)
-                } else if (userBlackJack) {
+                }
+
+                // Then the user
+                else if (userBlackJack) {
                     await user.update({points: user.points + (wager * 1.5)})
                     await resetGame(blackjack, user)
                     interaction.reply(`Congratulations! You drew a blackjack! you earned ${wager * 1.5} points!`)
-                } else {
+                }
+
+                // Neither have BlackJack so we continue the game.
+                else {
                     blackjack.gameState = 1
                     blackjack.wager = interaction.options.getInteger('wager')
                     await user.update({blackjack: JSON.stringify(blackjack)})
