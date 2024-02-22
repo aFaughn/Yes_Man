@@ -19,6 +19,6 @@ module.exports = {
 			await interaction.reply(`Quenton has made a "Your Mom" joke 1 time(s)!`)
 		}
 		await counter[0].update({ value: counter[0].value + 1})
-		interaction.reply(`Quenton has made a "Your Mom" joke ${counter[0].value} times!`)
+		await interaction.reply(`Quenton has made a "Your Mom" joke ${counter[0].value} times!`)
 	},
 };

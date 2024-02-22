@@ -19,7 +19,6 @@ module.exports = {
 			await interaction.reply(`Allen has flaked ${counter[0].value} times!`)
 		}
 		await counter[0].update({ value: counter[0].value + 1})
-		.then(interaction.reply(`Allen has flaked ${counter[0].value} times!`)
-		)
+		await interaction.reply(`Allen has flaked ${counter[0].value} times!`)
 	},
 };
