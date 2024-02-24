@@ -1,3 +1,5 @@
+#### Command is scrapped but keeping deprecated code for possible re-integration at a later date. ####
+
 const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
 const { User } = require('../../database/models')
 

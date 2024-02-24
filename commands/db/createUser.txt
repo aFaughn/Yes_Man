@@ -1,3 +1,5 @@
+### Disabled since most commands now create a user in the DB upon initial interaction ###
+
 const { SlashCommandBuilder, Message, InteractionCollector } = require("discord.js");
 const { config } = require('../../package.json')
 
