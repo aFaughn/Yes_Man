@@ -1,4 +1,5 @@
 const { Events } = require('discord.js');
+const { User } = require("../database/models");
 let film;
 
 module.exports = {
@@ -23,17 +24,23 @@ module.exports = {
 				console.error(error);
 			}
 
-		// Button listeners
+		// Button listeners--------------------
 		} else if (interaction.isButton()) {
-			// BlackJack
+
+			// BlackJack ------------
 			if (interaction.customId === 'blackjackUserHit') {
 				console.log('User has hit!')
+				const newCard = Math.floor(math.random() * 13)
+				let user = await User.findOne({where: {username: interaction.user.username}});
+				let blackjack = JSON.parse(user.blackjack)
+				
 			}
 
 			if (interaction.customId === 'blackjackUserStay') {
 				console.log('User Stayed!')
 			}
-			// Plex Requests
+
+			// Plex Requests ---------
 			if (interaction.customId === 'markComplete') {
 
 				channelId = '1125153614441238621'
