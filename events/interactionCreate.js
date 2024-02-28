@@ -30,10 +30,13 @@ module.exports = {
 			// BlackJack ------------
 			if (interaction.customId === 'blackjackUserHit') {
 				console.log('User has hit!')
-				const newCard = Math.floor(math.random() * 13)
+				const newCard = Math.floor(Math.random() * 13)
 				let user = await User.findOne({where: {username: interaction.user.username}});
 				let blackjack = JSON.parse(user.blackjack)
-				
+				usertotal = blackjack.hands.user.reduce((accum, cur) => accum += cur)
+				if (newCard === 1 && usertotal + 11 <= 21) {
+					blackjack.hands.user.push(1)
+				}
 			}
 
 			if (interaction.customId === 'blackjackUserStay') {
