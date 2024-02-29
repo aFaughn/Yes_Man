@@ -33,9 +33,26 @@ module.exports = {
 				const newCard = Math.floor(Math.random() * 13)
 				let user = await User.findOne({where: {username: interaction.user.username}});
 				let blackjack = JSON.parse(user.blackjack)
+				blackjack.hands.user.push(newCard)
+				await user.update({blackjack: JSON.stringify(blackjack)})
+				console.log(interaction)
 				usertotal = blackjack.hands.user.reduce((accum, cur) => accum += cur)
-				
-
+				if (usertotal > 21) {
+					const game = {
+						wager: 0,
+						gameState: 0,
+						hands: {
+							dealer: [],
+							user: [],
+						}
+					}
+						await user.update({blackjack: JSON.stringify(game)})
+						await interaction.message.edit({ content: `\`Sorry, you went over 21 and busted (${usertotal})! Your wager has been deducted and your game has been reset.\``, components: []})
+						await interaction.deferUpdate()
+				} else {
+					await interaction.message.edit(` \`\`\`Dealer is showing: ${blackjack.hands.dealer[1]} \nYou are holding: ${blackjack.hands.user.toString(',')} \nTotal: ${usertotal}\`\`\``)
+					await interaction.deferUpdate()
+				}
 			}
 
 			if (interaction.customId === 'blackjackUserStay') {

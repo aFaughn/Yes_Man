@@ -92,10 +92,10 @@ module.exports = {
         // Terminate a blackjack instance by passing in the blackjack object and user
         async function resetGame (game, user) {
             game.wager = 0
-            game.gamestate = 0
+            game.gameState = 0
             game.hands.dealer = []
             game.hands.user = []
-            await user.update({blackjack: game.JSON()})
+            await user.update({blackjack: JSON.stringify(game)})
         }
 
 
@@ -108,6 +108,7 @@ module.exports = {
         //Check if Wager is reset code
             if (interaction.options.getInteger('wager') === -1) {
                 await resetGame(blackjack, user)
+                console.log('Reset code recieved!')
                 await interaction.reply('Your instance of blackjack has been reset!')
             }
 
