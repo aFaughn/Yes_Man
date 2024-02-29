@@ -1,5 +1,6 @@
 const { Events } = require('discord.js');
 const { User } = require("../database/models");
+const blackjack = require('../commands/fun/blackjack');
 let film;
 
 module.exports = {
@@ -29,13 +30,11 @@ module.exports = {
 
 			// BlackJack ------------
 			if (interaction.customId === 'blackjackUserHit') {
-				console.log('User has hit!')
 				const newCard = Math.floor(Math.random() * 13)
 				let user = await User.findOne({where: {username: interaction.user.username}});
 				let blackjack = JSON.parse(user.blackjack)
 				blackjack.hands.user.push(newCard)
 				await user.update({blackjack: JSON.stringify(blackjack)})
-				console.log(interaction)
 				usertotal = blackjack.hands.user.reduce((accum, cur) => accum += cur)
 				if (usertotal > 21) {
 					const game = {
@@ -56,7 +55,30 @@ module.exports = {
 			}
 
 			if (interaction.customId === 'blackjackUserStay') {
-				console.log('User Stayed!')
+				let user = await User.findOne({where: {username: interaction.user.username}});
+				let blackjack = JSON.parse(user.blackjack)
+				await user.update({blackjack: JSON.stringify(blackjack)})
+				usertotal = blackjack.hands.user.reduce((accum, cur) => accum += cur)
+				let dealertotal = blackjack.hands.dealer.reduce((accum, cur) => accum += cur)
+				while (dealertotal < usertotal && dealertotal < 17) {
+					
+					let newCard = Math.floor(Math.random() * 13)
+					blackjack.hands.dealer.push(newCard)
+				}
+				if (dealertotal > 21) {
+
+					await interaction.message.edit({content: `The House Has Gone Bust! Points awarded to you and game reset!`, components: []})
+					await interaction.deferUpdate()
+
+				} else if (dealertotal === usertotal) {
+
+					await interaction.message.edit({content: `You and the dealer break even. Your game has been reset.`, components: []})
+					await interaction.deferUpdate()
+
+				} else if (dealertotal > usertotal) {
+					await interaction.message.edit({content: `The house drew higher than you without busting, you lose!`})
+					await interaction.deferUpdate()
+				}
 			}
 
 			// Plex Requests ---------
