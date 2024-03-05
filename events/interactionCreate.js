@@ -3,27 +3,22 @@ const { User } = require("../database/models");
 const blackjack = require('../commands/fun/blackjack');
 let film;
 let calculateTotal = (hand) => {
-	return hand.reduce((accum, cur) => {
-
+	let accum = 0;
+	for (let i = 0; i < hand.length; i++) {
+		let cur = hand[i]
 		if (cur === 1) {
-
 			accum += 11
-
 		}
-
-		if (cur === 11 || cur === 12 || cur === 13) {
-
+		else if (cur === 11 || cur === 12 || cur === 13) {
 			accum += 10
-
 		}
-
-		if (cur === 14) {
-
+		else if (cur === 14) {
 			accum += 1
-
+		} else {
+			accum += cur
 		}
-
-	})
+	}
+	return accum
 }
 const resetGame = {
 	wager: 0,
@@ -99,7 +94,7 @@ module.exports = {
 				let blackjack = JSON.parse(user.blackjack)
 				await user.update({blackjack: JSON.stringify(blackjack)})
 
-				while (calculateTotal(blackjack.hands.dealer) < calculateTotal() && calculateTotal(blackjack.hands.dealer) < 17) {
+				while (calculateTotal(blackjack.hands.dealer) < calculateTotal(blackjack.hands.user) && calculateTotal(blackjack.hands.dealer) < 17) {
 					
 					let newCard = Math.floor(Math.random() * 13)
 					blackjack.hands.dealer.push(newCard)
