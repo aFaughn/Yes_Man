@@ -163,12 +163,12 @@ module.exports = {
 
                 // Check both the dealer and user hands for 1 Face card and 1 Ace
                 for (let i = 0; i < blackjack.hands.dealer.length; i++) {
-                    if (blackjack.hands.dealer[i] > 10 && blackjack.hands.dealer[i + 1] === 1) dealerBlackJack = true;
-                    if (blackjack.hands.dealer[i] > 10 && blackjack.hands.dealer[i - 1] === 1) dealerBlackJack = true;
+                    if (blackjack.hands.dealer[i] >= 10 && blackjack.hands.dealer[i + 1] === 1) dealerBlackJack = true;
+                    if (blackjack.hands.dealer[i] >= 10 && blackjack.hands.dealer[i - 1] === 1) dealerBlackJack = true;
                 }
                 for (let i = 0; i < blackjack.hands.user.length; i++) {
-                    if (blackjack.hands.user[i] > 10 && blackjack.hands.user[i + 1] === 1) userBlackJack = true;
-                    if (blackjack.hands.user[i] > 10 && blackjack.hands.user[i - 1] === 1) userBlackJack = true;
+                    if (blackjack.hands.user[i] >= 10 && blackjack.hands.user[i + 1] === 1) userBlackJack = true;
+                    if (blackjack.hands.user[i] >= 10 && blackjack.hands.user[i - 1] === 1) userBlackJack = true;
                 }
 
                 // First check for double BlackJack
