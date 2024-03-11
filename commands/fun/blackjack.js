@@ -36,7 +36,7 @@ module.exports = {
         
         // Builds a string reply that will make sense to the user.
             const replyBuilder = (user, dealer, gamestate) => {
-                let reply = 'If you see this something fucked up.'
+                let reply = 'Something has gone wrong Try running /blackjack with a wager of -1.'
 
                 let total = 0;
 
@@ -85,7 +85,7 @@ module.exports = {
                     reply = ` \`\`\`Wager: ${interaction.options.getInteger('wager')} points. \nDealer is showing: ${dealer[1]} \nYou are holding: ${user[0]}, ${user[1]} \nTotal: ${total}\`\`\``
                     return reply
                 } else {
-                    return 'Something went wrong.'
+                    return 'Something went wrong. Try using /blackjack and wagering -1.'
                 }
             }
         
