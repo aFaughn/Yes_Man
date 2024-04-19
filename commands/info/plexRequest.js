@@ -28,12 +28,26 @@ module.exports = {
         const row = new ActionRowBuilder()
             .addComponents(markComplete, markBad)
 
-        const channel = await client.channels.fetch(plexChannel)
 
-        const response = await channel.send({ 
-            content: `${plexOwner} ${interaction.user.username} requested *${interaction.options.getString('title')}*`,
-            components: [row]
-        })
+            //Harcoding is bad and something you shouldn't do but it will work for now.
+        if (interaction.guildId === '1050609633833779202') {
+
+            const channel = await client.channels.fetch(plexChannel)
+            
+            const response = await channel.send({ 
+                content: `${plexOwner} ${interaction.user.username} requested *${interaction.options.getString('title')}*`,
+                components: [row]
+            })
+
+        } else if (interaction.guildId === '1220568523349430313') {
+
+            const channel = await client.channels.fetch('1230720104858128444')
+
+            const response = await channel.send({ 
+                content: `${plexOwner} ${interaction.user.username} requested *${interaction.options.getString('title')}*`,
+                components: [row]
+            })
+        }
 
         const acknowledge = await interaction.reply({
             content: `Request Made! This message will self destruct in 5 seconds!`,
