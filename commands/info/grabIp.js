@@ -20,7 +20,6 @@ module.exports = {
             // Define authorized users here
             let authorizedUsers  = {
                 'alfman': 'alfman',
-                'laxbroclb': 'laxbroclb'
             }
             
             for (let user in authorizedUsers) {
