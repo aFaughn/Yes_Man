@@ -8,18 +8,19 @@
     "gapi": "^0.0.3",
     "nodemon": "^2.0.22",
     "pg": "^8.11.3",
-    "sequelize": "^6.32.1"
+    "sequelize": "^6.32.1",
+    "undici": "^6.13.0"
   },
   "scripts": {
     "run": "npx nodemon"
   },
   "config": {
-    "plexOwner":"<@697944233776119850>",
-    "plexChannel":"1125153614441238621",
-    "nasaAPODChannel":"1197612396773122080",
+    "plexOwner": "<@697944233776119850>",
+    "plexChannel": "1125153614441238621",
+    "nasaAPODChannel": "1197612396773122080",
     "serverOwners": {
-      "alfman":"alfman"
+      "alfman": "alfman"
     },
-    "guildId":"1050609633833779202"
+    "guildId": "1050609633833779202"
   }
 }

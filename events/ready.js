@@ -10,6 +10,9 @@ module.exports = {
 
 		// Acknowledge Bot Ready
 		console.log(`Bot Logged in as ${client.user.tag}`);
+		const activeGuilds = await client.guilds.fetch()
+		.then(guilds => guilds.forEach(guild => console.log(`Connected to: ${guild.name}, id: ${guild.id}`)))
+		
 
 		// NASA APOD
 		const channel = await client.channels.fetch(nasaAPODChannel)
@@ -26,15 +29,30 @@ module.exports = {
 
 		// Create user entries for everyone in the server if there are no entries.
 		const dbCheck = await User.findAll()
-		if (!dbCheck[0]) {	
-			const guild = await client.guilds.fetch(`${guildId}`)
-			const members = await guild.members.fetch()
-			.then(response => response.forEach(member => {
-				if (!member.user.bot) {
-					User.create({username: member.user.username})
-					console.log(`Created DB entry for user ${member.user.username}`)
-				}
-			}))
+		if (!dbCheck[0]) {
+			await client.guilds.fetch()
+			// Grab every guild this server is a member of
+			.then(guilds => {
+
+				guilds.forEach(guild => {
+
+					client.guilds.fetch(guild.id)
+					.then(guild => guild.members.fetch()) // Then grab every user from every guild
+					.then(members => members.forEach(member => {
+
+						let exists = User.findOne({where: { username: member.user.username }})
+						.then(db => {
+
+							// Create entries for each user, skip duplicates and bots.
+							if (!member.user.bot && !db) {
+								User.create({username: member.user.username})
+								console.log(`Created DB entry for user ${member.user.username}`)
+							}
+
+						})
+					}))
+				})
+			})	
 		}
 	},
 };
