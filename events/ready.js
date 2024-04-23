@@ -1,5 +1,5 @@
 const { Events } = require('discord.js');
-const { User } = require('../database/models');
+const { User, Guild, Config } = require('../database/models');
 const apiKey = process.env.NASA_API_KEY
 const { nasaAPODChannel, guildId } = require('../package.json').config
 
@@ -35,6 +35,14 @@ module.exports = {
 			.then(guilds => {
 
 				guilds.forEach(guild => {
+					console.log(guild)
+					let exists = Guild.findOne({where: { remoteId: guild.id}})
+					if (!exists) {
+						Guild.create({
+							remoteId: guild.id,
+							name: guild.name,
+						})
+					}
 
 					client.guilds.fetch(guild.id)
 					.then(guild => guild.members.fetch()) // Then grab every user from every guild
@@ -45,7 +53,10 @@ module.exports = {
 
 							// Create entries for each user, skip duplicates and bots.
 							if (!member.user.bot && !db) {
-								User.create({username: member.user.username})
+								User.create({
+									username: member.user.username,
+									remoteId: member.user.id,
+								})
 								console.log(`Created DB entry for user ${member.user.username}`)
 							}
 
