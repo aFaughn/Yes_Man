@@ -10,7 +10,7 @@ class Guild extends Model {
 Guild.init(
     {
         remoteId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             unique: true
         },
         name: {
@@ -18,7 +18,7 @@ Guild.init(
             unique: true
         },
         ownerId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             unique: false
         },
         ownerName: {

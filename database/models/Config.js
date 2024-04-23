@@ -10,19 +10,19 @@ class Config extends Model {
 Config.init(
     {
         guildId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             unique: true
         },
         plexChannel: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             unique: false
         },
         plexOwner: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             unique: false
         },
         APODChannel: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             unique: false
         },
         botModerators: {

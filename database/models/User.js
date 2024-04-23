@@ -31,7 +31,7 @@ User.init(
             unique: true
         },
         remoteId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             unique: true
         },
         points: {
