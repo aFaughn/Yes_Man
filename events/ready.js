@@ -1,3 +1,5 @@
+// TODO Every promise in this file needs a .catch() method.
+
 const { Events } = require('discord.js');
 const { User, Guild, Config } = require('../database/models');
 const apiKey = process.env.NASA_API_KEY
@@ -10,22 +12,25 @@ module.exports = {
 
 		// Acknowledge Bot Ready
 		console.log(`Bot Logged in as ${client.user.tag}`);
-		const activeGuilds = await client.guilds.fetch()
+		await client.guilds.fetch()
 		.then(guilds => guilds.forEach(guild => console.log(`Connected to: ${guild.name}, id: ${guild.id}`)))
 		
 
 		// NASA APOD
 		const channel = await client.channels.fetch(nasaAPODChannel)
+		try {
 			setInterval(async () => {
 				const apod = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`, {
 					method: "GET",
 				})
 				.then(response => response.json())
 				.then(data => {
-					console.log(data)
 					channel.send(`Nasa Astronomy Picture Of The Day \n**${data.title}** \n${data.url} \n${data.explanation}`)
 				})
 			}, 86400000)
+		} catch (error) {
+			console.log(error)
+		}
 
 		// Create user entries for everyone in the server if there are no entries.
 		const dbCheck = await User.findAll()
@@ -37,11 +42,12 @@ module.exports = {
 				guilds.forEach(guild => {
 
 					//Create guild entry in DB
-					let snowflake = client.guilds.fetch(guild.id)
-					.then(snowflake => {
-						Guild.findOne({where: { remoteId: guild.id}})
-						.then(db => {
-							if (!db) {
+					try {
+						let snowflake = client.guilds.fetch(guild.id)
+						.then(snowflake => {
+							Guild.findOne({where: { remoteId: guild.id}})
+							.then(db => {
+								if (!db) {
 									Guild.create({
 										remoteId: `${guild.id}`,
 										name: guild.name,
@@ -53,11 +59,12 @@ module.exports = {
 									}),
 									console.log(`Created Config entry for Guild ${guild.name}`)
 								}
-							}
-						)
-						}
-					)
-
+							})
+						})
+					} catch (e) {
+						console.log(e)
+					}
+				
 					client.guilds.fetch(guild.id)
 					.then(guild => guild.members.fetch()) // Then grab every user from every guild
 					.then(members => members.forEach(member => {
