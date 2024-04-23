@@ -35,20 +35,24 @@ module.exports = {
 			.then(guilds => {
 
 				guilds.forEach(guild => {
-					console.log(guild)
-					let exists = Guild.findOne({where: { remoteId: guild.id}})
-					if (!exists) {
-						Guild.create({
-							remoteId: guild.id,
-							name: guild.name,
-						})
-					}
+
+					let snowflake = client.guilds.fetch(guild.id)
+					Guild.findOne({where: { remoteId: guild.id}})
+					.then(db => {
+						if (!db) {
+								Guild.create({
+									remoteId: `${guild.id}`,
+									name: guild.name,
+									ownerId: `${snowflake.ownerId}`
+								})
+							}
+						}
+					)
 
 					client.guilds.fetch(guild.id)
 					.then(guild => guild.members.fetch()) // Then grab every user from every guild
 					.then(members => members.forEach(member => {
-
-						let exists = User.findOne({where: { username: member.user.username }})
+						User.findOne({where: { username: member.user.username }})
 						.then(db => {
 
 							// Create entries for each user, skip duplicates and bots.

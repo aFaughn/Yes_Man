@@ -21,10 +21,6 @@ Guild.init(
             type: DataTypes.STRING,
             unique: false
         },
-        ownerName: {
-            type: DataTypes.STRING,
-            unique: false
-        },
     },
     {
         paranoid: true,
