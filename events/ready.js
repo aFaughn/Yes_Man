@@ -36,16 +36,21 @@ module.exports = {
 
 				guilds.forEach(guild => {
 
+					//Create guild entry in DB
 					let snowflake = client.guilds.fetch(guild.id)
-					Guild.findOne({where: { remoteId: guild.id}})
-					.then(db => {
-						if (!db) {
-								Guild.create({
-									remoteId: `${guild.id}`,
-									name: guild.name,
-									ownerId: `${snowflake.ownerId}`
-								})
+					.then(snowflake => {
+						Guild.findOne({where: { remoteId: guild.id}})
+						.then(db => {
+							if (!db) {
+									Guild.create({
+										remoteId: `${guild.id}`,
+										name: guild.name,
+										ownerId: `${snowflake.ownerId}`
+									})
+								}
+								console.log(`Created DB entry for Guild: ${guild.name}`)
 							}
+						)
 						}
 					)
 
