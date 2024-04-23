@@ -21,6 +21,10 @@ Config.init(
             type: DataTypes.INTEGER,
             unique: false
         },
+        APODChannel: {
+            type: DataTypes.INTEGER,
+            unique: false
+        },
         botModerators: {
             type: DataTypes.JSON,
             unique: false
