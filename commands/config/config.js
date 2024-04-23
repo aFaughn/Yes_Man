@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
+const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require("discord.js");
 const { Config, User, Guild } = require("../../database/models");
 
 module.exports = {
@@ -12,7 +12,38 @@ module.exports = {
         const beckoner = await User.findOne({where: {remoteId: interaction.user.id}})
         
         if (curGuild.ownerId === beckoner.remoteId) {
-            interaction.reply(`Open Modal`)
+            const modal = new ModalBuilder()
+            .setCustomId('configModal')
+            .setTitle('Yes Man Configuration')
+
+        const plexChannelIdInput = new TextInputBuilder()
+            .setCustomId('plexChannelIdInput')
+            .setLabel("Plex Request Channel ID")
+            .setStyle(TextInputStyle.Short)
+
+        const plexOwnerId = new TextInputBuilder()
+            .setCustomId('plexChannelOwnerId')
+            .setLabel('Plex Channel Owner User-ID')
+            .setStyle(TextInputStyle.Short)
+
+        const APODChannelId = new TextInputBuilder()
+            .setCustomId('APODChannelId')
+            .setLabel('Nasa APOD Channel ID')
+            .setStyle(TextInputStyle.Short)
+        
+        const BotModeratorId = new TextInputBuilder()
+            .setCustomId('BotModeratorId')
+            .setLabel('Bot Moderators: Seperate ID\'s with a (,)')
+            .setStyle(TextInputStyle.Paragraph)
+
+        const actionRow1 = new ActionRowBuilder().addComponents(plexChannelIdInput)
+        const actionRow2 = new ActionRowBuilder().addComponents(plexOwnerId)
+        const actionRow3 = new ActionRowBuilder().addComponents(APODChannelId)
+        const actionRow4 = new ActionRowBuilder().addComponents(BotModeratorId)
+
+        modal.addComponents(actionRow1, actionRow2, actionRow3, actionRow4)
+        
+        await interaction.showModal(modal);
         } else {
             interaction.reply({
                 content: `Sorry, only server owners and those specified as bot moderators may use this command.`,

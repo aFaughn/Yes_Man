@@ -142,5 +142,11 @@ module.exports = {
 		} else if (interaction.isStringSelectMenu()) {
 			return;
 		}
+
+		// Modal
+		if (interaction.commandName === 'config_update') {
+
+		}
+
 	}
 };
