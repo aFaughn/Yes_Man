@@ -35,14 +35,16 @@ const deployCommands = (dir) => {
     // and deploy your commands!
     (async () => {
         try {
-            console.log(`Started refreshing ${commands.length} application (/) commands.`);
-    
-            // The put method is used to fully refresh all commands in the guild with the current set
-            // This is a faster way of refreshing commands on a development server.
-            const data = await rest.put(
-                Routes.applicationGuildCommands(clientId, devGuildId),
-                { body: commands },
-            );
+            console.log(`Started refreshing ${commands.length} application (/) commands. Environment: ${env}`);
+            
+            if (env === 'development') {
+                // The put method is used to fully refresh all commands in the guild with the current set
+                // This is a faster way of refreshing commands on a development server.
+                const data = await rest.put(
+                    Routes.applicationGuildCommands(clientId, devGuildId),
+                    { body: commands },
+                );
+            }
 
             if (env === 'production') {
                 //Push commands to all guilds the bot is in.
