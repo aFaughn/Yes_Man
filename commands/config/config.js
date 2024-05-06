@@ -16,13 +16,13 @@ module.exports = {
             .setCustomId('configModal')
             .setTitle('Yes Man Configuration')
 
-        const plexChannelIdInput = new TextInputBuilder()
-            .setCustomId('plexChannelIdInput')
+        const plexChannelId = new TextInputBuilder()
+            .setCustomId('plexChannelId')
             .setLabel("Plex Request Channel ID")
             .setStyle(TextInputStyle.Short)
 
         const plexOwnerId = new TextInputBuilder()
-            .setCustomId('plexChannelOwnerId')
+            .setCustomId('plexOwnerId')
             .setLabel('Plex Channel Owner User-ID')
             .setStyle(TextInputStyle.Short)
 
@@ -36,7 +36,7 @@ module.exports = {
             .setLabel('Bot Moderators: Seperate ID\'s with a (,)')
             .setStyle(TextInputStyle.Paragraph)
 
-        const actionRow1 = new ActionRowBuilder().addComponents(plexChannelIdInput)
+        const actionRow1 = new ActionRowBuilder().addComponents(plexChannelId)
         const actionRow2 = new ActionRowBuilder().addComponents(plexOwnerId)
         const actionRow3 = new ActionRowBuilder().addComponents(APODChannelId)
         const actionRow4 = new ActionRowBuilder().addComponents(BotModeratorId)
@@ -44,6 +44,7 @@ module.exports = {
         modal.addComponents(actionRow1, actionRow2, actionRow3, actionRow4)
         
         await interaction.showModal(modal);
+
         } else {
             interaction.reply({
                 content: `Sorry, only server owners and those specified as bot moderators may use this command.`,

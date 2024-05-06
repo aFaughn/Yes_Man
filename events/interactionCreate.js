@@ -1,5 +1,5 @@
 const { Events } = require('discord.js');
-const { User } = require("../database/models");
+const { User, Config } = require("../database/models");
 const blackjack = require('../commands/fun/blackjack');
 let film;
 let calculateTotal = (hand) => {
@@ -144,8 +144,24 @@ module.exports = {
 		}
 
 		// Modal
-		if (interaction.commandName === 'config_update') {
+		if (interaction.isModalSubmit()) {
+			if (interaction.customId === 'configModal') {
 
+				const pcid = interaction.fields.getTextInputValue('plexChannelId');
+				const poid = interaction.fields.getTextInputValue('plexOwnerId');
+				const apodcid = interaction.fields.getTextInputValue('APODChannelId');
+				const bmid = interaction.fields.getTextInputValue('BotModeratorId');
+
+				let config = await Config.findOne({ where: { guildId: interaction.guildId}})
+				
+				try {
+
+					await config.update({ plexChannel: pcid, plexOwner: poid, APODChannel: apodcid, botModerators: bmid })
+					.then(await interaction.reply({content: `Successfully updated your configuration!`, ephemeral: true }))
+				} catch (e) {
+					await interaction.reply({content: `Something went wrong. Error: ${e}`, ephemeral: true})
+				}
+			}
 		}
 
 	}
