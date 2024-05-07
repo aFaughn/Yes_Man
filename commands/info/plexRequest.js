@@ -37,17 +37,21 @@ module.exports = {
             const channel = await client.channels.fetch(config.plexChannel)
             
             const response = await channel.send({ 
-                content: `${config.plexOwner} ${interaction.user.username} requested *${interaction.options.getString('title')}*`,
+                content: `<@${config.plexOwner}> ${interaction.user.username} requested *${interaction.options.getString('title')}*`,
                 components: [row]
             })
 
-        const acknowledge = await interaction.reply({
-            content: `Request Made! This message will self destruct in 5 seconds!`,
-            ephemeral: true
-        })
+            //This will throw an error in your console but it does work as intended.
+        if (interaction.user.id !== config.plexOwner) {
+            const acknowledge = await interaction.reply({
+                content: `Request Made! This message will self destruct in 5 seconds!`,
+                ephemeral: true
+            })
 
-        setTimeout(() => {
-            acknowledge.delete()
-        },5000)
+            setTimeout(() => {
+                acknowledge.delete()
+            },5000)
+        }   
+
 	},
 };

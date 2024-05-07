@@ -8,8 +8,9 @@ module.exports = {
 	async execute(interaction) {
         const { client } = interaction
         // Security / Permissions check
-        const curGuild = await Guild.findOne({where: {remoteId: interaction.guildId}})
-        const beckoner = await User.findOne({where: {remoteId: interaction.user.id}})
+        const curGuild = await Guild.findOne({where: { remoteId: interaction.guildId } })
+        const beckoner = await User.findOne({where: { remoteId: interaction.user.id } })
+        const config = await Config.findOne({where: { guildId: interaction.guildId } })
         
         if (curGuild.ownerId === beckoner.remoteId) {
             const modal = new ModalBuilder()
@@ -20,21 +21,29 @@ module.exports = {
             .setCustomId('plexChannelId')
             .setLabel("Plex Request Channel ID")
             .setStyle(TextInputStyle.Short)
+            .setRequired(false)
+            .setValue(config.plexChannel)
 
         const plexOwnerId = new TextInputBuilder()
             .setCustomId('plexOwnerId')
             .setLabel('Plex Channel Owner User-ID')
             .setStyle(TextInputStyle.Short)
+            .setRequired(false)
+            .setValue(config.plexOwner)
 
         const APODChannelId = new TextInputBuilder()
             .setCustomId('APODChannelId')
             .setLabel('Nasa APOD Channel ID')
             .setStyle(TextInputStyle.Short)
+            .setRequired(false)
+            .setValue(config.APODChannel)
         
         const BotModeratorId = new TextInputBuilder()
             .setCustomId('BotModeratorId')
             .setLabel('Bot Moderators: Seperate ID\'s with a (,)')
             .setStyle(TextInputStyle.Paragraph)
+            .setRequired(false)
+            .setValue(config.botModerators)
 
         const actionRow1 = new ActionRowBuilder().addComponents(plexChannelId)
         const actionRow2 = new ActionRowBuilder().addComponents(plexOwnerId)
