@@ -30,17 +30,17 @@ User.init(
             type: DataTypes.STRING,
             unique: true
         },
+        remoteId: {
+            type: DataTypes.STRING,
+            unique: true
+        },
         points: {
             type: DataTypes.FLOAT,
             unique: false,
             allowNull: true,
             defaultValue: 100,
         },
-        favoriteGame: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-        karma: {
+        trust: {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 100

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
-const { plexOwner, plexChannel } = require('../../package.json').config
+const { Config } = require('../../database/models');
 
 
 module.exports = {
@@ -12,6 +12,12 @@ module.exports = {
                 .setRequired(true)),
 	async execute(interaction) {
         const { client } = interaction
+
+        const config = await Config.findOne({
+            where: {
+                guildId: interaction.guildId
+            }
+        })
 
         const markComplete = new ButtonBuilder()
             .setCustomId('markComplete')
@@ -28,34 +34,24 @@ module.exports = {
         const row = new ActionRowBuilder()
             .addComponents(markComplete, markBad)
 
-
-            //Harcoding is bad and something you shouldn't do but it will work for now.
-        if (interaction.guildId === '1050609633833779202') {
-
-            const channel = await client.channels.fetch(plexChannel)
+            const channel = await client.channels.fetch(config.plexChannel)
             
             const response = await channel.send({ 
-                content: `${plexOwner} ${interaction.user.username} requested *${interaction.options.getString('title')}*`,
+                content: `<@${config.plexOwner}> ${interaction.user.username} requested *${interaction.options.getString('title')}*`,
                 components: [row]
             })
 
-        } else if (interaction.guildId === '1220568523349430313') {
-
-            const channel = await client.channels.fetch('1230720104858128444')
-
-            const response = await channel.send({ 
-                content: `${plexOwner} ${interaction.user.username} requested *${interaction.options.getString('title')}*`,
-                components: [row]
+            //This will throw an error in your console but it does work as intended.
+        if (interaction.user.id !== config.plexOwner) {
+            const acknowledge = await interaction.reply({
+                content: `Request Made! This message will self destruct in 5 seconds!`,
+                ephemeral: true
             })
-        }
 
-        const acknowledge = await interaction.reply({
-            content: `Request Made! This message will self destruct in 5 seconds!`,
-            ephemeral: true
-        })
+            setTimeout(() => {
+                acknowledge.delete()
+            },5000)
+        }   
 
-        setTimeout(() => {
-            acknowledge.delete()
-        },5000)
 	},
 };

@@ -1,5 +1,5 @@
 const { Events } = require('discord.js');
-const { User } = require("../database/models");
+const { User, Config } = require("../database/models");
 const blackjack = require('../commands/fun/blackjack');
 let film;
 let calculateTotal = (hand) => {
@@ -120,9 +120,12 @@ module.exports = {
 
 			// Plex Requests ---------
 			if (interaction.customId === 'markComplete') {
-
-				let channelId = '1125153614441238621'
-				const channel = await client.channels.fetch(channelId)
+				const config = await Config.findOne({
+					where: {
+						guildId: interaction.guildId
+					}
+				})
+				const channel = await client.channels.fetch(config.plexChannel)
 
 				for (let i = 0; i < interaction.message.content.length - 1; i++) {
 					let p1;
@@ -142,5 +145,27 @@ module.exports = {
 		} else if (interaction.isStringSelectMenu()) {
 			return;
 		}
+
+		// Modal
+		if (interaction.isModalSubmit()) {
+			if (interaction.customId === 'configModal') {
+
+				const pcid = interaction.fields.getTextInputValue('plexChannelId');
+				const poid = interaction.fields.getTextInputValue('plexOwnerId');
+				const apodcid = interaction.fields.getTextInputValue('APODChannelId');
+				const bmid = interaction.fields.getTextInputValue('BotModeratorId');
+
+				let config = await Config.findOne({ where: { guildId: interaction.guildId}})
+				
+				try {
+
+					await config.update({ plexChannel: pcid, plexOwner: poid, APODChannel: apodcid, botModerators: bmid })
+					.then(await interaction.reply({content: `Successfully updated your configuration!`, ephemeral: true }))
+				} catch (e) {
+					await interaction.reply({content: `Something went wrong. Error: ${e}`, ephemeral: true})
+				}
+			}
+		}
+
 	}
 };
