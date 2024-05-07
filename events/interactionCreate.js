@@ -120,9 +120,12 @@ module.exports = {
 
 			// Plex Requests ---------
 			if (interaction.customId === 'markComplete') {
-
-				let channelId = '1125153614441238621'
-				const channel = await client.channels.fetch(channelId)
+				const config = await Config.findOne({
+					where: {
+						guildId: interaction.guildId
+					}
+				})
+				const channel = await client.channels.fetch(config.plexChannel)
 
 				for (let i = 0; i < interaction.message.content.length - 1; i++) {
 					let p1;
