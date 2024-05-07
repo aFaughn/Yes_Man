@@ -3,7 +3,6 @@
 const { Events } = require('discord.js');
 const { User, Guild, Config } = require('../database/models');
 const apiKey = process.env.NASA_API_KEY
-const { nasaAPODChannel, guildId } = require('../package.json').config
 
 module.exports = {
 	name: Events.ClientReady,
@@ -17,7 +16,6 @@ module.exports = {
 		
 
 		// NASA APOD
-		const channel = await client.channels.fetch(nasaAPODChannel)
 		try {
 			setInterval(async () => {
 				const apod = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`, {
@@ -25,7 +23,12 @@ module.exports = {
 				})
 				.then(response => response.json())
 				.then(data => {
-					channel.send(`Nasa Astronomy Picture Of The Day \n**${data.title}** \n${data.url} \n${data.explanation}`)
+					client.guilds.fetch()
+					.then(guilds => guilds.forEach(guild => {
+						const config = Config.findOne({where: { guildId: guild.id }})
+						const channel = client.channels.fetch(config.APODChannel)
+						channel.send(`Nasa Astronomy Picture Of The Day \n**${data.title}** \n${data.url} \n${data.explanation}`)
+					}))
 				})
 			}, 86400000)
 		} catch (error) {
