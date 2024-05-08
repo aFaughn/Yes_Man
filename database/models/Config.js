@@ -15,19 +15,23 @@ Config.init(
         },
         plexChannel: {
             type: DataTypes.STRING,
-            unique: false
+            unique: false,
+            defaultValue: '',
         },
         plexOwner: {
             type: DataTypes.STRING,
-            unique: false
+            unique: false,
+            defaultValue: '',
         },
         APODChannel: {
             type: DataTypes.STRING,
-            unique: false
+            unique: false,
+            defaultValue: '',
         },
         botModerators: {
             type: DataTypes.JSON,
-            unique: false
+            unique: false,
+            defaultValue: '',
         },
     },
     {

@@ -47,14 +47,19 @@ const deployCommands = (dir) => {
                 console.log(`Successfully reloaded ${data.length} application (/) commands.`);
             }
             
+            // rest.put(
+            //     Routes.applicationGuildCommands(clientId, '1050609633833779202'),
+            //     { body: [] },
+            // );
+            
             if (env === 'production') {
                 //Push commands to all guilds the bot is in.
                 // These are only updated once per hour-ish and used for non-dev guilds.
-                await rest.put(
+                const data = await rest.put(
                     Routes.applicationCommands(clientId),
                     { body: commands },
                 );
-                console.log(`Please allow up to 1 hour for commands to appear in your servers! This is not a yes_man limitation but a Discord API limitation!`);
+                console.log(`Sent ${data.length} commands to the global command registry.`);
             }
     
         } catch (error) {
