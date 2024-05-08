@@ -53,7 +53,7 @@ const deployCommands = (dir) => {
                 await rest.put(
                     Routes.applicationCommands(clientId),
                     { body: commands },
-                )
+                );
                 console.log(`Please allow up to 1 hour for commands to appear in your servers! This is not a yes_man limitation but a Discord API limitation!`);
             }
     
