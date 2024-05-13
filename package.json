@@ -9,6 +9,7 @@
     "nodemon": "^2.0.22",
     "pg": "^8.11.3",
     "sequelize": "^6.32.1",
+    "sequelize-cli": "^6.6.2",
     "undici": "^6.13.0"
   },
   "scripts": {
