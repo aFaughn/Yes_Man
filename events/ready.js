@@ -56,11 +56,10 @@ module.exports = {
 										name: guild.name,
 										ownerId: `${snowflake.ownerId}`
 									}),
-									console.log(`Created DB entry for Guild: ${guild.name}`),
+									// console.log(`Created DB entry for Guild: ${guild.name}`),
 									Config.create({
 										guildId: `${guild.id}`,
-									}),
-									console.log(`Created Config entry for Guild ${guild.name}`)
+									})
 								}
 							})
 						})
@@ -80,7 +79,6 @@ module.exports = {
 									username: member.user.username,
 									remoteId: member.user.id,
 								})
-								console.log(`Created DB entry for user ${member.user.username}`)
 							}
 
 						})
