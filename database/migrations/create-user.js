@@ -1,4 +1,5 @@
 'use strict';
+
 const defaultInventory = { 
   items: [],
   upgrades: {
@@ -15,7 +16,6 @@ const defaultBlackjack = {
       user: [],
   }
 }
-
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

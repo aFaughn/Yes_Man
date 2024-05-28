@@ -36,7 +36,7 @@ module.exports = {
 		}
 
 		// Create user entries for everyone in the server if there are no entries.
-		const dbCheck = await User.findAll()
+		const dbCheck = await User.findAll({logging: false})
 		if (!dbCheck[0]) {
 			await client.guilds.fetch()
 			// Grab every guild this server is a member of

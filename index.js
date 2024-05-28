@@ -46,16 +46,6 @@ for (const folder of commandFolders) {
 	}
 }
 
-// Dynamically create associations because we are lazy.
-Object.keys(models).forEach(ele => {
-  models[ele].associate(models);
-})
-
-//BEWARE! SETTING FORCE_DB_RESET TO 'TRUE' WILL --WIPE YOUR DB-- UPON ANY CHANGE!
-async function dbSync() {
-  await db.sync({force: process.env.FORCE_DB_RESET === 'true' ? true : false})
-}
-dbSync()
 
 //DB Authentication
 async function authDB() {
@@ -67,8 +57,6 @@ async function authDB() {
   }
 }
 authDB();
-
-
 
 //Use node:fs to grab all events from events folder
 const eventsPath = path.join(__dirname, 'events');

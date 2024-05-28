@@ -5,8 +5,6 @@
 
 // module.exports = {User, Counter, Guild, Config};
 
-// Personal note: refer to inscryptr models/index.js and make sure its importing config properly.
-
 'use strict';
 
 const fs = require('fs');
@@ -30,7 +28,7 @@ fs
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
   })
   .forEach(file => {
-    const model = sequelize['import'](path.join(__dirname, file));
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes)
     db[model.name] = model;
   });
 
