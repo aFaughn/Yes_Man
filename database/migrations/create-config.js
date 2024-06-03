@@ -27,7 +27,7 @@ module.exports = {
       },
       botModerators: {
         type: Sequelize.JSON,
-        defaultValue: {"null":"null"},
+        defaultValue: JSON.stringify({"null":"null"}),
       },
       createdAt: {
         allowNull: false,
