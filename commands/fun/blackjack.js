@@ -108,7 +108,6 @@ module.exports = {
         //Check if Wager is reset code
             if (interaction.options.getInteger('wager') === -1) {
                 await resetGame(blackjack, user)
-                console.log('Reset code recieved!')
                 await interaction.reply('Your instance of blackjack has been reset!')
             }
 

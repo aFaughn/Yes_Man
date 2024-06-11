@@ -56,7 +56,6 @@ module.exports = {
 										name: guild.name,
 										ownerId: `${snowflake.ownerId}`
 									}),
-									// console.log(`Created DB entry for Guild: ${guild.name}`),
 									Config.create({
 										guildId: `${guild.id}`,
 									})
