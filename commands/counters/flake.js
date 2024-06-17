@@ -10,15 +10,17 @@ module.exports = {
 			where: {
 				name: 'flake'
 			}
+		}).then((data) => {
+			if (!data[0]) {
+				Counter.create({
+					name: 'flake',
+					value: 1
+				})
+				interaction.reply(`Allen has flaked ${data[0].value} times!`)
+			} else {
+				data[0].update({ value: data[0].value + 1})
+				interaction.reply(`Allen has flaked ${data[0].value} times!`)
+			}
 		})
-		if (!counter[0]) {
-			await Counter.create({
-				name: 'flake',
-				value: 0
-			})
-			await interaction.reply(`Allen has flaked ${counter[0].value} times!`)
-		}
-		await counter[0].update({ value: counter[0].value + 1})
-		await interaction.reply(`Allen has flaked ${counter[0].value} times!`)
 	},
 };

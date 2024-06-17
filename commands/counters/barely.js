@@ -10,7 +10,7 @@ module.exports = {
 			where: {
 				name: 'barely'
 			}
-		}).then( (data) => {
+		}).then((data) => {
 			if (!data[0]) {
 				Counter.create({
 					name: 'barely',
