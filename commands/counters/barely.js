@@ -10,15 +10,18 @@ module.exports = {
 			where: {
 				name: 'barely'
 			}
+		}).then( (data) => {
+			if (!data[0]) {
+				Counter.create({
+					name: 'barely',
+					value: 1
+				})
+				interaction.reply(`Carter has barely known 'er 1 time!`)
+			} else {
+				data[0].update({ value: data[0].value + 1})
+				interaction.reply(`Carter has barely known 'er ${data[0].value} times!`)
+
+			}
 		})
-		if (!counter[0]) {
-			await Counter.create({
-				name: 'barely',
-				value: 0
-			})
-			await interaction.reply(`Carter has barely known 'er ${counter[0].value} times!`)
-		}
-		await counter[0].update({ value: counter[0].value + 1})
-		await interaction.reply(`Carter has barely known 'er ${counter[0].value} times!`)
 	},
 };
