@@ -25,7 +25,7 @@ const bars = [
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('dracula_flow')
-		.setDescription('Prints a random Dracula Flow bar.'),
+		.setDescription('Prints a random Dracula Flow.'),
 	async execute(interaction) {
 		await interaction.reply(bars[Math.floor(Math.random() * bars.length)]);
 	},

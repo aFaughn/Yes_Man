@@ -7,13 +7,15 @@ module.exports = {
 		.setDescription('Check how many imaginary points you have'),
 	async execute(interaction) {
         // Grab user who ran the command
-		const user = await User.findAll({where: {username: interaction.user.username}})
+		await User.findAll({where: {username: interaction.user.username}})
+		.then((data) => {
+			if (!data[0]) {
+				interaction.reply('⚠ No user found! Please run /create_user first!')
+			} else {
 
-        //Err handling -- No user
-		if (!user[0]) {
-            await interaction.reply('⚠ No user found! Please run /create_user first!')
-		}
+				interaction.reply(`${interaction.user.username}, your point balance is ${data[0].points}.`)
 
-        await interaction.reply(`${interaction.user.username}, your point balance is ${user[0].points}.`)
+			}
+		})
 	},
 };

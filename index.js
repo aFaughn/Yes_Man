@@ -5,12 +5,9 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {Client, Collection, Events, GatewayIntentBits } = require(`discord.js`)
 const token = process.env.API_KEY;
-// const gapi_api_key = process.env.YOUTUBE_API_KEY
-// const oauthId = process.env.GOOGLE_OAUTH_ID
 const db = require('./database')
 const models = require('./database/models');
 const sequelize = require('./database');
-// const { gapi } = require('gapi')
 
 // Deploy Commands
 const dir = __dirname
@@ -49,16 +46,6 @@ for (const folder of commandFolders) {
 	}
 }
 
-// Dynamically create associations because we are lazy.
-Object.keys(models).forEach(ele => {
-  models[ele].associate(models);
-})
-
-//BEWARE! SETTING FORCE_DB_RESET TO 'TRUE' WILL --WIPE YOUR DB-- UPON ANY CHANGE!
-async function dbSync() {
-  await db.sync({force: process.env.FORCE_DB_RESET === 'true' ? true : false})
-}
-dbSync()
 
 //DB Authentication
 async function authDB() {
@@ -70,8 +57,6 @@ async function authDB() {
   }
 }
 authDB();
-
-
 
 //Use node:fs to grab all events from events folder
 const eventsPath = path.join(__dirname, 'events');

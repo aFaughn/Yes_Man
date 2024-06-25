@@ -4,7 +4,7 @@ const { User } = require("../../database/models");
 module.exports = {
     data: new SlashCommandBuilder()
     .setName('blackjack')
-    .setDescription('Initializes a game of blackjack')
+    .setDescription('[IN DEVELOPMENT][NON-FUNCTIONAL] Initializes a game of blackjack')
     .addIntegerOption(option => 
         option.setName('wager')
             .setDescription('Your wager in points. -1 will reset your game!')
@@ -108,7 +108,6 @@ module.exports = {
         //Check if Wager is reset code
             if (interaction.options.getInteger('wager') === -1) {
                 await resetGame(blackjack, user)
-                console.log('Reset code recieved!')
                 await interaction.reply('Your instance of blackjack has been reset!')
             }
 

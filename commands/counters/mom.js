@@ -10,15 +10,20 @@ module.exports = {
 			where: {
 				name: 'mom'
 			}
-		})
-		if (!counter[0]) {
-			await Counter.create({
+		}).then((data)=>{
+			if (!data[0]) {
+
+				Counter.create({
 				name: 'mom',
 				value: 1
-			})
-			await interaction.reply(`Quenton has made a "Your Mom" joke 1 time(s)!`)
-		}
-		await counter[0].update({ value: counter[0].value + 1})
-		await interaction.reply(`Quenton has made a "Your Mom" joke ${counter[0].value} times!`)
+			})	
+			interaction.reply(`Quenton has made a "Your Mom" joke 1 time!`)
+
+			} else {
+				data[0].update({ value: data[0].value + 1})
+				interaction.reply(`Quenton has made a "Your Mom" joke ${data[0].value} times!`)
+			}
+			
+		})
 	},
 };

@@ -1,6 +1,6 @@
 // TODO Every promise in this file needs a .catch() method.
 
-const { Events } = require('discord.js');
+const { Events, ActivityType } = require('discord.js');
 const { User, Guild, Config } = require('../database/models');
 const apiKey = process.env.NASA_API_KEY
 
@@ -13,6 +13,15 @@ module.exports = {
 		console.log(`Bot Logged in as ${client.user.tag}`);
 		await client.guilds.fetch()
 		.then(guilds => guilds.forEach(guild => console.log(`Connected to: ${guild.name}, id: ${guild.id}`)))
+
+		// Adds status flavor text
+		client.user.setPresence({
+			activities: [{
+				name: 'for commands. 😀',
+				type: ActivityType.Watching,
+			}],
+			status: 'online'
+		});
 		
 
 		// NASA APOD
@@ -36,7 +45,7 @@ module.exports = {
 		}
 
 		// Create user entries for everyone in the server if there are no entries.
-		const dbCheck = await User.findAll()
+		const dbCheck = await User.findAll({logging: false})
 		if (!dbCheck[0]) {
 			await client.guilds.fetch()
 			// Grab every guild this server is a member of
@@ -56,11 +65,9 @@ module.exports = {
 										name: guild.name,
 										ownerId: `${snowflake.ownerId}`
 									}),
-									console.log(`Created DB entry for Guild: ${guild.name}`),
 									Config.create({
 										guildId: `${guild.id}`,
-									}),
-									console.log(`Created Config entry for Guild ${guild.name}`)
+									})
 								}
 							})
 						})
@@ -80,7 +87,6 @@ module.exports = {
 									username: member.user.username,
 									remoteId: member.user.id,
 								})
-								console.log(`Created DB entry for user ${member.user.username}`)
 							}
 
 						})
