@@ -1,6 +1,6 @@
 // TODO Every promise in this file needs a .catch() method.
 
-const { Events } = require('discord.js');
+const { Events, ActivityType } = require('discord.js');
 const { User, Guild, Config } = require('../database/models');
 const apiKey = process.env.NASA_API_KEY
 
@@ -13,6 +13,15 @@ module.exports = {
 		console.log(`Bot Logged in as ${client.user.tag}`);
 		await client.guilds.fetch()
 		.then(guilds => guilds.forEach(guild => console.log(`Connected to: ${guild.name}, id: ${guild.id}`)))
+
+		// Adds status flavor text
+		client.user.setPresence({
+			activities: [{
+				name: 'for commands. 😀',
+				type: ActivityType.Watching,
+			}],
+			status: 'online'
+		});
 		
 
 		// NASA APOD

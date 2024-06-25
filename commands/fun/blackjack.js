@@ -4,7 +4,7 @@ const { User } = require("../../database/models");
 module.exports = {
     data: new SlashCommandBuilder()
     .setName('blackjack')
-    .setDescription('Initializes a game of blackjack')
+    .setDescription('[IN DEVELOPMENT][NON-FUNCTIONAL] Initializes a game of blackjack')
     .addIntegerOption(option => 
         option.setName('wager')
             .setDescription('Your wager in points. -1 will reset your game!')
