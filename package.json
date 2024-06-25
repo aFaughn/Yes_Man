@@ -7,15 +7,17 @@
     "dotenv": "^16.3.1",
     "eslint": "^9.5.0",
     "gapi": "^0.0.3",
+    "n": "^9.2.3",
     "nodemon": "^3.1.4",
     "pg": "^8.11.3",
     "sequelize": "^6.32.1",
     "sequelize-cli": "^6.6.2",
+    "stable": "^0.1.8",
     "undici": "^6.13.0"
   },
   "scripts": {
     "dev": "npx nodemon .",
-    "prod":"node .",
-    "destroy_db":"npx sequelize db:drop; npx sequelize db:create; npx sequelize db:migrate"
+    "prod": "node .",
+    "destroy_db": "npx sequelize db:drop; npx sequelize db:create; npx sequelize db:migrate"
   }
 }
