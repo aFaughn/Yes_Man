@@ -31,6 +31,7 @@ module.exports = {
         .setTimestamp()
         .addFields(
             {name: 'CITATION ISSUER', value: issuer},
+            {name: 'REASON FOR CITATION', value: reason},
             {name: 'RECIPIENT OF CITATION', value: `${recipient}`, inline: true},
             {name: 'FINE AMOUNT', value: `${fine}`},
         )
