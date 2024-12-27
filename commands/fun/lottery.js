@@ -8,17 +8,29 @@ module.exports = {
     .setName('scratchoff')
     .setDescription('Buy a lottery ticet!')
     .addIntegerOption(option =>
+<<<<<<< HEAD
         option.setName('firstpick')
+=======
+        option.SetName('firstPick')
+>>>>>>> 1892c563b2adf308d35915645f83e7a1f7b89724
         .setDescription('Enter your first number between 1 and 10')
         .setRequired(true)
     )
     .addIntegerOption(option =>
+<<<<<<< HEAD
         option.setName('secondpick')
+=======
+        option.SetName('secondPick')
+>>>>>>> 1892c563b2adf308d35915645f83e7a1f7b89724
         .setDescription('Select your second number between 1 and 10')
         .setRequired(true)
     )
     .addIntegerOption(option =>
+<<<<<<< HEAD
         option.setName('thirdpick')
+=======
+        option.SetName('thirdPick')
+>>>>>>> 1892c563b2adf308d35915645f83e7a1f7b89724
         .setDescription('Pick your final number between 1 and 10')
         .setRequired(true)
     ),
@@ -36,9 +48,15 @@ module.exports = {
         }
 
         //Grab lotto ticket picks from args
+<<<<<<< HEAD
         let firstNum = interaction.options.getInteger('firstpick')
         let secondNum = interaction.options.getInteger('secondpick')
         let thirdNum = interaction.options.getInteger('thirdpick')
+=======
+        let firstNum = interaction.options.getInteger('firstPick')
+        let secondNum = interaction.options.getInteger('secondPick')
+        let thirdNum = interaction.options.getInteger('thirdPick')
+>>>>>>> 1892c563b2adf308d35915645f83e7a1f7b89724
 
         //Declares array for picks
         let picks = [firstNum, secondNum, thirdNum]
