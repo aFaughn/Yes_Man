@@ -5,7 +5,7 @@ const { User } = require("../../database/models");
 
 module.exports = {
     data: new SlashCommandBuilder()
-    .setName('scratchoff')
+    .setName('poweball')
     .setDescription('Buy a lottery ticet!')
     .addIntegerOption(option =>
         option.setName('firstpick')
@@ -57,12 +57,41 @@ module.exports = {
         //Creates Matches number ???
         let matches = 0
 
-        for (let i = 0; i < 3; i++)
-        {
-           if (picks[i] == wins[i]){
-            matches++
-           }
+        //Creates Dictionaries
+
+        let winningnums = {}
+
+        
+        //Dynamic Object Population
+        for (let i = 0; i<3; i++){
+            if (winningnums[wins[i]] == undefined){
+                winningnums[wins[i]] = 1
+            }
+            else {
+                winningnums[wins[i]]++
+            }
         }
+        
+        //Deprecated, but around for safekeeping.
+        // let pickednums = {}
+     /*   for (let i = 0; i<3; i++){
+            if (pickednums[picks[i]] == undefined){
+                pickednums[picks[i]] = 1
+            }
+            else {
+                pickednums[picks[i]]++
+            }
+        } */
+
+        //Check for matches
+        for (let i = 0; i<3; i++){
+            if (winningnums[picks[i]] === picks[i]){
+                winningnums[picks[i]]--
+                matches++
+            }
+        }
+
+
 
         if (matches <= 1)
         {
