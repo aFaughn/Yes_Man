@@ -5,7 +5,7 @@ const { User } = require("../../database/models");
 
 module.exports = {
     data: new SlashCommandBuilder()
-    .setName('poweball')
+    .setName('powerball')
     .setDescription('Buy a lottery ticet!')
     .addIntegerOption(option =>
         option.setName('firstpick')
@@ -44,9 +44,9 @@ module.exports = {
         let picks = [firstNum, secondNum, thirdNum]
 
         //Picks winning numbers
-        const firstWin = Math.random(10)
-        const secondWin = Math.random(10)
-        const thirdWin = Math.random(10)
+        const firstWin = Math.round(Math.random()*10)
+        const secondWin = Math.round(Math.random()*10)
+        const thirdWin = Math.round(Math.random()*10)
 
         //Declares array for winning nums
         let wins = [firstWin, secondWin, thirdWin]
