@@ -95,20 +95,20 @@ module.exports = {
 
         if (matches <= 1)
         {
-            await interaction.reply({content: `Not enough matches, sorry! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: 0`, ephemeral: true})
+            await interaction.reply({content: `Number of matches: ${matches} \nNot enough matches, sorry! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: 0`, ephemeral: true})
         }
 
         if (matches == 2)
             {
                 Payout = (Payout * 0.1)
                 user[0].update({points: User[0].points + Payout})
-                await interaction.reply({content: `2 Matches! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, epemeral: true})
+                await interaction.reply({content: `Number of matches: ${matches} \n2 Matches! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, epemeral: true})
             }
 
         if (matches == 3)
             {
                 user[0].update({points: user[0].points + Payout})
-                await interaction.reply({content: `3 Matches! You win the jackpot! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, ephemeral: true})
+                await interaction.reply({content: `Number of matches: ${matches} \n3 Matches! You win the jackpot! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, ephemeral: true})
             }
 
        

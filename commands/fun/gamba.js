@@ -74,7 +74,7 @@ module.exports = {
                         interaction.reply(`[🍋💲💲] (${outcome}) Stale! You break even. (+0 points)`)
                                 
                     }
-                    // Loss
+                    // Loss           |  || \n ||  |_
                     else {
                     
                         data.update({ points: userpoints - wager})
