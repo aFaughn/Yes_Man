@@ -36,6 +36,7 @@ module.exports = {
         }
 
         //Grab lotto ticket picks from args
+        // TODO prevent users from entering integers greater than 10 and less than 0
         let firstNum = interaction.options.getInteger('firstpick')
         let secondNum = interaction.options.getInteger('secondpick')
         let thirdNum = interaction.options.getInteger('thirdpick')
@@ -85,10 +86,8 @@ module.exports = {
 
         //Check for matches
         for (let i = 0; i<3; i++){
-            console.log(winningnums[picks[i]])
-            console.log(winningnums[picks[i]] > 0)
-            if (winningnums[picks[i]] > 0){
-                winningnums[picks[i]]--
+            if (winningnums[picks[new String(i)]] > 0){
+                winningnums[picks[new String(i)]]--
                 matches++
             }
         }
