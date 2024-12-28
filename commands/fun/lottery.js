@@ -45,9 +45,9 @@ module.exports = {
         let picks = [firstNum, secondNum, thirdNum]
 
         //Picks winning numbers
-        const firstWin = Math.round(Math.random()*10)
-        const secondWin = Math.round(Math.random()*10)
-        const thirdWin = Math.round(Math.random()*10)
+        const firstWin = 1//Math.round(Math.random()*10)
+        const secondWin = 2//Math.round(Math.random()*10)
+        const thirdWin = 3//Math.round(Math.random()*10)
 
         //Declares array for winning nums
         let wins = [firstWin, secondWin, thirdWin]
@@ -107,7 +107,7 @@ module.exports = {
         if (matches == 2)
             {
                 Payout = (Payout * 0.1)
-                user[0].update({points: User[0].points + Payout})
+                user[0].update({points: User[0][`points`] + Payout})
                 await interaction.reply({content: `Number of matches: ${matches} \n2 Matches! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, epemeral: true})
             }
 
