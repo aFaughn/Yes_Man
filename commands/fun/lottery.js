@@ -85,7 +85,7 @@ module.exports = {
 
         //Check for matches
         for (let i = 0; i<3; i++){
-            if (winningnums[picks[i]] === picks[i]){
+            if (winningnums[picks[i]] == picks[i]){
                 winningnums[picks[i]]--
                 matches++
             }
