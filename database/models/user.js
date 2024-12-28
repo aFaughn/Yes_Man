@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     username: DataTypes.STRING,
     remoteId: DataTypes.STRING,
-    points: DataTypes.BIGINT,
+    points: DataTypes.INTEGER,
     trust: DataTypes.INTEGER,
     inventory: DataTypes.STRING,
     blackjack: DataTypes.STRING
