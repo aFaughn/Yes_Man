@@ -113,7 +113,7 @@ module.exports = {
 
         if (matches == 3)
             {
-                user[0].update({points: user[0].points + Payout})
+                user[0].update({points: user[0]['points'] + Payout})
                 await interaction.reply({content: `Number of matches: ${matches} \n3 Matches! You win the jackpot! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, ephemeral: true})
             }
 
