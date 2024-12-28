@@ -91,14 +91,8 @@ module.exports = {
                 matches++
             }
         }
-        console.log(winningnums)
-        console.log('picks')
-        console.log(picks)
-        console.log('wins')
-        console.log(wins)
-        console.log('matches')
-        console.log(matches)
 
+        console.log(user[0].username)
 
         if (matches <= 1)
         {
