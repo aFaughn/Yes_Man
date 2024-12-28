@@ -92,6 +92,7 @@ module.exports = {
             }
         }
 
+        console.log(typeof(user[0].points))
 
         if (matches <= 1)
         {
