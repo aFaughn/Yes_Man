@@ -44,9 +44,9 @@ module.exports = {
         let picks = [firstNum, secondNum, thirdNum]
 
         //Picks winning numbers
-        const firstWin = Math.random(10)
-        const secondWin = Math.random(10)
-        const thirdWin = Math.random(10)
+        const firstWin = Math.floor(Math.random(10) * 10)
+        const secondWin = Math.floor(Math.random(10) * 10)
+        const thirdWin = Math.floor(Math.random(10) * 10)
 
         //Declares array for winning nums
         let wins = [firstWin, secondWin, thirdWin]
@@ -95,20 +95,20 @@ module.exports = {
 
         if (matches <= 1)
         {
-            await interaction.reply(`Not enough matches, sorry! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: 0`)
+            await interaction.reply({message: `Not enough matches, sorry! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: 0`, ephemeral: true})
         }
 
         if (matches == 2)
             {
                 Payout = (Payout * 0.1)
                 user[0].update({points: User[0].points + Payout})
-                await interaction.reply(`2 Matches! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`)
+                await interaction.reply({message: `2 Matches! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, epemeral: true})
             }
 
         if (matches == 3)
             {
                 user[0].update({points: user[0].points + Payout})
-                await interaction.reply(`3 Matches! You win the jackpot! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`)
+                await interaction.reply({message: `3 Matches! You win the jackpot! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, ephemeral: true})
             }
 
        
