@@ -90,6 +90,11 @@ module.exports = {
                 matches++
             }
         }
+        console.log(winningnums)
+        console.log('picks')
+        console.log(picks)
+        console.log('wins')
+        console.log(wins)
 
 
 
