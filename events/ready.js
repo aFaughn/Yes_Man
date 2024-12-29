@@ -50,7 +50,6 @@ module.exports = {
 			await client.guilds.fetch()
 			// Grab every guild this server is a member of
 			.then(guilds => {
-
 				guilds.forEach(guild => {
 
 					//Create guild entry in DB

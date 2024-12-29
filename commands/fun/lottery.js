@@ -24,12 +24,12 @@ module.exports = {
     ),
 
     async execute(interaction) {
-        const user = await User.findAll({where: {username: interaction.user.username}})
+        await User.findAll({where: {username: interaction.user.username}})
         .then(user => {
-            
+            console.log(user)
             
             if (user[0].points >= 100){
-                user[0].update({points: points - 100})
+                user[0].update({points: user[0].points - 100})
                 //These next few lines may look eerily similar to Allen's code in the gamba slash command...it is.
                 
                 //Grab user that executed the command.
@@ -44,9 +44,9 @@ module.exports = {
                 let picks = [firstNum, secondNum, thirdNum]
                 
                 //Picks winning numbers
-        const firstWin = 1//Math.round(Math.random()*10)
-        const secondWin = 2//Math.round(Math.random()*10)
-        const thirdWin = 3//Math.round(Math.random()*10)
+        const firstWin = Math.round(Math.random()*10)
+        const secondWin = Math.round(Math.random()*10)
+        const thirdWin = Math.round(Math.random()*10)
 
         //Declares array for winning nums
         let wins = [firstWin, secondWin, thirdWin]
