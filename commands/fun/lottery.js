@@ -24,12 +24,12 @@ module.exports = {
     ),
 
     async execute(interaction) {
+        const user = await User.findAll({where: {username: interaction.user.username}})
         if (user[0].points >= 100){
            await user[0].update({points: points - 100})
         //These next few lines may look eerily similar to Allen's code in the gamba slash command...it is.
         
         //Grab user that executed the command.
-        const user = await User.findAll({where: {username: interaction.user.username}})
 
         //Err handling -- No user
         if (!user[0]) {
