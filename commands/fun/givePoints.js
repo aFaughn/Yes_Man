@@ -11,7 +11,7 @@ module.exports = {
         .then((data) => {
             if (!data[0]) {
                 interaction.reply({ content: '⚠ No user found! Please run /create_user first!', ephemeral: true})
-            } else if (!data[0].points <= 0) {
+            } else if (!data[0].points > 0) {
                 interaction.reply({ content: `⚠ You may only run this command when you have 0 points!`, ephemeral: true })
             } else {
                 data[0].update({ points: 100 })
