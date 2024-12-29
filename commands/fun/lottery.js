@@ -25,27 +25,25 @@ module.exports = {
 
     async execute(interaction) {
         const user = await User.findAll({where: {username: interaction.user.username}})
-        if (await user[0].points >= 100){
-           await user[0].update({points: points - 100})
-        //These next few lines may look eerily similar to Allen's code in the gamba slash command...it is.
-        
-        //Grab user that executed the command.
-
-        //Err handling -- No user
-        if (!user[0]) {
-            interaction.reply('⚠ No user found! Please run /create_user first!')
-        }
-
-        //Grab lotto ticket picks from args
-        // TODO prevent users from entering integers greater than 10 and less than 0
-        let firstNum = interaction.options.getInteger('firstpick')
-        let secondNum = interaction.options.getInteger('secondpick')
-        let thirdNum = interaction.options.getInteger('thirdpick')
-
-        //Declares array for picks
-        let picks = [firstNum, secondNum, thirdNum]
-
-        //Picks winning numbers
+        .then(user => {
+            
+            
+            if (user[0].points >= 100){
+                user[0].update({points: points - 100})
+                //These next few lines may look eerily similar to Allen's code in the gamba slash command...it is.
+                
+                //Grab user that executed the command.
+                
+                //Grab lotto ticket picks from args
+                // TODO prevent users from entering integers greater than 10 and less than 0
+                let firstNum = interaction.options.getInteger('firstpick')
+                let secondNum = interaction.options.getInteger('secondpick')
+                let thirdNum = interaction.options.getInteger('thirdpick')
+                
+                //Declares array for picks
+                let picks = [firstNum, secondNum, thirdNum]
+                
+                //Picks winning numbers
         const firstWin = 1//Math.round(Math.random()*10)
         const secondWin = 2//Math.round(Math.random()*10)
         const thirdWin = 3//Math.round(Math.random()*10)
@@ -55,14 +53,14 @@ module.exports = {
 
         //Declares Payout
         let Payout = 100000
-
+        
         //Creates Matches number ???
         let matches = 0
 
         //Creates Dictionaries
 
         let winningnums = {}
-
+        
         
         //Dynamic Object Population
         for (let i = 0; i<3; i++){
@@ -97,27 +95,28 @@ module.exports = {
 
         if (matches <= 1)
         {
-            await interaction.reply({content: `Number of matches: ${matches} \nNot enough matches, sorry! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: 0`, ephemeral: true})
+            interaction.reply({content: `Number of matches: ${matches} \nNot enough matches, sorry! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: 0`, ephemeral: true})
         }
 
         if (matches == 2)
             {
                 Payout = (Payout * 0.1)
-                await user[0].update({ points: (user[0].points + Payout)})
-                await interaction.reply({content: `Number of matches: ${matches} \n2 Matches! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, ephemeral: true})
+                user[0].update({ points: (user[0].points + Payout)})
+                interaction.reply({content: `Number of matches: ${matches} \n2 Matches! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, ephemeral: true})
             }
+            
+            if (matches == 3)
+                {
+                    user[0].update({ points: (user[0].points + Payout)})
+                    interaction.reply({content: `Number of matches: ${matches} \n3 Matches! You win the jackpot! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, ephemeral: true})
+                }
 
-        if (matches == 3)
-            {
-                await user[0].update({ points: (user[0].points + Payout)})
-                await interaction.reply({content: `Number of matches: ${matches} \n3 Matches! You win the jackpot! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, ephemeral: true})
+                
             }
-
-       
+            else {
+             interaction.reply(`Not enough money to buy a lotto ticket... 👀 (use /give_points)`)
     }
-    else {
-        await interaction.reply(`Not enough money to buy a lotto ticket... 👀 (use /give_points)`)
-    }
-
+    
+    })
 }
 }
