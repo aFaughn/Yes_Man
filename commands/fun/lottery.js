@@ -26,8 +26,7 @@ module.exports = {
     async execute(interaction) {
         await User.findAll({where: {username: interaction.user.username}})
         .then(user => {
-            console.log(user)
-            
+         //   console.log(user)
             if (user[0].points >= 100){
                 user[0].update({points: user[0].points - 100})
                 //These next few lines may look eerily similar to Allen's code in the gamba slash command...it is.
@@ -51,7 +50,7 @@ module.exports = {
         //Declares array for winning nums
         let wins = [firstWin, secondWin, thirdWin]
 
-        //Declares Payout
+        //Declares Payout TODO: Configurable starting jackpot, dynamic jackpot based on num tix.
         let Payout = 100000
         
         //Creates Matches number ???
@@ -91,7 +90,7 @@ module.exports = {
             }
         }
 
-        console.log(typeof(user[0].points))
+        //console.log(typeof(user[0].points))
 
         if (matches <= 1)
         {
@@ -102,13 +101,13 @@ module.exports = {
             {
                 Payout = (Payout * 0.1)
                 user[0].update({ points: (user[0].points + Payout)})
-                interaction.reply({content: `Number of matches: ${matches} \n2 Matches! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, ephemeral: true})
+                interaction.reply({content: `Number of matches: ${matches} \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, ephemeral: true})
             }
             
             if (matches == 3)
                 {
                     user[0].update({ points: (user[0].points + Payout)})
-                    interaction.reply({content: `Number of matches: ${matches} \n3 Matches! You win the jackpot! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, ephemeral: true})
+                    interaction.reply({content: `Number of matches: ${matches}!! \nYou win the jackpot! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, ephemeral: true})
                 }
 
                 
