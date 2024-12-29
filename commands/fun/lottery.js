@@ -24,7 +24,8 @@ module.exports = {
     ),
 
     async execute(interaction) {
-        
+        if (user[0].points >= 100){
+           await user[0].update({points: points - 100})
         //These next few lines may look eerily similar to Allen's code in the gamba slash command...it is.
         
         //Grab user that executed the command.
@@ -114,6 +115,9 @@ module.exports = {
 
        
     }
+    else {
+        await interaction.reply(`Not enough money to buy a lotto ticket... 👀 (use /give_points)`)
+    }
 
-
+}
 }
