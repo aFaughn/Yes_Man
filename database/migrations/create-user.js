@@ -36,7 +36,7 @@ module.exports = {
         unique: true,
       },
       points: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.INTEGER,
         unique: false,
         allowNull: true,
         defaultValue: 100,
