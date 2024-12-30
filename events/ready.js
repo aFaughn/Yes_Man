@@ -73,6 +73,8 @@ module.exports = {
 		}
 
 		// Create user entries for everyone in the server if there are no entries.
+		// If you recently added this bot to your server and users are not being registered, it's probably because you
+		// didn't assign the correct intents (guilds, specifically).
 		const dbCheck = await User.findAll({logging: false})
 		if (!dbCheck[0]) {
 			await client.guilds.fetch()
