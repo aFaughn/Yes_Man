@@ -34,25 +34,23 @@ module.exports = {
 					.then(guilds => guilds.forEach(guild => {
 						Config.findOne({where: { guildId: guild.id }})
 						.then(config => {
-							if (config.APODChannel === undefined) {
+							if (config.dataValues.APODChannel === '') {
 								console.log('Tried to push an APOD but the user has yet to declare an APOD Channel in their config.')
 							} else {
-								console.log('~~~~~~')
-								console.log(config.APODChannel)
-								client.channels.fetch(config.APODChannel)
-								.then(channel => {
-									if (channel) {
-										console.log(channel)
-										channel.send(`Nasa Astronomy Picture Of The Day \n**${data.title}** \n${data.url} \n${data.explanation}`)
-									} else {
-										console.log('tried to send an APOD but no channel was found.')
-									}
-								})
+								try {
+									client.channels.fetch(config.dataValues.APODChannel)
+									.then(channel => {
+											console.log(channel)
+											channel.send(`Nasa Astronomy Picture Of The Day \n**${data.title}** \n${data.url} \n${data.explanation}`)
+									})
+								} catch (e) {
+									console.log(`APOD ran into an error while trying to execute: \n`, e)
+								}
 							}
 						})
 					}))
 				})
-			}, 5000)
+			}, 86400000)
 			// WARNING!!!! SETTING THE TIMEOUT TOO SHORT WILL RESULT IN REVOCATION OF YOUR API KEY!!!!!
 			// GENERALLY IT IS BEST TO NOT QUERY PUBLIC API'S MORE THAN 120 TIMES / MONTH
 		} catch (error) {
@@ -62,7 +60,7 @@ module.exports = {
 		// Create user entries for everyone in the server if there are no entries.
 		const dbCheck = await User.findAll({logging: false})
 		if (!dbCheck[0]) {
-			await client.guilds.cache
+			await client.guilds.fetch()
 			// Grab every guild this server is a member of
 			.then(guilds => {
 				guilds.forEach(guild => {
