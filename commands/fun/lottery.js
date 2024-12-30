@@ -11,16 +11,22 @@ module.exports = {
         option.setName('firstpick')
         .setDescription('Enter your first number between 1 and 10')
         .setRequired(true)
+        .setMinValue(1)
+        .setMaxValue(10)
     )
     .addIntegerOption(option =>
         option.setName('secondpick')
         .setDescription('Select your second number between 1 and 10')
         .setRequired(true)
+        .setMinValue(1)
+        .setMaxValue(10)
     )
     .addIntegerOption(option =>
         option.setName('thirdpick')
         .setDescription('Pick your final number between 1 and 10')
         .setRequired(true)
+        .setMinValue(1)
+        .setMaxValue(10)
     ),
 
     async execute(interaction) {
