@@ -22,6 +22,7 @@ module.exports = {
 		});
 
 		// NASA APOD
+		// Welcome to callback hell.
 		try {
 			setInterval(async () => {
 				const apod = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`, {
@@ -31,12 +32,27 @@ module.exports = {
 				.then(data => {
 					client.guilds.fetch()
 					.then(guilds => guilds.forEach(guild => {
-						const config = Config.findOne({where: { guildId: guild.id }})
-						const channel = client.channels.fetch(config.APODChannel)
-						channel.send(`Nasa Astronomy Picture Of The Day \n**${data.title}** \n${data.url} \n${data.explanation}`)
+						Config.findOne({where: { guildId: guild.id }})
+						.then(config => {
+							if (config.APODChannel === undefined) {
+								console.log('Tried to push an APOD but the user has yet to declare an APOD Channel in their config.')
+							} else {
+								console.log('~~~~~~')
+								console.log(config.APODChannel)
+								client.channels.fetch(config.APODChannel)
+								.then(channel => {
+									if (channel) {
+										console.log(channel)
+										channel.send(`Nasa Astronomy Picture Of The Day \n**${data.title}** \n${data.url} \n${data.explanation}`)
+									} else {
+										console.log('tried to send an APOD but no channel was found.')
+									}
+								})
+							}
+						})
 					}))
 				})
-			}, 86400000)
+			}, 5000)
 			// WARNING!!!! SETTING THE TIMEOUT TOO SHORT WILL RESULT IN REVOCATION OF YOUR API KEY!!!!!
 			// GENERALLY IT IS BEST TO NOT QUERY PUBLIC API'S MORE THAN 120 TIMES / MONTH
 		} catch (error) {
