@@ -109,20 +109,20 @@ module.exports = {
 
         if (matches <= 1)
         {
-            interaction.reply({content: `Number of matches: ${matches} \nNot enough matches, sorry! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: 0`, ephemeral: true})
+            interaction.reply({content: `Number of matches: ${matches} \nNot enough matches, sorry! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: 0 \nNew Balance: ${user[0].points}`, ephemeral: true})
         }
 
         if (matches == 2)
             {
                 Payout = (Payout * 0.1)
                 user[0].update({ points: (user[0].points + Payout)})
-                interaction.reply({content: `Number of matches: ${matches} \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, ephemeral: true})
+                interaction.reply({content: `Number of matches: ${matches} \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout} \nNew Balance: ${user[0].points}`, ephemeral: true})
             }
             
             if (matches == 3)
                 {
                     user[0].update({ points: (user[0].points + Payout)})
-                    interaction.reply({content: `Number of matches: ${matches}!! \nYou win the jackpot! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout}`, ephemeral: true})
+                    interaction.reply({content: `Number of matches: ${matches}!! \nYou win the jackpot! \nWinning Numbers: ${wins} \nYour Picks: ${picks} \nPoints Awarded: ${Payout} \nNew Balance: ${user[0].points}`, ephemeral: true})
                 }
 
                 

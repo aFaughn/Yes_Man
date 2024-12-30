@@ -48,7 +48,7 @@ module.exports = {
 
                         reward = wager * 10
                         user[0].update({ points: user[0].points + reward  })
-                        interaction.reply(`[💎💎💎] \n (${outcome}) JACKPOT!!! You got ${reward}`)
+                        interaction.reply(`[💎💎💎] \n (${outcome}) JACKPOT!!! You got ${reward} \nNew Balance: ${user[0].points}`)
 
                     }
                     // 69
@@ -56,7 +56,7 @@ module.exports = {
                     
                         reward = wager * 69
                         user[0].update({ points: user[0].points + reward  })
-                        interaction.reply(`[6️⃣9️⃣6️⃣9️⃣6️⃣9️⃣6️⃣9️⃣] \n LOLOLOLOLOLOLOLOL YOU ROLLED ${outcome} You got ${reward} points!`)
+                        interaction.reply(`[6️⃣9️⃣6️⃣9️⃣6️⃣9️⃣6️⃣9️⃣] \n LOLOLOLOLOLOLOLOL YOU ROLLED ${outcome} You got ${reward} points! \nNew Balance: ${user[0].points}`)
                     
                     }
                     // Good Reward
@@ -64,7 +64,7 @@ module.exports = {
                             
                         reward = wager * 3
                         user[0].update({ points: user[0].points + reward  })
-                        interaction.reply(`[🍒🍒🍒] \n (${outcome}) Big Winner! You got ${reward} points!`)
+                        interaction.reply(`[🍒🍒🍒] \n (${outcome}) Big Winner! You got ${reward} points! \nNew Balance: ${user[0].points}`)
                             
                     }
                     // Middling Reward
@@ -72,20 +72,20 @@ module.exports = {
                     
                         reward = wager * 1.5
                         user[0].update({ points: user[0].points + reward  })
-                        interaction.reply(`[🍋🍋🍋] \n (${outcome}) Winner! You got ${reward} points!`)
+                        interaction.reply(`[🍋🍋🍋] \n (${outcome}) Winner! You got ${reward} points! \nNew Balance: ${user[0].points}`)
                                 
                     }
                     // Break Even
                     else if (outcome < 50 && outcome >= 45) {
                     
-                        interaction.reply(`[🍋💲💲] (${outcome}) Stale! You break even. (+0 points)`)
+                        interaction.reply(`[🍋💲💲] (${outcome}) Stale! You break even. (+0 points) \nNew Balance: ${user[0].points}`)
                                 
                     }
                     // Loss           |  || \n ||  |_
                     else if (outcome <45){
                     
                         user[0].update({ points: user[0].points - wager  })
-                        interaction.reply(`[🍋🍒🥝] \n (${outcome}) Loss! You lost your wager! -${wager} points!`)
+                        interaction.reply(`[🍋🍒🥝] \n (${outcome}) Loss! You lost your wager! -${wager} points! \nNew Balance: ${user[0].points}`)
                             
                     }
                 }
