@@ -11,16 +11,22 @@ module.exports = {
         option.setName('firstpick')
         .setDescription('Enter your first number between 1 and 10')
         .setRequired(true)
+        .setMinValue(1)
+        .setMaxValue(10)
     )
     .addIntegerOption(option =>
         option.setName('secondpick')
         .setDescription('Select your second number between 1 and 10')
         .setRequired(true)
+        .setMinValue(1)
+        .setMaxValue(10)
     )
     .addIntegerOption(option =>
         option.setName('thirdpick')
         .setDescription('Pick your final number between 1 and 10')
         .setRequired(true)
+        .setMinValue(1)
+        .setMaxValue(10)
     ),
 
     async execute(interaction) {
@@ -43,9 +49,18 @@ module.exports = {
                 let picks = [firstNum, secondNum, thirdNum]
                 
                 //Picks winning numbers
-        const firstWin = Math.round(Math.random()*10)
-        const secondWin = Math.round(Math.random()*10)
-        const thirdWin = Math.round(Math.random()*10)
+        let firstWin = Math.round(Math.random()*10)
+                if (firstWin == 0){
+                    firstWin = 1
+                }
+        let secondWin = Math.round(Math.random()*10)
+                if (secondWin == 0){
+                    secondWin = 1
+                }
+        let thirdWin = Math.round(Math.random()*10)
+                if (thirdWin == 0){
+                    thirdWin = 1
+                }
 
         //Declares array for winning nums
         let wins = [firstWin, secondWin, thirdWin]
