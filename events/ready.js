@@ -23,27 +23,41 @@ module.exports = {
 
 		// NASA APOD
 		// Welcome to callback hell.
+		// Going to annotate this so reading this later is less painful.
 		try {
 			setInterval(async () => {
+				// Set an interval so the APOD is fetched every 24hrs.
+				// We only fetch this once, up here, outside of the each server func because 
+				// if we spanned across a shit ton of servers we will spam the API and get banned.
 				const apod = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`, {
 					method: "GET",
 				})
+				// Fetch the APOD.
 				.then(response => response.json())
+				// Parse data from a JSON string to javascript.
 				.then(data => {
+					// Once the data has been recieved and parsed...
 					client.guilds.fetch()
+					// Fetch every guild the bot is a member of.
 					.then(guilds => guilds.forEach(guild => {
 						Config.findOne({where: { guildId: guild.id }})
+						// Find the corresponding configuration settings for this guild.
 						.then(config => {
+							// Execute some logic based on what the APOD Channel value is inside config.
 							if (config.dataValues.APODChannel === '') {
+								// In this case, the user has yet to set an APOD channel so we'll just spit a console log and move on.
 								console.log('Tried to push an APOD but the user has yet to declare an APOD Channel in their config.')
 							} else {
 								try {
+									// In case discord is down and the fetch fails we don't want our entire app to crash so this is in a try block.
 									client.channels.fetch(config.dataValues.APODChannel)
+									// Load the APOD channel into memory by querying it by ID.
 									.then(channel => {
-											console.log(channel)
+										// Finally, we send the APOD.
 											channel.send(`Nasa Astronomy Picture Of The Day \n**${data.title}** \n${data.url} \n${data.explanation}`)
 									})
 								} catch (e) {
+									// If you got here, something fucked up.
 									console.log(`APOD ran into an error while trying to execute: \n`, e)
 								}
 							}
@@ -53,6 +67,7 @@ module.exports = {
 			}, 86400000)
 			// WARNING!!!! SETTING THE TIMEOUT TOO SHORT WILL RESULT IN REVOCATION OF YOUR API KEY!!!!!
 			// GENERALLY IT IS BEST TO NOT QUERY PUBLIC API'S MORE THAN 120 TIMES / MONTH
+			// 86400000 == 24 Hours
 		} catch (error) {
 			console.log(error)
 		}
