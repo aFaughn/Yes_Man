@@ -1,5 +1,3 @@
-// TODO Every promise in this file needs a .catch() method.
-
 const { Events, ActivityType } = require('discord.js');
 const { User, Guild, Config } = require('../database/models');
 const apiKey = process.env.NASA_API_KEY
@@ -22,7 +20,6 @@ module.exports = {
 			}],
 			status: 'online'
 		});
-		
 
 		// NASA APOD
 		try {
@@ -40,6 +37,8 @@ module.exports = {
 					}))
 				})
 			}, 86400000)
+			// WARNING!!!! SETTING THE TIMEOUT TOO SHORT WILL RESULT IN REVOCATION OF YOUR API KEY!!!!!
+			// GENERALLY IT IS BEST TO NOT QUERY PUBLIC API'S MORE THAN 120 TIMES / MONTH
 		} catch (error) {
 			console.log(error)
 		}
@@ -47,7 +46,7 @@ module.exports = {
 		// Create user entries for everyone in the server if there are no entries.
 		const dbCheck = await User.findAll({logging: false})
 		if (!dbCheck[0]) {
-			await client.guilds.fetch()
+			await client.guilds.cache
 			// Grab every guild this server is a member of
 			.then(guilds => {
 				guilds.forEach(guild => {
