@@ -1,4 +1,4 @@
-const { Events, ActivityType } = require('discord.js');
+const { Events, ActivityType, EmbedBuilder } = require('discord.js');
 const { User, Guild, Config } = require('../database/models');
 const apiKey = process.env.NASA_API_KEY
 
@@ -54,7 +54,14 @@ module.exports = {
 									// Load the APOD channel into memory by querying it by ID.
 									.then(channel => {
 										// Finally, we send the APOD.
-											channel.send(`Nasa Astronomy Picture Of The Day \n**${data.title}** \n${data.url} \n${data.explanation}`)
+											// channel.send(`Nasa Astronomy Picture Of The Day \n**${data.title}** \n${data.url} \n${data.explanation}`)
+											let embed = new EmbedBuilder()
+											.setColor('#0066ff')
+											.setTitle('NASA Astronomy Picture Of the Day')
+											.setDescription(data.explanation)
+											.setImage(data.url)
+											.setFields({name: 'Image Title', value: data.title})
+											channel.send({ embeds: [embed]})
 									})
 								} catch (e) {
 									// If you got here, something fucked up.
@@ -64,7 +71,7 @@ module.exports = {
 						})
 					}))
 				})
-			}, 86400000)
+			}, 5000)
 			// WARNING!!!! SETTING THE TIMEOUT TOO SHORT WILL RESULT IN REVOCATION OF YOUR API KEY!!!!!
 			// GENERALLY IT IS BEST TO NOT QUERY PUBLIC API'S MORE THAN 120 TIMES / MONTH
 			// 86400000 == 24 Hours
