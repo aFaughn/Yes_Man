@@ -82,7 +82,7 @@ module.exports = {
                                 
                     }
                     // Loss           |  || \n ||  |_
-                    else if (outcome <45){
+                    else if (outcome < 45){
                     
                         user[0].update({ points: user[0].points - wager  })
                         interaction.reply(`[🍋🍒🥝] \n (${outcome}) Loss! You lost your wager! -${wager} points! \nNew Balance: ${user[0].points}`)

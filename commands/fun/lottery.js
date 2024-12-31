@@ -6,7 +6,7 @@ const { User } = require("../../database/models");
 module.exports = {
     data: new SlashCommandBuilder()
     .setName('powerball')
-    .setDescription('Buy a lottery ticet!')
+    .setDescription('Buy a lottery ticket!')
     .addIntegerOption(option =>
         option.setName('firstpick')
         .setDescription('Enter your first number between 1 and 10')
