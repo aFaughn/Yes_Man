@@ -10,7 +10,7 @@ module.exports = {
 		await User.findAll({where: {username: interaction.user.username}})
 		.then((data) => {
 			if (!data[0]) {
-				interaction.reply('⚠ No user found! Please run /create_user first!')
+				interaction.reply('⚠ No user found!')
 			} else {
 
 				interaction.reply(`${interaction.user.username}, your point balance is ${data[0].points}.`)

@@ -1,37 +1,11 @@
 const { Events } = require('discord.js');
 const { User, Config } = require("../database/models");
-let film;
-let calculateTotal = (hand) => {
-	let accum = 0;
-	for (let i = 0; i < hand.length; i++) {
-		let cur = hand[i]
-		if (cur === 1) {
-			accum += 11
-		}
-		else if (cur === 11 || cur === 12 || cur === 13) {
-			accum += 10
-		}
-		else if (cur === 14) {
-			accum += 1
-		} else {
-			accum += cur
-		}
-	}
-	return accum
-}
-const resetGame = {
-	wager: 0,
-	gameState: 0,
-	hands: {
-		dealer: [],
-		user: [],
-	}
-}
 
 module.exports = {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
 		const { client } = interaction;
+		let film;
 
 		// Slash Command listeners
 		if (interaction.isChatInputCommand()) {
@@ -83,6 +57,8 @@ module.exports = {
 
 		// Modal
 		if (interaction.isModalSubmit()) {
+
+			// Config Modal
 			if (interaction.customId === 'configModal') {
 
 				const pcid = interaction.fields.getTextInputValue('plexChannelId');

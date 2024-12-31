@@ -8,6 +8,15 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const deployCommands = (dir) => {
+    /*
+
+    Parses the entire /commands folder for files with .js extension
+    and registers them to the discord slashcommand api.
+
+    Never put any .js files in commands if they are not commands or you -will- break
+    this function.
+
+    */
     const commands = [];
     // Grab all the command files from the commands directory you created earlier
     const foldersPath = path.join(dir, 'commands');
