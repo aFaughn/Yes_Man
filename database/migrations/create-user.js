@@ -46,6 +46,11 @@ module.exports = {
         allowNull: false,
         defaultValue: 100
       },
+      rank: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'Dust'
+      },
       inventory: {
         type: Sequelize.STRING(9999),
         allowNull: true,

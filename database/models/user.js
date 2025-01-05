@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     remoteId: DataTypes.STRING,
     points: DataTypes.INTEGER,
     trust: DataTypes.INTEGER,
+    rank: DataTypes.STRING,
     inventory: DataTypes.STRING,
     blackjack: DataTypes.STRING
   }, {
