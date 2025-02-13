@@ -1,4 +1,4 @@
-# Yes Man Documentation (v.0.57)
+# Yes Man Documentation (v.1.1)
 
 ## Installation
 
