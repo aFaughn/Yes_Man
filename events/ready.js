@@ -53,15 +53,32 @@ module.exports = {
 									client.channels.fetch(config.dataValues.APODChannel)
 									// Load the APOD channel into memory by querying it by ID.
 									.then(channel => {
-										// Finally, we send the APOD.
-											// channel.send(`Nasa Astronomy Picture Of The Day \n**${data.title}** \n${data.url} \n${data.explanation}`)
+										// We have all the data we need. Time to build the embed.
+
+										// Sometimes APOD doesn't send an image but instead a video.
+										// Discord embeds do not support nested embeds yet so we need to accomodate for that.
+										if (data.url.substring(12, 23) === 'youtube.com') {
+											let embed = new EmbedBuilder()
+											.setColor('#0066ff')
+											.setTitle("Nasa Astronomy Video Of the Day")
+											.setDescription(data.explanation)
+											.setFields({name: 'Image Title', value: data.title})
+
+											// First send our embed with all our nice information for the user.
+											channel.send({ embeds: [embed]})
+											// Then send a regular messsage that discord can embed into the app normally.
+											channel.send({ content: data.url})	
+
+										} else {
 											let embed = new EmbedBuilder()
 											.setColor('#0066ff')
 											.setTitle('NASA Astronomy Picture Of the Day')
 											.setDescription(data.explanation)
 											.setImage(data.url)
 											.setFields({name: 'Image Title', value: data.title})
+											// Finally, we send the APOD.
 											channel.send({ embeds: [embed]})
+										}
 									})
 								} catch (e) {
 									// If you got here, something fucked up.
