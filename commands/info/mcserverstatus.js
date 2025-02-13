@@ -20,19 +20,19 @@ module.exports = {
         }
       })
       .then(data => {
-        if (data.error) {
+        if (data.online === false) {
           let embed = new EmbedBuilder()
             .setColor("FF0000")
             .setTitle("Minecraft Server Status: [DOWN]")
-            .setDescription(`${data.error}`)
+            .setDescription("The Minecraft server is down! Contact an admin ASAP!")
             .setTimestamp();
 
           interaction.reply({ embeds: [embed] });
-        } else {
+        } else if (data.online === true) {
           players = "";
           if (data.players.list) {
             for (let i = 1; i < data.players.list.length + 1; i++) {
-              players += `${i}. ${data.players.list[i - 10]["name"]}`;
+              players += `${i}. ${data.players.list[i - 1]["name"]}, `;
             }
           }
           let embed = new EmbedBuilder()
