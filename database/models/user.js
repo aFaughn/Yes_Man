@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     points: DataTypes.INTEGER,
     trust: DataTypes.INTEGER,
     inventory: DataTypes.STRING,
-    blackjack: DataTypes.STRING
+    blackjack: DataTypes.STRING,
+    fishingXP: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'User',
