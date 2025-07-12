@@ -2,7 +2,7 @@ const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
 const wait = require('node:timers/promises').setTimeout
 const { User } = require('../../database/models')
 
-fishSizes = [
+let fishSizes = [
     'Tiny',
     'Small',
     'Young',
@@ -15,7 +15,7 @@ fishSizes = [
     "Mother-of-all"
 ]
 
-fishTypes = {
+let fishTypes = {
     trash: [
         'Old boot',
         'Fast Food wrapper',
@@ -90,8 +90,10 @@ module.exports = {
 	async execute(interaction) {
         await interaction.deferReply()
         await wait(3_000)
-        const roll      = Math.floor(Math.random() * 10000)
-        const sizeMod   = Math.floor(Math.random() * 10000)
+        let roll        = Math.floor(Math.random() * 10001)
+        let sizeMod     = Math.floor(Math.random() * 10001)
+        let catMod      = 1
+        let fishType    = ''
         const user      = await User.findOne({ where: { name: interaction.user.username}})
         const userXP    = await user.fishingXP
 
@@ -123,44 +125,87 @@ module.exports = {
         // Calculate size
 
         // Apply xp bonus to roll
+
+        
         roll = roll + ((userXP / 10) / 2)
 
         switch (sizeMod) {
-            case sizeMod < 1000:
+            case sizeMod < 2000:
+                sizeMod = 0.01
+                fishType = fishTypes.trash[Math.floor(Math.random() * fishTypes.trash.length)]
+
+            case sizeMod >= 2000 && sizeMod < 4000:
                 sizeMod = 1
+                fishType = fishTypes.trash[Math.floor(Math.random() * fishTypes.small.length)]
                 
-            case sizeMod >= 1000 && sizeMod < 2000:
-                sizeMod = 1.10
+            case sizeMod >= 4000 && sizeMod < 6000:
+                sizeMod = 1.5
+                fishType = fishTypes.trash[Math.floor(Math.random() * fishTypes.medium.length)]
                 
-            case sizeMod >= 2000 && sizeMod < 3000:
-                sizeMod = 1.30
-                
-            case sizeMod >= 3000 && sizeMod < 4000:
-                sizeMod = 1.50
-                
-            case sizeMod >= 4000 && sizeMod < 5000:
-                sizeMod = 2.00
-                
-            case sizeMod >= 5000 && sizeMod < 6000:
-                sizeMod = 2.30
+            case sizeMod >= 8000 && sizeMod < 9999:
+                sizeMod = 2.5
+                fishType = fishTypes.trash[Math.floor(Math.random() * fishTypes.large.length)]
 
-            case sizeMod >= 6000 && sizeMod < 7000:
-                sizeMod = 2.50
-
-            case sizeMod >= 7000 && sizeMod < 8000:
-                sizeMod = 2.75
-
-            case sizeMod >= 8000 && sizeMod < 9500:
-                sizeMod = 3.00
-
-            case sizeMod >= 9500:
-                sizeMod = 10
+            case sizeMod > 9999:
+                sizeMod = 5
+                fishType = fishTypes.trash[Math.floor(Math.random() * fishTypes.legendary.length)]
 
             default:
                 break;
         }
+        
 
+        switch (roll) {
+            case roll < 1000:
+                roll = fishSizes[Math.trunc(roll / 1000)]
+                catMod = 1
 
+            case roll <= 2000 && roll > 1000:
+                roll = fishSizes[Math.trunc(roll / 1000)]
+                catMod = 1.10
+
+            case roll <= 3000 && roll > 2000:
+                roll = fishSizes[Math.trunc(roll / 1000)]
+                catMod = 1.30
+
+            case roll <= 4000 && roll > 3000:
+                roll = fishSizes[Math.trunc(roll / 1000)]
+                catMod = 1.50
+
+            case roll <= 5000 && roll > 4000:
+                roll = fishSizes[Math.trunc(roll / 1000)]
+                catMod = 2
+
+            case roll <= 6000 && roll > 5000:
+                roll = fishSizes[Math.trunc(roll / 1000)]
+                catMod = 2.3
+
+            case roll <= 7000 && roll > 6000:
+                roll = fishSizes[Math.trunc(roll / 1000)]
+                catMod = 2.5
+
+            case roll <= 8000 && roll > 7000:
+                roll = fishSizes[Math.trunc(roll / 1000)]
+                catMod = 2.75
+
+            case roll <= 9000 && roll > 8000:
+                roll = fishSizes[Math.trunc(roll / 1000)]
+                catMod = 3
+
+            case roll > 9000:
+                roll = fishSizes[Math.trunc(roll / 1000)]
+                catMod = 10
+
+        }
+
+        let base = 10
+        let xpGain = base * catMod * sizeMod
+
+        await user.update({ fishingXP: userXP + xpGain})
+        await db.session.add(user)
+        await db.session.commit()
+
+        await interaction.reply(`You caught a ${roll} ${fishType} that was worth ${xpGain}!`)
 
 	},
 };
