@@ -210,7 +210,7 @@ module.exports = {
         await user.update({ fishingXP: Math.round(user.fishingXP + xpGain)})
 
         await interaction.editReply(
-            `🐟 You caught a${roll[0] === 'A' ? 'n' : ''} ${roll} ${fishType} that was worth ${xpGain} xp. 🐟\nTotal XP: ${await user.fishingXP}\nRank: ${fisherRanks[Math.trunc(user.fishingXP / 10000)]} Angler \nRank ${Math.trunc(user.fishingXP / 10000)} / 10`
+            `🎣 You caught a${roll[0] === 'A' ? 'n' : ''} ${roll} ${fishType} that was worth ${xpGain} xp.\n🧠Total XP: ${await user.fishingXP}\n🎖️Rank: ${fisherRanks[Math.trunc(user.fishingXP / 10000)]} Angler \n🚀Rank ${Math.trunc(user.fishingXP / 10000)} / 10`
             )
 
 	},
