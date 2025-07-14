@@ -56,6 +56,11 @@ module.exports = {
         allowNull: true,
         defaultValue: JSON.stringify(defaultBlackjack)
       },
+      fishingXP: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
