@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
+import { SlashCommandBuilder } from "discord.js";
 
 const bars = [
 	"I'm movin' different.",
@@ -24,7 +24,7 @@ const bars = [
 	"Balled so hard they thought I was a fuckin' nut sack."
 ]
 
-module.exports = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName('dracula_flow')
 		.setDescription('Prints a random Dracula Flow.'),

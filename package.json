@@ -1,7 +1,12 @@
 {
-  "name": "mydiscordbot",
-  "version": "0.0.1",
+  "name": "yes-man",
+  "displayName":"Yes-Man",
+  "version": "0.1.0",
   "private": true,
+  "type":"module",
+  "engines": {
+    "node":">=16.0.0"
+  },
   "dependencies": {
     "coffeescript": "^2.7.0",
     "discord.js": "^14.11.0",

@@ -1,18 +1,17 @@
-// const User = require('./User');
-// const Counter = require('./Counter')
-// const Guild = require('./Guild')
-// const Config = require('./Config')
-
-// module.exports = {User, Counter, Guild, Config};
-
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
+import fs from 'node:fs';
+import path from 'node:path';
+import { Sequelize } from 'sequelize';
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../../config/database.js')[env];
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+import cfg from '../../config/database.js';;
+let config = cfg[env];
+
 const db = {};
 
 let sequelize;
@@ -30,6 +29,7 @@ fs
   .forEach(file => {
     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes)
     db[model.name] = model;
+    console.log('~``~~~~~~~~~~~~~' ,db)
   });
 
 Object.keys(db).forEach(modelName => {
@@ -41,4 +41,4 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+export default db;

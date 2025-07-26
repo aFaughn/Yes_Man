@@ -1,7 +1,9 @@
-const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require("discord.js");
-const { Config, User, Guild } = require("../../database/models");
+import { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } from 'discord.js';
+import Config from "../../database/models/config.js";
+import User from "../../database/models/user.js";
+import Guild from "../../database/models/guild.js";
 
-module.exports = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName('config_update')
 		.setDescription('Modify the configuration settings of Yes Man'),

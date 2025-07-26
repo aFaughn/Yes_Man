@@ -1,5 +1,6 @@
-const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
-module.exports = {
+import { SlashCommandBuilder } from "discord.js";
+
+export default{
 	data: new SlashCommandBuilder()
 		.setName('roll')
 		.setDescription('Roll a dice. Defaults to a 20 sided die.')

@@ -1,13 +1,15 @@
-require('dotenv').config()
-const { REST, Routes } = require('discord.js');
+import dotenv from 'dotenv'
+dotenv.config()
+import { REST, Routes } from 'discord.js';
+import fs from 'node:fs';
+import path from 'node:path';
+
 const token = process.env.API_KEY
 const clientId = process.env.CLIENT_ID
 const devGuildId = process.env.GUILD_ID
 const env = process.env.NODE_ENV
-const fs = require('node:fs');
-const path = require('node:path');
 
-const deployCommands = (dir) => {
+const deployCommands = async (dir) => {
     /*
 
     Parses the entire /commands folder for files with .js extension
@@ -29,7 +31,8 @@ const deployCommands = (dir) => {
         // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
         for (const file of commandFiles) {
             const filePath = path.join(commandsPath, file);
-            const command = require(filePath);
+            const imported = await import(filePath);
+            const command = imported.default || imported;
             if ('data' in command && 'execute' in command) {
                 commands.push(command.data.toJSON());
             } else {
@@ -78,4 +81,4 @@ const deployCommands = (dir) => {
     })();
 }
 
-module.exports = { deployCommands }
+export default deployCommands

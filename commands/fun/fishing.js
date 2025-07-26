@@ -1,7 +1,6 @@
-const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
-const wait = require('node:timers/promises').setTimeout
-const { User } = require('../../database/models')
-const { db } = require('../../database/index');
+import { SlashCommandBuilder } from "discord.js";
+import wait from 'node:timers/promises'
+import User from '../../database/models/user.js'
 
 let fishSizes = [
     'Tiny',
@@ -84,7 +83,7 @@ let fishTypes = {
     ]
 }
 
-fisherRanks = [
+const fisherRanks = [
     'Novice',
     'Apprentice',
     'Acquainted',
@@ -97,7 +96,7 @@ fisherRanks = [
     "Neptune's Chosen"
 ]
 
-module.exports = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName('fish')
 		.setDescription('Try to catch a fish'),
