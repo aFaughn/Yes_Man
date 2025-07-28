@@ -1,8 +1,7 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
-const { Config } = require('../../database/models');
+import { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import Config from '../../database/models/config.js';
 
-
-module.exports = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName('plex_request')
 		.setDescription('Creates a request for the plex server.')

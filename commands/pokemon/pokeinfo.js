@@ -1,7 +1,6 @@
-const { SlashCommandBuilder, InteractionCollector, EmbedBuilder, channelLink } = require("discord.js");
-const { Counter } = require("../../database/models");
+import { SlashCommandBuilder, InteractionCollector, EmbedBuilder, channelLink } from "discord.js";
 
-module.exports = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName('pokeinfo')
 		.setDescription('Grabs information about a specified pokemon')

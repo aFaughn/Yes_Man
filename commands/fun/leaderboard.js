@@ -1,9 +1,7 @@
-const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
-const { User } = require('../../database/models');
-const sequelize = require("../../database");
+import { SlashCommandBuilder } from "discord.js";
+import User from '../../database/models/user.js';
 
-
-module.exports = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName('leaderboards')
 		.setDescription('Returns the top 3 users with the most points.'),

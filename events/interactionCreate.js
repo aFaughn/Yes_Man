@@ -1,7 +1,7 @@
-const { Events } = require('discord.js');
-const { User, Config } = require("../database/models");
+import { Events } from 'discord.js';
+import Config from '../database/models/config.js';
 
-module.exports = {
+export default {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
 		const { client } = interaction;

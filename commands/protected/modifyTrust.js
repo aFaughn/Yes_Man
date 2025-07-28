@@ -1,7 +1,7 @@
-const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
-const { User } = require("../../database/models");
+import { SlashCommandBuilder, InteractionCollector } from "discord.js";
+import User from "../../database/models/user.js";
 
-module.exports = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName('modify_trust')
 		.setDescription("[Protected] Modify a user's trust.")

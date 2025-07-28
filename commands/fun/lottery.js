@@ -1,9 +1,7 @@
-const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
-const { User } = require("../../database/models");
+import { SlashCommandBuilder } from "discord.js";
+import User from '../../database/models/user.js';
 
-
-
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
     .setName('powerball')
     .setDescription('Buy a lottery ticet!')

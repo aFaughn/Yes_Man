@@ -1,16 +1,20 @@
-require('dotenv').config()
-require('coffee-script/register')
-const { deployCommands } = require('./events/deployCommands')
-const fs = require('node:fs');
-const path = require('node:path');
-const {Client, Collection, Events, GatewayIntentBits } = require(`discord.js`)
+import dotenv from 'dotenv';
+dotenv.config();
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { Client, Collection, GatewayIntentBits } from 'discord.js';
+
+import deployCommands from './events/deployCommands.js';
+import sequelize from './database/index.js';
+
 const token = process.env.API_KEY;
-const db = require('./database')
-const models = require('./database/models');
-const sequelize = require('./database');
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Deploy Commands
-const dir = __dirname
+const dir = __dirname;
 deployCommands(dir)
 
 // Declare permissions that our bot will need in order to perform it's functions.
@@ -36,7 +40,8 @@ for (const folder of commandFolders) {
 	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 	for (const file of commandFiles) {
 		const filePath = path.join(commandsPath, file);
-		const command = require(filePath);
+    const imported = await import(filePath);
+		const command = imported.default || imported;
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
 		if ('data' in command && 'execute' in command) {
 			client.commands.set(command.data.name, command);
@@ -64,7 +69,9 @@ const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'
 
 for (const file of eventFiles) {
   const filePath = path.join(eventsPath, file);
-  const event = require(filePath);
+  const imported = await import(filePath);
+  const event = imported.default || imported
+
   if (event.once) {
     client.once(event.name, (...args) => event.execute(...args));
   } else {

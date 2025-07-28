@@ -1,6 +1,6 @@
-const { Events } = require('discord.js');
+import { Events } from 'discord.js';
 
-module.exports = {
+export default {
     name: Events.GuildCreate,
     async execute(guild) {
         console.log(`Registered new guild: ${guild.name}`)

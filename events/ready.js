@@ -1,8 +1,8 @@
-const { Events, ActivityType, EmbedBuilder } = require('discord.js');
-const { User, Guild, Config } = require('../database/models');
+import { Events, ActivityType, EmbedBuilder } from 'discord.js';
+
 const apiKey = process.env.NASA_API_KEY
 
-module.exports = {
+export default {
 	name: Events.ClientReady,
 	once: true,
 	async execute(client) {

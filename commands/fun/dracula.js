@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
+import { SlashCommandBuilder } from "discord.js";
 
 const bars = [
   "I'm movin' different.",
@@ -24,6 +24,7 @@ const bars = [
   "Balled so hard they thought I was a fuckin' nut sack.",
 ];
 
+<<<<<<< HEAD
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("dracula_flow")
@@ -32,3 +33,13 @@ module.exports = {
     await interaction.reply(bars[Math.floor(Math.random() * bars.length)]);
   },
 };
+=======
+export default {
+	data: new SlashCommandBuilder()
+		.setName('dracula_flow')
+		.setDescription('Prints a random Dracula Flow.'),
+	async execute(interaction) {
+		await interaction.reply(bars[Math.floor(Math.random() * bars.length)]);
+	},
+};
+>>>>>>> fa11fd2bb0cd1547a217ab77f867250dd0a567b5
