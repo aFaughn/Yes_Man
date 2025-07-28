@@ -1,13 +1,14 @@
 {
   "name": "yes-man",
-  "displayName":"Yes-Man",
+  "displayName": "Yes-Man",
   "version": "0.1.0",
   "private": true,
-  "type":"module",
+  "type": "module",
   "engines": {
-    "node":">=16.0.0"
+    "node": ">=16.0.0"
   },
   "dependencies": {
+    "@google/genai": "^1.11.0",
     "coffeescript": "^2.7.0",
     "discord.js": "^14.11.0",
     "dotenv": "^16.3.1",
