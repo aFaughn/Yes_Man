@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } from 'discord.js';
-import Config from "../../database/models/config.js";
-import User from "../../database/models/user.js";
-import Guild from "../../database/models/guild.js";
+import { Config } from "../../database/models/config.js";
+import { User } from "../../database/models/user.js";
+import { Guild } from "../../database/models/guild.js";
 
 export default {
 	data: new SlashCommandBuilder()

@@ -1,13 +1,5 @@
-<<<<<<< HEAD
-const { SlashCommandBuilder, InteractionCollector } = require("discord.js");
-const wait = require("node:timers/promises").setTimeout;
-const { User } = require("../../database/models");
-const { db } = require("../../database/index");
-=======
 import { SlashCommandBuilder } from "discord.js";
-import wait from 'node:timers/promises'
-import User from '../../database/models/user.js'
->>>>>>> fa11fd2bb0cd1547a217ab77f867250dd0a567b5
+import { User } from '../../database/models/user.js'
 
 let fishSizes = [
   "Tiny",
@@ -90,37 +82,6 @@ let fishTypes = {
   ],
 };
 
-<<<<<<< HEAD
-fisherRanks = [
-  "Novice",
-  "Apprentice",
-  "Acquainted",
-  "Adept",
-  "Skilled",
-  "Pro",
-  "Expert",
-  "Master",
-  "King",
-  "Neptune's Chosen",
-];
-
-module.exports = {
-  data: new SlashCommandBuilder()
-    .setName("fish")
-    .setDescription("Try to catch a fish"),
-  async execute(interaction) {
-    await interaction.deferReply();
-    await wait(3_000);
-    let initialRoll = Math.floor(Math.random() * 10001);
-    let roll = initialRoll;
-    let sizeMod = Math.floor(Math.random() * 10001);
-    let catMod = 1;
-    let fishType = "";
-    const user = await User.findOne({
-      where: { username: interaction.user.username },
-    });
-    const userXP = await user.fishingXP;
-=======
 const fisherRanks = [
     'Novice',
     'Apprentice',
@@ -140,7 +101,7 @@ export default {
 		.setDescription('Try to catch a fish'),
 	async execute(interaction) {
         await interaction.deferReply()
-        await wait(3_000)
+        await setTimeout(() => {}, 1000)
         let initialRoll = Math.floor(Math.random() * 10001)
         let roll        = initialRoll
         let sizeMod     = Math.floor(Math.random() * 10001)
@@ -148,7 +109,6 @@ export default {
         let fishType    = ''
         const user      = await User.findOne({ where: { username: interaction.user.username}})
         const userXP    = await user.fishingXP
->>>>>>> fa11fd2bb0cd1547a217ab77f867250dd0a567b5
 
     /* 
         Max fishing skill is 100,000 XP

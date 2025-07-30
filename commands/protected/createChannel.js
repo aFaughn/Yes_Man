@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, InteractionCollector } from "discord.js";
-import User from "../../database/models/user.js";
+import { User }from "../../database/models/user.js";
 
 export default {
 	data: new SlashCommandBuilder()

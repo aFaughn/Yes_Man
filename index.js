@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { Client, Collection, GatewayIntentBits } from 'discord.js';
 
 import deployCommands from './events/deployCommands.js';
-import sequelize from './database/index.js';
+import { sequelize } from './database/index.js';
 
 const token = process.env.API_KEY;
 

@@ -1,5 +1,5 @@
-const { SlashCommandBuilder, InteractionCollector, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
-module.exports = {
+import { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } from 'discord.js';
+export default {
 	data: new SlashCommandBuilder()
 		.setName('doubleornothing')
 		.setDescription('Double your money or cashout'),

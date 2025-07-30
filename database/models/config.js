@@ -2,7 +2,7 @@
 
 import { Model } from 'sequelize';
 
-export default (sequelize, DataTypes) => {
+export const Config = (sequelize, DataTypes) => {
   class Config extends Model {
     /**
      * Helper method for defining associations.

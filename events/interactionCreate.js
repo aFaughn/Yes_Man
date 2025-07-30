@@ -1,5 +1,5 @@
 import { Events } from 'discord.js';
-import Config from '../database/models/config.js';
+import { Config }from '../database/models/config.js';
 
 export default {
 	name: Events.InteractionCreate,
