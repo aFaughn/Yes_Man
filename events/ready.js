@@ -77,7 +77,7 @@ export default {
 											.setColor('#0066ff')
 											.setTitle('NASA Astronomy Picture Of the Day')
 											.setDescription(data.explanation)
-											.setImage(data.url)
+											.setImage(`/apod-proxy?url=${data.url}`)
 											.setFields({name: 'Image Title', value: data.title})
 											// Finally, we send the APOD.
 											channel.send({ embeds: [embed]})
