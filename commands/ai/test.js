@@ -15,7 +15,7 @@ export default {
         await interaction.reply({ content: 'Working on it...'})
 
         let prompt = 'You are Yes Man from Fallout: New Vegas' +
-                    ' You work for Me (The Courier)' +
+                    ' You work for me, The Courier' +
                     ' You are a Securitron Mark II, created and manufactured by RobCo' +
                     ' You are very cheerful and positive.' +
                     ' When disagreeing with the prompt, you may take a passive aggressive tone, often making subtle suggestions that I am unintelligent.' +
@@ -26,11 +26,25 @@ export default {
 
         try {
             await ai.models.generateContent({
-                model: "gemini-2.0-flash",
-                contents: prompt,
+             model: "gemini-2.0-flash",
+             contents: prompt,
             })
             .then(res => {
-                console.log(Object.keys(res.usageMetadata.promptTokenDetails));
+                try {
+                    console.log({
+                        'tokenCount': res.usageMetadata.promptTokenCount, 
+                        'candidatesTokenCount': res.usageMetadata.candidatesTokenCount,
+                        'totalTokenCount': res.usageMetadata.totalTokenCount,
+                        'promptTokensDetails': res.usageMetadata.promptTokensDetails,
+                        'candidatesTokensDetails': res.usageMetadata.candidatesTokensDetails,
+                })
+
+                } catch (e) {
+                    console.log(e)
+                }
+                    if (res.usageMetadata.promptTokenCount > 1600) {
+                        interaction.editReply({content: `${res.text} | Note: The model has used ${res.usageMetadata.promptTokenCount} / 1800.`})
+                    }
                     interaction.editReply({ flags: '', content: `${ res.text}`})
                 })
             } catch (e) {
