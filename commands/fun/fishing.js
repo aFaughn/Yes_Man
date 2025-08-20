@@ -147,31 +147,31 @@ export default {
       catMod = 1;
     } else if (roll <= 2000 && roll > 1000) {
       roll = fishSizes[1]; // Index 1 for 'Small'
-      catMod = 1.1;
+      catMod = 2;
     } else if (roll <= 3000 && roll > 2000) {
       roll = fishSizes[2]; // Index 2 for 'Young'
-      catMod = 1.3;
+      catMod = 2;
     } else if (roll <= 4000 && roll > 3000) {
       roll = fishSizes[3]; // Index 3 for 'Adolescent'
-      catMod = 1.5;
+      catMod = 3.5;
     } else if (roll <= 5000 && roll > 4000) {
       roll = fishSizes[4]; // Index 4 for 'Adult'
-      catMod = 2;
+      catMod = 4;
     } else if (roll <= 6000 && roll > 5000) {
       roll = fishSizes[5]; // Index 5 for 'Large'
-      catMod = 2.3;
+      catMod = 6;
     } else if (roll <= 7000 && roll > 6000) {
       roll = fishSizes[6]; // Index 6 for 'Big'
-      catMod = 2.5;
+      catMod = 8;
     } else if (roll <= 8000 && roll > 7000) {
       roll = fishSizes[7]; // Index 7 for 'Huge'
-      catMod = 2.75;
+      catMod = 10;
     } else if (roll <= 9000 && roll > 8000) {
       roll = fishSizes[8]; // Index 8 for 'Gargantuan'
-      catMod = 3;
+      catMod = 15;
     } else if (roll > 9000) {
       roll = fishSizes[9]; // Index 9 for 'Mother-of-all'
-      catMod = 10;
+      catMod = 20;
     }
 
     // Calculate fish type
@@ -181,28 +181,28 @@ export default {
       fishType =
         fishTypes.trash[Math.floor(Math.random() * fishTypes.trash.length)];
     } else if (sizeMod >= 2000 && sizeMod < 4000) {
-      sizeMod = 1;
+      sizeMod = 1.3;
       fishType =
         fishTypes.small[Math.floor(Math.random() * fishTypes.small.length)];
     } else if (sizeMod >= 4000 && sizeMod < 6000) {
       // Changed 8000 to 6000 based on your original intention
-      sizeMod = 1.5;
+      sizeMod = 1.8;
       fishType =
         fishTypes.medium[Math.floor(Math.random() * fishTypes.medium.length)];
     } else if (sizeMod >= 6000 && sizeMod < 9975) {
-      sizeMod = 2.5;
+      sizeMod = 3;
       fishType =
         fishTypes.large[Math.floor(Math.random() * fishTypes.large.length)];
     } else if (sizeMod >= 9975) {
       // Adjusted from > 9999
-      sizeMod = 5;
+      sizeMod = 6;
       fishType =
         fishTypes.legendary[
           Math.floor(Math.random() * fishTypes.legendary.length)
         ]; // Corrected array
     }
     if (initialRoll === 10000) {
-      catMod = 10;
+      catMod = 15;
       sizeMod = 10;
       roll = fishSizes[9];
       fishType =
@@ -211,7 +211,7 @@ export default {
         ];
     }
 
-    let base = 10;
+    let base = 15;
     let xpGain = base * catMod * sizeMod;
 
     await user.update({ fishingXP: Math.round(user.fishingXP + xpGain) });
