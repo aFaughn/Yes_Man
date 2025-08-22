@@ -18,7 +18,7 @@ export default {
             fields: [
                 {
                     name: 'Current Payout',
-                    value: 'Value',
+                    value: '10',
                 },
             ]
         }
@@ -36,9 +36,8 @@ export default {
         const Row = new ActionRowBuilder()
         .addComponents(DORDouble, DORCashOut)
 
-        interaction.reply({
+        await interaction.reply({
             embeds: [embed],
-            ephemeral: true,
             components: [Row]
         })
 	},

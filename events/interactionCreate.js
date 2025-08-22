@@ -1,4 +1,4 @@
-import { Events } from 'discord.js';
+import { Events, EmbedBuilder } from 'discord.js';
 import { Config }from '../database/models/config.js';
 
 export default {
@@ -28,6 +28,7 @@ export default {
 		} else if (interaction.isButton()) {
 
 			// Plex Requests ---------
+			// TODO: Rename customID's to something more descriptive.
 			if (interaction.customId === 'markComplete') {
 				const config = await Config.findOne({
 					where: {
@@ -50,6 +51,36 @@ export default {
 			if (interaction.customId === 'markBad') {
 				
 				await interaction.message.delete()
+			}
+
+			// Double or Nothing -----------------
+			// Double
+			if (interaction.customId === 'DORDouble') {
+				let previousValue = parseInt(interaction.message.embeds[0].fields[0].value);
+
+				const embed = {
+					color: 0xff0000,
+					title: 'Double or Nothing',
+					author: {
+						name: interaction.user.username,
+						iconURL: 'https://i.imgur.com/zzsgannb.jpg' 
+					},
+					fields: [
+						{
+							name: 'Current Payout',
+							value: `${previousValue * 2}`,
+						},
+					]
+				}
+
+				await interaction.message.edit({ embeds: [embed] })
+				await interaction.deferUpdate()
+				
+			}
+
+			// Cashout
+			if (interaction.customId === 'DORCashout') {
+
 			}
 		} else if (interaction.isStringSelectMenu()) {
 			return;
