@@ -1,5 +1,6 @@
 import { Events, EmbedBuilder } from 'discord.js';
-import { Config }from '../database/models/config.js';
+import { Config } from '../database/models/config.js';
+import { User } from '../database/models/user.js';
 
 export default {
 	name: Events.InteractionCreate,
@@ -56,31 +57,96 @@ export default {
 			// Double or Nothing -----------------
 			// Double
 			if (interaction.customId === 'DORDouble') {
-				let previousValue = parseInt(interaction.message.embeds[0].fields[0].value);
+				// Prevent other users from interacting with the current user's game.
+				if (!interaction.user.username === interaction.message.embeds[0].author.name) {
 
-				const embed = {
-					color: 0xff0000,
-					title: 'Double or Nothing',
-					author: {
-						name: interaction.user.username,
-						iconURL: 'https://i.imgur.com/zzsgannb.jpg' 
-					},
-					fields: [
-						{
-							name: 'Current Payout',
-							value: `${previousValue * 2}`,
-						},
-					]
+					await  deferUpdate()
+
+				} else {
+
+					let previousValue = parseInt(interaction.message.embeds[0].fields[0].value);
+					let num = Math.floor(Math.random() * 2); // 0 or 1
+
+					// User wins the coin-toss
+					if (num === 1) {
+						const embed = {
+							color: 0xff0000,
+							title: 'Double or Nothing',
+							author: {
+								name: interaction.user.username,
+								iconURL: 'https://i.imgur.com/zzsgannb.jpg' 
+							},
+							fields: [
+								{
+									name: 'Current Payout',
+									value: `${previousValue * 2}`,
+								},
+							]
+						}
+
+						await interaction.message.edit({ embeds: [embed] })
+						await interaction.deferUpdate()
+					}
+					// User loses the coin toss
+					else {
+
+						const embed = {
+							color: 0xff0000,
+							title: 'Double or Nothing - You Lose!',
+							fields: [
+								{
+									name: 'Current Payout',
+									value: 'Zilch!',
+								},
+								{
+									name: 'Better Luck Next Time',
+									value: '',
+								}
+							]
+						}
+
+						await interaction.message.edit({ embeds: [embed], components: [] })
+						await interaction.deferUpdate()
+						setTimeout(() => {
+							interaction.message.delete();
+						}, 10000); // Delete the message after 10 seconds
+
+					}	
+
 				}
-
-				await interaction.message.edit({ embeds: [embed] })
-				await interaction.deferUpdate()
 				
 			}
 
 			// Cashout
 			if (interaction.customId === 'DORCashout') {
+				if (interaction.user.username === interaction.message.embeds[0].author.name) {
+					const embed = {
+						color: 0xff0000,
+						title: 'Double or Nothing - Cashed Out!',
+						fields: [
+							{
+								name: 'Current Payout',
+								value: `${interaction.message.embeds[0].fields[0].value}`,
+							},
+							{
+								name: 'Thanks for Playing',
+								value: '',
+							}
+						]
+					}
 
+					const user = await User.findOne({ where: { username: interaction.user.username } });
+					if (user) {
+						await user.update({
+							points: user.points + parseInt(interaction.message.embeds[0].fields[0].value)
+						})
+					}
+					await interaction.message.edit({ embeds: [embed], components: [] })
+					await interaction.deferUpdate()
+					setTimeout(() => {
+						interaction.message.delete();
+					}, 10000); // Delete the message after 10 seconds
+				}
 			}
 		} else if (interaction.isStringSelectMenu()) {
 			return;
