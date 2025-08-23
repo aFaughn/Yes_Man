@@ -1,3 +1,4 @@
+import readline from 'node:readline';
 import dotenv from 'dotenv';
 dotenv.config();
 import fs from 'node:fs';
@@ -81,3 +82,21 @@ for (const file of eventFiles) {
 
 // client.login logs the bot in and sets it up for use. You'll enter your token here.
 client.login(token);
+
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+rl.on('line', async (input) => {
+  // Example: send a message to a channel
+  if (input.startsWith('say')) {
+    const args = input.split(', ');
+    const message = args[2]
+    const channel = await client.channels.fetch(args[1]);
+    channel.send(message);
+  }
+
+  // Add more CLI commands here
+});
