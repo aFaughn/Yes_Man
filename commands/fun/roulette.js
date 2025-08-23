@@ -1,4 +1,6 @@
-import { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } from 'discord.js';
+import { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, MessageFlags } from 'discord.js';
+import { User } from '../../database/models/user.js';
+
 export default {
 	data: new SlashCommandBuilder()
 		.setName('doubleornothing')
@@ -18,7 +20,7 @@ export default {
             fields: [
                 {
                     name: 'Current Payout',
-                    value: '10',
+                    value: '100',
                 },
             ]
         }
@@ -35,6 +37,15 @@ export default {
 
         const Row = new ActionRowBuilder()
         .addComponents(DORDouble, DORCashOut)
+
+        const user = await User.findOne({ where: { username: interaction.user.username } });
+        if (user) {
+            if (user.points < 100) {
+                return interaction.reply({ content: 'You need at least 100 points to use this command.', flags: MessageFlags.Ephemeral});
+            }
+
+            await user.update({ points: user.points - 100 });
+        }
 
         await interaction.reply({
             embeds: [embed],
