@@ -1,9 +1,9 @@
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder, MessageFlags } from "discord.js";
 import { User } from "../../database/models/user.js";
 
 export default {
 	data: new SlashCommandBuilder()
-		.setName('pointsgamba')
+		.setName('getpoints')
 		.setDescription('Gives you 100 points if you have 0'),
 	async execute(interaction) {
         // Grab user who ran the command
@@ -15,7 +15,7 @@ export default {
                 interaction.reply({ content: `⚠ You may only run this command when you have 0 points!`, ephemeral: true })
             } else {
                 data[0].update({ points: 100 })
-                interaction.reply({ content: `Gave 100 points to ${interaction.user.username}`, ephemeral: true })
+                const reply = interaction.reply({ content: `Here's 100 points, ${interaction.user.username}.`, flags: MessageFlags.Ephemeral })
             }
         })
 	},
