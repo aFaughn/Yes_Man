@@ -8,6 +8,9 @@
     "node": ">=16.0.0"
   },
   "dependencies": {
+    "@babel/core": "^7.28.3",
+    "@babel/node": "^7.28.0",
+    "@babel/preset-env": "^7.28.3",
     "@google/genai": "^1.11.0",
     "coffeescript": "^2.7.0",
     "discord.js": "^14.11.0",
@@ -23,7 +26,7 @@
   },
   "scripts": {
     "dev": "npx nodemon .",
-    "prod": "node .",
+    "prod": "nodemon --exec babel-node index.js",
     "destroy_db": "npx sequelize db:drop; npx sequelize db:create; npx sequelize db:migrate"
   }
 }
