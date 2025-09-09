@@ -93,9 +93,17 @@ rl.on('line', async (input) => {
   // Example: send a message to a channel
   if (input.startsWith('say')) {
     const args = input.split(', ');
+    if (args.length < 3) {
+      console.log('Usage: say, <channelID>, <message>');
+      return;
+    }
     const message = args[2]
-    const channel = await client.channels.fetch(args[1]);
-    channel.send(message);
+    try {
+      const channel = await client.channels.fetch(args[1]);
+      channel.send(message);
+    } catch (error) {
+      console.log('Error fetching channel or sending message: \n' + error)
+    }
   }
 
   // Add more CLI commands here
