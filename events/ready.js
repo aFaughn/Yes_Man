@@ -1,7 +1,6 @@
 import { Events, ActivityType, EmbedBuilder } from 'discord.js';
-import { User } from '../database/models/user.js';
-import { Guild } from '../database/models/guild.js';
-import { Config } from '../database/models/config.js';
+import db from '../database/models/index.js'
+const { Guild, User, Config } = db;
 
 const apiKey = process.env.NASA_API_KEY
 
