@@ -2,7 +2,7 @@
 
 import { Model } from 'sequelize';
 
-export const Guild = (sequelize, DataTypes) => {
+const Guild = (sequelize, DataTypes) => {
   class Guild extends Model {
     /**
      * Helper method for defining associations.
@@ -23,3 +23,5 @@ export const Guild = (sequelize, DataTypes) => {
   });
   return Guild;
 };
+
+export default Guild;

@@ -1,7 +1,7 @@
 'use strict';
 import { Model } from 'sequelize';
 
-export const Counter = (sequelize, DataTypes) => {
+const Counter = (sequelize, DataTypes) => {
   class Counter extends Model {
     /**
      * Helper method for defining associations.
@@ -21,3 +21,5 @@ export const Counter = (sequelize, DataTypes) => {
   });
   return Counter;
 };
+
+export default Counter;
