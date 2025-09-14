@@ -3,11 +3,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { Sequelize } from 'sequelize';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 import cfg from '../../config/database.js';;
 let config = cfg[env];
