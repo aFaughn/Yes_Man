@@ -1,16 +1,17 @@
 'use strict';
 
-import { Model, DataTypes } from 'sequelize';
-import { sequelize } from '../index.js';
+import { Model } from 'sequelize';
 
- export class User extends Model {
+ const defineUser = (sequelize, DataTypes) => {
+  class User extends Model {
+
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+    */
+   static associate(models) {
+     // define association here
     }
   }
   User.init({
@@ -25,3 +26,7 @@ import { sequelize } from '../index.js';
     sequelize,
     modelName: 'User',
   });
+  return User;
+};
+
+export default defineUser;

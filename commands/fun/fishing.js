@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
-import { User } from '../../database/models/user.js'
+import User from '../../database/models/user.js'
 
 let fishSizes = [
   "Tiny",
