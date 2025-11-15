@@ -1,5 +1,6 @@
 import { SlashCommandBuilder } from "discord.js";
-import User from "../../database/models/user.js";
+import {db} from '../../database/models/index.js';
+const { User } = db;
 
 export default{
 	data: new SlashCommandBuilder()

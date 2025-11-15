@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
-import Config from '../../database/models/config.js';
-
+import {db} from '../../database/models/index.js';
+const { Config } = db;
 export default {
 	data: new SlashCommandBuilder()
 		.setName('plex_request')
