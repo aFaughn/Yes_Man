@@ -54,7 +54,7 @@ export default {
                 return interaction.reply({ content: 'You need at least 100 points to use this command.', flags: MessageFlags.Ephemeral});
             }
 
-            await user.update({ points: user.points - 100 });
+            await user.update({ points: user.points - wager });
         }
 
         await interaction.reply({
