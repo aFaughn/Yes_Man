@@ -6,10 +6,18 @@ const { User } = db;
 export default {
 	data: new SlashCommandBuilder()
 		.setName('doubleornothing')
-		.setDescription('Double your money or cashout'),
+		.setDescription('Double your money or cashout')
+        .addIntegerOption(option => 
+            option.setName('wager')
+            .setDescription('Amount to wager (minimum 100 points)')
+            .setRequired(false)),
 	async execute(interaction) {
         // Create a new instance of Double or Nothing.
-        
+        let wager = interaction.options.getInteger('wager');
+        if (wager === null || wager === undefined)
+            {
+            wager = `${100}`;
+            }  
 
 
         const embed = {
@@ -22,7 +30,7 @@ export default {
             fields: [
                 {
                     name: 'Current Payout',
-                    value: '100',
+                    value: wager,
                 },
             ]
         }
