@@ -50,9 +50,11 @@ export default {
 
         const user = await User.findOne({ where: { username: interaction.user.username } });
         if (user) {
-            //TODO add separate if statement for handling negative wagers.
-            if (user.points < wager || wager < 0) {
-                return interaction.reply({ content: 'You do not have enough points.', flags: MessageFlags.Ephemeral});
+            if (user.points < wager) {
+                return interaction.reply({ content: `You do not have enough points. Current points: ${user.points}`, flags: MessageFlags.Ephemeral});
+            }
+            if (wager < 0) {
+                return interaction.reply({ content: 'Wager must be greater than zero. Why did you try this?', flags: MessageFlags.Ephemeral});
             }
 
             await user.update({ points: user.points - wager });

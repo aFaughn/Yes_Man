@@ -3,7 +3,7 @@ import {db} from '../../database/models/index.js';
 const { User } = db;
 export default {
   data: new SlashCommandBuilder()
-    .setName("powerball")
+    .setName("lotto")
     .setDescription("Buy a lottery ticet!")
     .addIntegerOption((option) =>
       option
