@@ -10,21 +10,18 @@ export default {
         .setName("integer1")
         .setDescription("Enter your first integer")
         .setRequired(true)
-        .setMinValue(1)
     )
     .addIntegerOption((option) =>
       option
         .setName("integer2")
         .setDescription("Enter your second integer")
         .setRequired(true)
-        .setMinValue(1)
     )
     .addIntegerOption((option) =>
       option
         .setName("integer3")
         .setDescription("Enter your third integer")
         .setRequired(true)
-        .setMinValue(1)
     )
     .addIntegerOption((option) =>
       option
@@ -58,11 +55,11 @@ export default {
     //TODO: Improve response formatting / Polish. Titles, all picks and target displayed.
     if (foundPair) {
       return interaction.reply(
-        {content: `Yes! ${pair[0]} and ${pair[1]} add up to ${targetNum}.`, flags: MessageFlags.Ephemeral
+        {content: `Yes! ${pair[0]} and ${pair[1]} add up to ${targetNum}.`, //flags: MessageFlags.Ephemeral
     });
     } else {
       return interaction.reply(
-        {content: `No, there are no two integers that add up to ${targetNum}.`, flags: MessageFlags.Ephemeral
+        {content: `No, there are no two integers that add up to ${targetNum}.`, //flags: MessageFlags.Ephemeral
     });
     }
 }
