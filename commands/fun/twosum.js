@@ -55,6 +55,7 @@ export default {
       if (foundPair) break;
     }
 
+    //TODO: Improve response formatting / Polish. Titles, all picks and target displayed.
     if (foundPair) {
       return interaction.reply(
         {content: `Yes! ${pair[0]} and ${pair[1]} add up to ${targetNum}.`, flags: MessageFlags.Ephemeral
