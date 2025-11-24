@@ -129,7 +129,18 @@ export default {
               ephemeral: true,
             });
           }
-        } else {
+
+          if (firstNum + secondNum == thirdNum) {
+            user[0].update({ points: user[0].points + 500 });
+            interaction.reply({
+              content: `Bonus Award! Your first two picks add up to your third pick! +500 points! \nNew Balance: ${user[0].points}`,
+              ephemeral: true,
+            });
+          }
+
+        } 
+        
+        else {
           interaction.reply(
             `Not enough money to buy a lotto ticket... 👀 (use /give_points)`
           );
