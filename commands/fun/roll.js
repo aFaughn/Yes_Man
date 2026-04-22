@@ -13,7 +13,9 @@ export default{
             option.setName('die_amount')
             .setDescription('Specify the amount of dice to roll. Capped at 15')
             .setRequired(false)
-        ),
+        )
+        
+        ,
 	async execute(interaction) {
         let sides = await interaction.options.getInteger('die_type')
         let rolls = await interaction.options.getInteger('die_amount')
