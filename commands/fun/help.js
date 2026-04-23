@@ -66,7 +66,6 @@ export default {
 		if (category == 'repo') {
 
 			await interaction.reply({ embeds: [repoHelp], flags: MessageFlags.Ephemeral })
-
 		}
 		else if (category == 'utility') {
 
@@ -75,6 +74,9 @@ export default {
 		else if (category == 'fun') {
 
 			await interaction.reply({ embeds: [funHelp], flags: MessageFlags.Ephemeral })
+		}
+		else if (category == 'gambling') {
+			await interaction.reply({ embeds: [gambleHelp], flags: MessageFlags.Ephemeral })
 		}
 
 
