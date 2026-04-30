@@ -47,9 +47,9 @@ export default {
 				{ name: '**/citation**', value: 'Write your friends a mock citation.' },
 				{ name: '**/dracula**', value: 'Responds with a random quote from the Dracula Flow YouTube series.' },
 				{ name: '**/getpoints**', value: 'Gives you 100 points if your balance is 0.' },
-				{ name: 'fishing', value: 'Go fishing to earn XP!' },
-				{ name: 'maxwell', value: 'meow' },
-				{ name: 'pokeinfo', value: 'Get information about your favorite Pokemon!' }
+				{ name: '/fishing', value: 'Go fishing to earn XP!' },
+				{ name: '/maxwell', value: 'meow' },
+				{ name: '/pokeinfo', value: 'Get information about your favorite Pokemon!' }
 			)
 
 		const gambleHelp = new EmbedBuilder()
@@ -57,9 +57,9 @@ export default {
 			.setTitle('Gambling Commands')
 			.setDescription('Here\'s all of the ways that you can gamble your points and hit it big!\n...or lose it all.')
 			.addFields(
-				{ name: 'doubleornothing', value: 'Take a chance on doubling your wager!' },
+				{ name: '/doubleornothing', value: 'Take a chance on doubling your wager!' },
 				{ name: '/gamba', value: 'Spins a slot machine.' },
-				{ name: 'lotto', value: 'Buys a lottery ticket.' },
+				{ name: '/lotto', value: 'Buys a lottery ticket.' },
 			)
 
 

@@ -1,10 +1,10 @@
 'use strict';
 
-const defaultInventory = { 
+const defaultInventory = {
   items: [],
   upgrades: {
-      pointscap: 0,
-      gambacap: 0,
+    pointscap: 0,
+    gambacap: 0,
   }
 }
 
@@ -12,8 +12,8 @@ const defaultBlackjack = {
   gameState: 0,
   wager: 0,
   hands: {
-      dealer: [],
-      user: [],
+    dealer: [],
+    user: [],
   }
 }
 
@@ -57,6 +57,16 @@ module.exports = {
         defaultValue: JSON.stringify(defaultBlackjack)
       },
       fishingXP: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+      },
+      huntingXP: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+      },
+      globalLevel: {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0

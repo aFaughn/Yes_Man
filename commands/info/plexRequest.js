@@ -1,15 +1,15 @@
-import { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
-import {db} from '../../database/models/index.js';
+import { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } from "discord.js";
+import { db } from '../../database/models/index.js';
 const { Config } = db;
 export default {
-	data: new SlashCommandBuilder()
-		.setName('plex_request')
-		.setDescription('Creates a request for the plex server.')
+    data: new SlashCommandBuilder()
+        .setName('plex_request')
+        .setDescription('Creates a request for the plex server.')
         .addStringOption(option =>
             option.setName('title')
                 .setDescription('Title of the film. Duh.')
                 .setRequired(true)),
-	async execute(interaction) {
+    async execute(interaction) {
         const { client } = interaction
 
         const config = await Config.findOne({
@@ -33,24 +33,24 @@ export default {
         const row = new ActionRowBuilder()
             .addComponents(markComplete, markBad)
 
-            const channel = await client.channels.fetch(config.plexChannel)
-            
-            const response = await channel.send({ 
-                content: `<@${config.plexOwner}> ${interaction.user.username} requested *${interaction.options.getString('title')}*`,
-                components: [row]
-            })
+        const channel = await client.channels.fetch(config.plexChannel)
 
-            //This will throw an error in your console but it does work as intended.
+        const response = await channel.send({
+            content: `<@${config.plexOwner}> ${interaction.user.username} requested *${interaction.options.getString('title')}*`,
+            components: [row]
+        })
+
+        //This will throw an error in your console but it does work as intended.
         if (interaction.user.id !== config.plexOwner) {
             const acknowledge = await interaction.reply({
                 content: `Request Made! This message will self destruct in 5 seconds!`,
-                ephemeral: true
+                flags: MessageFlags.Ephemeral
             })
 
             setTimeout(() => {
                 acknowledge.delete()
-            },5000)
-        }   
+            }, 5000)
+        }
 
-	},
+    },
 };

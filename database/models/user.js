@@ -2,7 +2,7 @@
 
 import { Model } from 'sequelize';
 
- const defineUser = (sequelize, DataTypes) => {
+const defineUser = (sequelize, DataTypes) => {
   class User extends Model {
 
     /**
@@ -10,8 +10,8 @@ import { Model } from 'sequelize';
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
     */
-   static associate(models) {
-     // define association here
+    static associate(models) {
+      // define association here
     }
   }
   User.init({
@@ -21,7 +21,9 @@ import { Model } from 'sequelize';
     trust: DataTypes.INTEGER,
     inventory: DataTypes.STRING,
     blackjack: DataTypes.STRING,
-    fishingXP: DataTypes.INTEGER
+    fishingXP: DataTypes.INTEGER,
+    globalLevel: DataTypes.INTEGER,
+    huntingXP: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'User',

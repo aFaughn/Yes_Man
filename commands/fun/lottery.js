@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
-import {db} from '../../database/models/index.js';
+import { db } from '../../database/models/index.js';
 const { User } = db;
 export default {
   data: new SlashCommandBuilder()
@@ -130,16 +130,16 @@ export default {
             });
           }
 
-          if (firstNum + secondNum == thirdNum) {
-            user[0].update({ points: user[0].points + 500 });
-            interaction.reply({
-              content: `Bonus Award! Your first two picks add up to your third pick! +500 points! \nNew Balance: ${user[0].points}`,
-              ephemeral: true,
-            });
-          }
+          // if (firstNum + secondNum == thirdNum) {
+          //   user[0].update({ points: user[0].points + 500 });
+          //   interaction.reply({
+          //     content: `Hidden Bonus Award! Your first two picks add up to your third pick! +500 points! \nNew Balance: ${user[0].points}`,
+          //     ephemeral: true,
+          //   });
+          // }
 
-        } 
-        
+        }
+
         else {
           interaction.reply(
             `Not enough money to buy a lotto ticket... 👀 (use /give_points)`
